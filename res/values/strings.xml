@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Bienvenue</string>
+    <string name="app_name">gSun</string>
+
+	<!-- main.xml -->
+	
+	<string name="accueil_calcul">Calcul d\'une direction</string>
+	<string name="accueil_mesures">Accès aux mesures</string>
+	<string name="accueil_aide">i</string>
+	<color name="ecriture">#F7230C</color>
+	<color name="background">#CCCCFF</color>
+	<color name="texte">#1560DB</color>
+
+	
+	<!-- param.xml -->
+	
+	<string name="param_titre">Paramétrage</string>
+	
+	<string-array name="param_typedate_array">
+		<item>Date ?</item>
+		<item>Solstice d"'"été</item>
+		<item>Solstice d"'"hiver</item>
+		<item>Équinoxe</item>
+		<item>Personnalisée</item>
+	</string-array>
+
+    <string-array name="param_mois_array">
+        <item>Mois ?</item>
+        <item>Janvier</item>
+        <item>Février</item>
+        <item>Mars</item>
+        <item>Avril</item>
+        <item>Mai</item>
+        <item>Juin</item>
+        <item>Juillet</item>
+        <item>Août</item>
+        <item>Septembre</item>
+        <item>Octobre</item>
+        <item>Novembre</item>
+        <item>Décembre</item>
+    </string-array>
+    
+    <string-array name="param_jour_array">
+    	<item>Jour ?</item>
+        <item>1er</item>
+     	<item>11</item>
+		<item>21</item>
+    </string-array>
+    
+    <string name="param_levertext">"Lever"</string>
+    
+     <string name="param_couchertext">"Coucher"</string>
+
+    <string-array name="param_heure_array">
+    	<item>Heure ?</item>
+        <item>05:00</item>
+        <item>06:00</item>
+        <item>07:00</item>
+        <item>08:00</item>
+        <item>09:00</item>
+        <item>10:00</item>
+        <item>11:00</item>
+        <item>12:00</item>
+        <item>13:00</item>
+        <item>14:00</item>
+        <item>15:00</item>
+        <item>16:00</item>
+        <item>17:00</item>
+        <item>18:00</item>
+        <item>19:00</item>
+        <item>20:00</item>
+        <item>21:00</item>
+        <item>22:00</item>
+        <item>23:00</item>
+    </string-array>
+    
+    <string name="param_precisiontext">Précision ?</string>
+    <string name="param_precisiontext2">"Heure à choisir"</string>
+
+
+</resources>

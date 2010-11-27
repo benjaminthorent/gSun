@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
+    >
+ 
+  
+<TextView  
+    android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:text="@string/hello"
+    android:layout_gravity="center"
+    android:textSize="25px"
+    android:textColor="@color/ecriture"
+    android:layout_marginTop="10px"
+    />
+    
+<ImageView
+	android:src="@drawable/soleil"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:scaleType="fitXY"
+	android:layout_gravity="center"
+	android:layout_marginTop="20px"
+	
+	/>
+	
+ <Button
+ 	android:id="@+id/accueil_calcul"
+ 	android:layout_width="fill_parent"
+ 	android:layout_height="wrap_content"
+ 	android:layout_gravity="center"
+ 	android:text="@string/accueil_calcul"
+ 	android:layout_marginTop="50px"
+ 	android:layout_marginLeft="40px"
+ 	android:layout_marginRight="40px"
+ 	/>
+ 	
+  <Button
+ 	android:id="@+id/accueil_mesures"
+ 	android:layout_width="wrap_content"
+ 	android:layout_height="wrap_content"
+ 	android:layout_gravity="center"
+ 	android:text="@string/accueil_mesures"
+ 	android:layout_marginTop="20px"
+ 	android:layout_marginLeft="40px"
+ 	android:layout_marginRight="40px"
+ 
+ 	/>
+ 	
+  <Button
+ 	android:id="@+id/accueil_aide"
+ 	android:layout_width="wrap_content"
+ 	android:layout_height="wrap_content"
+ 	android:layout_gravity="right"
+ 	android:text="@string/accueil_aide"
+ 	android:layout_marginRight="15px"
+ 	android:layout_marginBottom="15px"
+ 	/>
+    
+</LinearLayout>

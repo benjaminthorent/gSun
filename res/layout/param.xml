@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/background"
+	android:id="@+id/ChoixDateLayout"
+	>
+  
+	<TextView
+		android:id="@+id/param_titre"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content" 
+		android:text="@string/param_titre"
+		android:textSize="25px"
+		android:layout_marginTop="10px"
+		android:layout_centerHorizontal="true"
+		android:textColor="#0000FF"
+	/>
+  
+	<Spinner
+		android:id="@+id/param_typedate"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/param_titre"
+		android:layout_marginLeft="30px"
+		android:layout_marginRight="30px"
+		android:layout_marginTop="10px"
+ 	/>
+  
+	<Spinner 
+		android:id="@+id/param_mois"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/param_typedate"
+		android:layout_alignParentRight="true"
+		android:layout_marginLeft="150px"
+		android:layout_marginRight="30px"
+		android:visibility="invisible"
+		android:layout_marginTop="10px"
+	/>
+	    
+	<Spinner 
+		android:id="@+id/param_jour"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/param_typedate"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="30px"
+		android:layout_marginRight="200px"
+		android:visibility="invisible"
+		android:layout_marginTop="10px"
+	/>
+	
+	
+		
+		
+		
+		<TextView
+			android:id="@+id/param_precisiontext2"
+			android:text="@string/param_precisiontext2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="17px"
+			android:textColor="@color/texte"
+	 		android:layout_below="@id/param_jour"
+	 		android:layout_marginTop="10px"
+			android:layout_centerHorizontal="true"
+		/>
+		
+		<TextView
+	 		android:id="@+id/param_levertext"
+	 		android:layout_width="fill_parent"
+	 		android:layout_height="wrap_content"
+	 		android:text="@string/param_levertext"
+	 		android:visibility="invisible"
+	 		android:textSize="17px"
+	 		android:textColor="@color/texte"
+	 		android:layout_toLeftOf="@id/param_precisiontext2"
+	 		android:layout_alignBaseline="@id/param_precisiontext2"
+	 		android:gravity="left"
+	 		android:layout_margin="5px"
+	 	/>
+	 	
+		<TextView
+	 		android:id="@+id/param_couchertext"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="@string/param_couchertext"
+	 		android:visibility="invisible"
+	 		android:textSize="17px"
+	 		android:textColor="@color/texte"
+	 		android:layout_alignBaseline="@id/param_levertext"
+	 		android:layout_toRightOf="@id/param_precisiontext2"
+	 		android:gravity="right"
+	 		android:layout_margin="5px"
+		/>
+		
+		<SeekBar android:id="@+id/seek"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:max="100"
+	        android:progress="50"
+	        android:layout_marginTop="10px"
+	        android:layout_below="@id/param_precisiontext2"
+	        android:layout_marginLeft="60px"
+	        android:layout_marginRight="60px"
+	    />
+		
+		<TextView
+			android:id="@+id/param_lever"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+	 		android:layout_below="@id/param_levertext"
+			android:visibility="invisible"
+			android:textSize="18px"
+			android:textColor="@color/texte"
+			android:layout_alignBaseline="@id/seek"
+		/>
+		
+		
+		<TextView
+			android:id="@+id/param_coucher"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/param_couchertext"
+	 		android:visibility="invisible"
+	 		android:textSize="18px"
+	 		android:textColor="@color/texte"
+		/>
+		
+		
+	    
+	    <TextView android:id="@+id/progress"
+	       	android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/param_precisiontext2"
+	        android:layout_alignBaseline="@id/param_precisiontext2"
+	        android:textSize="18px"
+			android:textColor="@color/texte"
+	    />
+    
+		
+		
+		
+		
+ 	
+	 	
+		
+	
+ 		
+	 	
+ 	
+	
+		
+		
+		
+	
+	<RelativeLayout
+		android:id="@+id/precision"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/seek"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="10px"
+	>
+		<TextView
+			android:id="@+id/param_precisiontext"
+			android:text="@string/param_precisiontext"
+			android:layout_width="wrap_content"
+			android:layout_height="fill_parent"
+			android:textSize="18px"
+			android:textColor="@color/texte"
+		/>
+		
+		<Button
+			style="?android:attr/buttonStyleSmall"
+			android:id="@+id/param_precision_moins"
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:text=" – "
+	 		android:layout_toRightOf="@id/param_precisiontext"
+			android:layout_alignBaseline="@id/param_precisiontext"
+			android:layout_marginLeft="25px"
+			android:layout_centerHorizontal="true"
+	 	/>
+	 	
+	 	<Button
+	 		style="?android:attr/buttonStyleSmall"
+			android:id="@+id/param_precision_valeur"
+			android:text="bla"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="18px"
+			android:textColor="#FFFFFF"
+			android:layout_toRightOf="@id/param_precision_moins"
+			android:layout_alignBaseline="@id/param_precisiontext"
+		/>
+	 	
+	 	<Button
+	 		style="?android:attr/buttonStyleSmall"
+			android:id="@+id/param_precision_plus"
+		 	android:layout_width="wrap_content"
+		 	android:layout_height="wrap_content"
+		 	android:text=" + "
+	 		android:layout_toRightOf="@id/param_precision_valeur"
+			android:layout_alignBaseline="@id/param_precisiontext"
+	 	/>
+	
+	</RelativeLayout>
+	
+
+	
+	
+</RelativeLayout>
