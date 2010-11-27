@@ -1,5 +1,6 @@
 package com.ei3info.gsun;
 
+import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -263,10 +265,16 @@ public class Guide extends View {
 	            pitch = event.values[1];     // pitch  
 	            roll = event.values[2];        // roll  
 	   
-	            if (azimuth > 200) {  
+	            //TODO A lier ˆ la classe qui rŽcupre les position objectif
+	            int azimuth_objectif = 180;
+	            int pitch_objectif = -30;
+	            int precision_azimuth = 20;
+	            int precision_pitch = 20;
+	            
+	            /*if (azimuth > azimuth_objectif+precision_azimuth) {  
 	                // top side up  
 	                currentDirection = Direction.LEFT;  
-	            } else if (azimuth < 160) {  
+	            } else if (azimuth < azimuth_objectif-precision_azimuth) {  
 	                // bottom side up  
 	                currentDirection = Direction.RIGHT;  
 	            } else if (roll > 45) {  
@@ -275,10 +283,31 @@ public class Guide extends View {
 	            } else if (roll < -45) {  
 	                // left side up  
 	                //currentDirection = Direction.DOWN;  
-	            }  else if(azimuth<=200 && azimuth>=160) {
+	            }  else if(azimuth<=azimuth_objectif+precision_azimuth && azimuth>=azimuth_objectif-precision_azimuth) {
 	                // left side up
 	            	currentDirection = Direction.OK;
-	            }
+	            }*/
+	            
+	            if (azimuth > azimuth_objectif+precision_azimuth) {  
+	                // GoLeft  
+	                currentDirection = Direction.LEFT;  
+	            } else if (azimuth < azimuth_objectif-precision_azimuth) {  
+	                // GoRight 
+	                currentDirection = Direction.RIGHT;  
+	            } else {  
+	            	// Azimuth OK
+	            	if (pitch > pitch_objectif+precision_pitch) {  
+	            		// GoDown
+		                currentDirection = Direction.DOWN;
+	            	} else if (pitch < pitch_objectif-precision_pitch) {
+	            		// GoUp 
+		                currentDirection = Direction.UP;
+	            	} else {
+	            		// Objective reached !
+		            	currentDirection = Direction.OK;
+	            	}
+	            } 
+	            
 	   
 	            if (currentDirection != null && !currentDirection.equals(oldDirection)) {  
 	                switch (currentDirection) {  
@@ -289,6 +318,8 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=0;
+	                        //EcranRecherche.mMediaPlayer.get(0).stop();
+	                        //EcranRecherche.mMediaPlayer.get(1).stop();
 	                        break;  
 	                    case RIGHT :   
 	                        listener.GoRight(); 
@@ -297,22 +328,30 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=0;
+	                        //EcranRecherche.mMediaPlayer.get(0).stop();
+	                        //EcranRecherche.mMediaPlayer.get(1).stop();
 	                        break;  
 	                    case UP:   
 	                        listener.GoUp(); 
 	                        etat_affichage[0]=0;
 	                        etat_affichage[1]=0;
-	                        etat_affichage[2]=1;
-	                        etat_affichage[3]=0;
+	                        etat_affichage[2]=0;
+	                        etat_affichage[3]=1;
 	                        etat_affichage[4]=0;
+	                        //EcranRecherche.mMediaPlayer.get(0).stop();
+	                        //EcranRecherche.mMediaPlayer.get(1).stop();
+	                        //EcranRecherche.mMediaPlayer.get(0).start();
 	                        break;  
 	                    case DOWN:   
 	                        listener.GoDown();
 	                        etat_affichage[0]=0;
 	                        etat_affichage[1]=0;
-	                        etat_affichage[2]=0;
-	                        etat_affichage[3]=1;
+	                        etat_affichage[2]=1;
+	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=0;
+	                        //EcranRecherche.mMediaPlayer.get(0).stop();
+	                        //EcranRecherche.mMediaPlayer.get(1).stop();
+	                        //EcranRecherche.mMediaPlayer.get(1).start();
 	                        break; 
 	                    case OK:   
 	                        listener.Ok();
@@ -321,10 +360,13 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=1;
+	                        //EcranRecherche.mMediaPlayer.get(0).stop();
+	                        //EcranRecherche.mMediaPlayer.get(1).stop();
 	                        break;
 	                }  
 	                oldDirection = currentDirection;  
-	               invalidate();
+	                //Optimized invalidate ?
+	                invalidate();
 	            }
 	   
 	            // forwards orientation to the OrientationListener  
