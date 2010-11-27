@@ -3,10 +3,14 @@ package com.ei3info.gsun;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -61,10 +65,16 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         //final TextView param_leverpoint = (TextView)findViewById(R.id.param_leverpoint);
         final TextView param_couchertext = (TextView)findViewById(R.id.param_couchertext); 
         //final TextView param_coucherpoint = (TextView)findViewById(R.id.param_coucherpoint);
+        final TextView param_precisiontext2 = (TextView)findViewById(R.id.param_precisiontext2);
+        
+        final TextView param_precisiontext = (TextView)findViewById(R.id.param_precisiontext);
+        final Button param_precision_moins = (Button)findViewById(R.id.param_precision_moins);
+        final Button param_precision_valeur = (Button)findViewById(R.id.param_precision_valeur);
+        final Button param_precision_plus = (Button)findViewById(R.id.param_precision_plus);
         
         
         
-        //Retour ˆ l'accueil
+        //Retour Âˆ l'accueil
         /*OnClickListener onClickLister = new OnClickListener() {
 	 
 	    	@Override
@@ -95,12 +105,19 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_levertext.setVisibility(4);
 		    			//param_leverpoint.setVisibility(4);
 		    			param_lever.setVisibility(4);
+		    			mSeekBar.setVisibility(4);
+		    			mProgressText.setVisibility(4);
+		    			param_precisiontext.setVisibility(4);
+		    	        param_precision_moins.setVisibility(4);
+		    	        param_precision_valeur.setVisibility(4);
+		    	        param_precision_plus.setVisibility(4);
+		    			param_precisiontext2.setVisibility(4);
 		    			param_couchertext.setVisibility(4);
 		    			//param_coucherpoint.setVisibility(4);
 		    			param_coucher.setVisibility(4);
 	    				break;
 	    			case 1:
-	    				//Solstice d'ŽtŽ
+	    				//Solstice d'ÂŽtÂŽ
 	    	    		param_jour_spinner.setSelection(3);
 	        			param_mois_spinner.setSelection(6);
 		    			param_jour_spinner.setVisibility(3);
@@ -108,13 +125,20 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_levertext.setVisibility(3);
 		    			//param_leverpoint.setVisibility(3);
 		    			param_lever.setVisibility(3);
+		    			mSeekBar.setVisibility(3);
+		    			mProgressText.setVisibility(3);
+		    			param_precisiontext.setVisibility(3);
+		    	        param_precision_moins.setVisibility(3);
+		    	        param_precision_valeur.setVisibility(3);
+		    	        param_precision_plus.setVisibility(3);
+		    			param_precisiontext2.setVisibility(3);
 		    			param_couchertext.setVisibility(3);
 		    			//param_coucherpoint.setVisibility(3);
 		    			param_coucher.setVisibility(3);
 		    			
 		    			jour = 21;
 		    			mois = 6;
-		    			param_lever.setText("8:00");
+		    			param_lever.setText("08:00");
 		    			param_coucher.setText("19:00");
 		    			//param_heure_spinner.setVisibility(3);
 		    			break;
@@ -127,17 +151,24 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_levertext.setVisibility(3);
 		    			//param_leverpoint.setVisibility(3);
 		    			param_lever.setVisibility(3);
+		    			mSeekBar.setVisibility(3);
+		    			mProgressText.setVisibility(3);
+		    			param_precisiontext.setVisibility(3);
+		    	        param_precision_moins.setVisibility(3);
+		    	        param_precision_valeur.setVisibility(3);
+		    	        param_precision_plus.setVisibility(3);
+		    			param_precisiontext2.setVisibility(3);
 		    			param_couchertext.setVisibility(3);
 		    			//param_coucherpoint.setVisibility(3);
 		    			param_coucher.setVisibility(3);
 	    				jour = 21;
 	    				mois = 12;
-		    			param_lever.setText("8:00");
+		    			param_lever.setText("08:00");
 		    			param_coucher.setText("19:00");
 		    			//param_heure_spinner.setVisibility(3);
 	    				break;
 	    			case 3:
-	    				//ƒquinoxes
+	    				//Âƒquinoxes
 	    	    		param_jour_spinner.setSelection(3);
 	        			param_mois_spinner.setSelection(3);
 		    			param_jour_spinner.setVisibility(3);
@@ -145,12 +176,19 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_levertext.setVisibility(3);
 		    			//param_leverpoint.setVisibility(3);
 		    			param_lever.setVisibility(3);
+		    			mSeekBar.setVisibility(3);
+		    			mProgressText.setVisibility(3);
+		    			param_precisiontext.setVisibility(3);
+		    	        param_precision_moins.setVisibility(3);
+		    	        param_precision_valeur.setVisibility(3);
+		    	        param_precision_plus.setVisibility(3);
+		    			param_precisiontext2.setVisibility(3);
 		    			param_couchertext.setVisibility(3);
 		    			//param_coucherpoint.setVisibility(3);
 		    			param_coucher.setVisibility(3);
 		    			jour = 21;
 		    			mois = 3;
-		    			param_lever.setText("8:00");
+		    			param_lever.setText("08:00");
 		    			param_coucher.setText("19:00");
 		    			//param_heure_spinner.setVisibility(3);
 		    			break;
@@ -186,6 +224,13 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     	    		param_levertext.setVisibility(4);
     	    		//param_leverpoint.setVisibility(4);
         			param_lever.setVisibility(4);
+	    			mSeekBar.setVisibility(4);
+	    			mProgressText.setVisibility(4);
+	    			param_precisiontext.setVisibility(4);
+	    	        param_precision_moins.setVisibility(4);
+	    	        param_precision_valeur.setVisibility(4);
+	    	        param_precision_plus.setVisibility(4);
+	    			param_precisiontext2.setVisibility(4);
         			param_couchertext.setVisibility(4);
         			//param_coucherpoint.setVisibility(4);
         			param_coucher.setVisibility(4);
@@ -249,6 +294,13 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         	//@SuppressWarnings("unchecked")
 	    	public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
     			param_levertext.setVisibility(4);
+    			mSeekBar.setVisibility(4);
+    			mProgressText.setVisibility(4);
+    			param_precisiontext.setVisibility(4);
+    	        param_precision_moins.setVisibility(4);
+    	        param_precision_valeur.setVisibility(4);
+    	        param_precision_plus.setVisibility(4);
+    			param_precisiontext2.setVisibility(4);
     			//param_leverpoint.setVisibility(4);
     			param_lever.setVisibility(4);
     			param_couchertext.setVisibility(4);
@@ -264,6 +316,13 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    			param_levertext.setVisibility(3);
 	    			//param_leverpoint.setVisibility(3);
 	    			param_lever.setVisibility(3);
+	    			mSeekBar.setVisibility(3);
+	    			mProgressText.setVisibility(3);
+	    			param_precisiontext.setVisibility(3);
+	    	        param_precision_moins.setVisibility(3);
+	    	        param_precision_valeur.setVisibility(3);
+	    	        param_precision_plus.setVisibility(3);
+	    			param_precisiontext2.setVisibility(3);
 	    			param_couchertext.setVisibility(3);
 	    			//param_coucherpoint.setVisibility(3);
 	    			param_coucher.setVisibility(3);
@@ -320,14 +379,20 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    mSeekBar = (SeekBar)findViewById(R.id.seek);
         mSeekBar.setOnSeekBarChangeListener(this);
         mProgressText = (TextView)findViewById(R.id.progress);
+        mSeekBar.setVisibility(4);
     }
 
+
+    
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
         int heu = heureLever-1;
         int nbMorceaux = heureCoucher - heureLever;
         int tailleMorceau = (int) (100.0 / nbMorceaux);
         int marche = tailleMorceau;
         boolean arretboucle = false;
+
+        final TextView param_precisiontext2 = (TextView)findViewById(R.id.param_precisiontext2);
+        param_precisiontext2.setVisibility(4);
         
         while(!arretboucle){
 	        if(progress < marche) {
@@ -339,8 +404,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	        }
         }
         
-        
-    	mProgressText.setText("" + heu + ":00."/*+"=" + fromTouch*/);
+    	mProgressText.setText("" + heu + ":00"/*+"=" + fromTouch*/);
     }
 
     public void onStartTrackingTouch(SeekBar seekBar) {
