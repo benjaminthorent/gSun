@@ -17,6 +17,9 @@
 	
 	<string name="param_titre">Paramétrage</string>
 	
+	<string name="param_retour">Back</string>
+	<string name="param_TrouverSoleil">Find the Sun!</string>
+	
 	<string-array name="param_typedate_array">
 		<item>Date ?</item>
 		<item>Solstice d"'"été</item>

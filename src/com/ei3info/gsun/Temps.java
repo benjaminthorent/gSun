@@ -6,11 +6,11 @@ public class Temps {
 	public int mois;
 	public int heure;
 	
-	public Temps(int jour, int mois, int heure) {
+	public Temps(int jour, int mois) {
 		super();
 		this.jour = jour;
 		this.mois = mois;
-		this.heure = heure;
+		this.heure = 0;
 	}
 
 	public int getJour() {

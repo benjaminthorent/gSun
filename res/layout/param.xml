@@ -140,29 +140,15 @@
 			android:textColor="@color/texte"
 	    />
     
-		
-		
-		
-		
- 	
-	 	
-		
-	
- 		
-	 	
- 	
 	
 		
-		
-		
-	
 	<RelativeLayout
 		android:id="@+id/precision"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/seek"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="10px"
+		android:layout_marginTop="30px"
 	>
 		<TextView
 			android:id="@+id/param_precisiontext"
@@ -210,6 +196,26 @@
 	</RelativeLayout>
 	
 
-	
+		 <Button
+ 			android:id="@+id/param_TrouverSoleil"
+ 			android:layout_width="wrap_content"
+ 			android:layout_height="wrap_content"
+ 			android:layout_gravity="center"
+ 			android:text="@string/param_TrouverSoleil"
+ 			android:layout_marginTop="350px"
+			android:layout_centerHorizontal="true"
+			android:visibility="invisible"
+ 		/>
+
+		 <Button
+ 			android:id="@+id/param_retour"
+ 			android:layout_width="wrap_content"
+ 			android:layout_height="wrap_content"
+ 			android:layout_gravity="center"
+ 			android:text="@string/param_retour"
+			 android:layout_toRightOf="@id/param_TrouverSoleil"
+			 android:layout_alignBaseline="@id/param_TrouverSoleil"
+ 		/>
+		
 	
 </RelativeLayout>

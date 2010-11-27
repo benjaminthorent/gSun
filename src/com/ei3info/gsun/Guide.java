@@ -1,6 +1,6 @@
 package com.ei3info.gsun;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.util.List;
 
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
+//import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 

@@ -1,16 +1,13 @@
 package com.ei3info.gsun;
 
-
-
 import android.app.Activity;
-//import android.content.Intent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-//import android.view.View.OnClickListener;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-//import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -20,8 +17,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	SeekBar mSeekBar;
     TextView mProgressText;
 	
-	protected int jour;
-	protected int mois;
+	
 	protected int compteur = 0;
 	protected int heureLever = 7;
 	protected int heureCoucher = 20;
@@ -72,22 +68,35 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         final Button param_precision_valeur = (Button)findViewById(R.id.param_precision_valeur);
         final Button param_precision_plus = (Button)findViewById(R.id.param_precision_plus);
         
+        final Button param_retour = (Button)findViewById(R.id.param_retour);
+        final Button param_TrouverSoleil = (Button)findViewById(R.id.param_TrouverSoleil);
+        final Temps temps = new Temps(1,1);
         
+        // A modifier: recueillir les données du GPS
+        final PositionUtilisateur posUtilisateur = new PositionUtilisateur(5.0,4.0);
+       
+        final Calculs calcul = new Calculs(posUtilisateur,temps);
         
-        //Retour  l'accueil
-        /*OnClickListener onClickLister = new OnClickListener() {
-	 
-	    	@Override
-	    	public void onClick(View v){
-	    		if (v.getId() == R.id.param_retour) {
-		    		Intent intent = new Intent(Param.this, gSun.class);
-					startActivity(intent);
-		    		finish();
-	    		}
-	    	}	
-	    };
-	    
-	    param_retour.setOnClickListener(onClickLister);*/
+        OnClickListener onClickLister = new OnClickListener() {
+            public void onClick(View v){
+            	switch(v.getId()){
+            	case R.id.param_retour:
+            		Intent intent = new Intent(Param.this, gSun.class);
+        			startActivity(intent);
+            		finish();
+            		break;
+            	case R.id.param_TrouverSoleil:
+            		Intent intent2 = new Intent(Param.this, EcranRecherche.class);
+        			startActivity(intent2);
+        			finish();
+            		break;
+            	}
+            }
+        };
+      //on affecte aux Button l'�couteur d'�v�nement
+       param_retour.setOnClickListener(onClickLister);
+       param_TrouverSoleil.setOnClickListener(onClickLister);
+        
 	
 	    
 	    
@@ -115,9 +124,10 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_couchertext.setVisibility(4);
 		    			//param_coucherpoint.setVisibility(4);
 		    			param_coucher.setVisibility(4);
+		    			
 	    				break;
 	    			case 1:
-	    				//Solstice d't
+	    				//Solstice d'ÂŽtÂŽ
 	    	    		param_jour_spinner.setSelection(3);
 	        			param_mois_spinner.setSelection(6);
 		    			param_jour_spinner.setVisibility(3);
@@ -136,10 +146,12 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			//param_coucherpoint.setVisibility(3);
 		    			param_coucher.setVisibility(3);
 		    			
-		    			jour = 21;
-		    			mois = 6;
+		    			temps.setJour(21);
+		    			temps.setMois(6);
+		    			
 		    			param_lever.setText("08:00");
 		    			param_coucher.setText("19:00");
+		    			param_TrouverSoleil.setVisibility(3);
 		    			//param_heure_spinner.setVisibility(3);
 		    			break;
 	    			case 2:	
@@ -161,14 +173,18 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_couchertext.setVisibility(3);
 		    			//param_coucherpoint.setVisibility(3);
 		    			param_coucher.setVisibility(3);
-	    				jour = 21;
-	    				mois = 12;
-		    			param_lever.setText("08:00");
-		    			param_coucher.setText("19:00");
+
+		    			temps.setJour(21);
+		    			temps.setMois(12);
+	    				heureLever = (int) calcul.getHeureLever();
+	    				heureCoucher = (int) calcul.getHeureCoucher();
+		    			param_lever.setText(Integer.toString(heureLever) + ":00");
+		    			param_coucher.setText(Integer.toString(heureCoucher) + ":00");
+		    			param_TrouverSoleil.setVisibility(3);
 		    			//param_heure_spinner.setVisibility(3);
 	    				break;
 	    			case 3:
-	    				//quinoxes
+	    				//Âƒquinoxes
 	    	    		param_jour_spinner.setSelection(3);
 	        			param_mois_spinner.setSelection(3);
 		    			param_jour_spinner.setVisibility(3);
@@ -186,10 +202,13 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    			param_couchertext.setVisibility(3);
 		    			//param_coucherpoint.setVisibility(3);
 		    			param_coucher.setVisibility(3);
-		    			jour = 21;
-		    			mois = 3;
-		    			param_lever.setText("08:00");
-		    			param_coucher.setText("19:00");
+		    			temps.setJour(21);
+		    			temps.setMois(03);
+	    				heureLever = (int) calcul.getHeureLever();
+	    				heureCoucher = (int) calcul.getHeureCoucher();
+		    			param_lever.setText(Integer.toString(heureLever) + ":00");
+		    			param_coucher.setText(Integer.toString(heureCoucher) + ":00");
+		    			param_TrouverSoleil.setVisibility(3);
 		    			//param_heure_spinner.setVisibility(3);
 		    			break;
 	    			case 4:	
@@ -249,17 +268,17 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    			param_mois_spinner.setVisibility(4);
 	    			break;
 	    		case 1:
-		    		jour = 1;
+		    		temps.setJour(1);
 		    		param_mois_spinner.setVisibility(3);
 		    		param_typedate_spinner.setSelection(4);
 		    		break;
 	    		case 2:
-	    			jour = 11;
+	    			temps.setJour(11);
 	    			param_mois_spinner.setVisibility(3);
 	    			param_typedate_spinner.setSelection(4);
 	    			break;
 	    		case 3:
-		    		jour = 21;
+	    			temps.setJour(21);
 		    		param_mois_spinner.setVisibility(3);
 		    		switch (param_mois_spinner.getSelectedItemPosition()) {
 		    		case 3:
@@ -312,7 +331,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     			if(position == 0) {
 	    			//param_heure_spinner.setVisibility(4);
 	    		}else {
-		    		mois = (int) parent.getItemIdAtPosition(position);
+		    		temps.setMois((int) parent.getItemIdAtPosition(position));
 	    			param_levertext.setVisibility(3);
 	    			//param_leverpoint.setVisibility(3);
 	    			param_lever.setVisibility(3);
@@ -326,6 +345,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    			param_couchertext.setVisibility(3);
 	    			//param_coucherpoint.setVisibility(3);
 	    			param_coucher.setVisibility(3);
+	    			param_TrouverSoleil.setVisibility(3);
 	    			//param_heure_spinner.setVisibility(3);
 	    		}
 	    		
@@ -370,6 +390,8 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    	public void onNothingSelected (AdapterView<?> parent) {
 	    		
 	    	}
+	    	
+	    	
 	    };
 	    
 	    param_mois_spinner.setOnItemSelectedListener(onItemSelectedListenerPersoMois);
@@ -380,6 +402,9 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         mSeekBar.setOnSeekBarChangeListener(this);
         mProgressText = (TextView)findViewById(R.id.progress);
         mSeekBar.setVisibility(4);
+        param_TrouverSoleil.setVisibility(4);
+        
+        
     }
 
 
@@ -414,5 +439,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     public void onStopTrackingTouch(SeekBar seekBar) {
         //
     }
-	    
+    
+
 }
+

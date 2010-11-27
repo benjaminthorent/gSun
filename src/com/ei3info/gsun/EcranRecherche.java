@@ -1,12 +1,12 @@
 package com.ei3info.gsun;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.util.Vector;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
+//import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
