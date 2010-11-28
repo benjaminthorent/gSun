@@ -12,8 +12,8 @@
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content" 
 		android:text="@string/param_titre"
-		android:textSize="25px"
-		android:layout_marginTop="10px"
+		android:textSize="27px"
+		android:layout_marginTop="20px"
 		android:layout_centerHorizontal="true"
 		android:textColor="#0000FF"
 	/>
@@ -25,7 +25,7 @@
 		android:layout_below="@id/param_titre"
 		android:layout_marginLeft="30px"
 		android:layout_marginRight="30px"
-		android:layout_marginTop="10px"
+		android:layout_marginTop="20px"
  	/>
   
 	<Spinner 
@@ -37,7 +37,7 @@
 		android:layout_marginLeft="150px"
 		android:layout_marginRight="30px"
 		android:visibility="invisible"
-		android:layout_marginTop="10px"
+		android:layout_marginTop="20px"
 	/>
 	    
 	<Spinner 
@@ -49,106 +49,93 @@
 		android:layout_marginLeft="30px"
 		android:layout_marginRight="200px"
 		android:visibility="invisible"
-		android:layout_marginTop="10px"
+		android:layout_marginTop="20px"
 	/>
 	
+	<TextView android:id="@+id/progress"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textSize="22px"
+		android:textColor="@color/texte"
+		android:layout_below="@id/param_jour"
+		android:layout_marginTop="20px"
+		android:layout_centerHorizontal="true"
+		android:visibility="invisible"
+		android:text="Heure à choisir"
+	/>
+
+	<SeekBar android:id="@+id/seek"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="50"
+        android:layout_marginLeft="60px"
+        android:layout_marginRight="60px"
+        android:layout_below="@id/progress"
+    />
+
+	<TextView
+ 		android:id="@+id/param_couchertext"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/param_couchertext"
+ 		android:visibility="invisible"
+ 		android:textSize="15px"
+ 		android:textColor="@color/texte"
+ 		android:gravity="right"
+		android:layout_toRightOf="@id/progress"
+		android:layout_alignBaseline="@id/progress"
+ 		android:layout_margin="5px"
+	/>
 	
-		
-		
-		
-		<TextView
-			android:id="@+id/param_precisiontext2"
-			android:text="@string/param_precisiontext2"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textSize="17px"
-			android:textColor="@color/texte"
-	 		android:layout_below="@id/param_jour"
-	 		android:layout_marginTop="10px"
-			android:layout_centerHorizontal="true"
-		/>
-		
-		<TextView
-	 		android:id="@+id/param_levertext"
-	 		android:layout_width="fill_parent"
-	 		android:layout_height="wrap_content"
-	 		android:text="@string/param_levertext"
-	 		android:visibility="invisible"
-	 		android:textSize="17px"
-	 		android:textColor="@color/texte"
-	 		android:layout_toLeftOf="@id/param_precisiontext2"
-	 		android:layout_alignBaseline="@id/param_precisiontext2"
-	 		android:gravity="left"
-	 		android:layout_margin="5px"
-	 	/>
-	 	
-		<TextView
-	 		android:id="@+id/param_couchertext"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:text="@string/param_couchertext"
-	 		android:visibility="invisible"
-	 		android:textSize="17px"
-	 		android:textColor="@color/texte"
-	 		android:layout_alignBaseline="@id/param_levertext"
-	 		android:layout_toRightOf="@id/param_precisiontext2"
-	 		android:gravity="right"
-	 		android:layout_margin="5px"
-		/>
-		
-		<SeekBar android:id="@+id/seek"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:max="100"
-	        android:progress="50"
-	        android:layout_marginTop="10px"
-	        android:layout_below="@id/param_precisiontext2"
-	        android:layout_marginLeft="60px"
-	        android:layout_marginRight="60px"
-	    />
-		
-		<TextView
-			android:id="@+id/param_lever"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-	 		android:layout_below="@id/param_levertext"
-			android:visibility="invisible"
-			android:textSize="18px"
-			android:textColor="@color/texte"
-			android:layout_alignBaseline="@id/seek"
-		/>
-		
-		
-		<TextView
-			android:id="@+id/param_coucher"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/param_couchertext"
-	 		android:visibility="invisible"
-	 		android:textSize="18px"
-	 		android:textColor="@color/texte"
-		/>
-		
-		
-	    
-	    <TextView android:id="@+id/progress"
-	       	android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_toRightOf="@id/param_precisiontext2"
-	        android:layout_alignBaseline="@id/param_precisiontext2"
-	        android:textSize="18px"
-			android:textColor="@color/texte"
-	    />
+	<TextView
+ 		android:id="@+id/param_levertext"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+ 		android:text="@string/param_levertext"
+ 		android:visibility="invisible"
+ 		android:textSize="15px"
+ 		android:textColor="@color/texte"
+ 		android:gravity="left"
+		android:layout_toLeftOf="@id/progress"
+		android:layout_alignBaseline="@id/progress"
+ 		android:layout_margin="13px"
+	/>
+
+	<TextView
+ 		android:id="@+id/param_lever"
+ 		android:layout_width="fill_parent"
+ 		android:layout_height="wrap_content"
+ 		android:visibility="invisible"
+ 		android:textSize="17px"
+ 		android:textColor="@color/texte"
+ 		android:layout_below="@id/progress"
+ 		android:layout_marginLeft="10px"
+ 		android:layout_marginTop="2px"
+ 	/>
+
+	<TextView
+		android:id="@+id/param_coucher"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+ 		android:visibility="invisible"
+ 		android:textSize="17px"
+ 		android:textColor="@color/texte"
+ 		android:gravity="right"
+ 		android:layout_below="@id/progress"
+ 		android:layout_marginRight="10px"
+ 		android:layout_marginTop="2px"
+	/>
+
+	
     
-	
-		
 	<RelativeLayout
 		android:id="@+id/precision"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/seek"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="30px"
+		android:layout_marginTop="25px"
 	>
 		<TextView
 			android:id="@+id/param_precisiontext"
@@ -174,13 +161,14 @@
 	 	<Button
 	 		style="?android:attr/buttonStyleSmall"
 			android:id="@+id/param_precision_valeur"
-			android:text="bla"
+			android:text=" 2 "
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="18px"
 			android:textColor="#FFFFFF"
 			android:layout_toRightOf="@id/param_precision_moins"
 			android:layout_alignBaseline="@id/param_precisiontext"
+			android:background="@drawable/mybutton"
 		/>
 	 	
 	 	<Button
@@ -195,27 +183,26 @@
 	
 	</RelativeLayout>
 	
+	<Button
+		android:id="@+id/param_TrouverSoleil"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+ 		android:text="@string/param_TrouverSoleil"
+		android:visibility="invisible"	
+		android:background="@drawable/mybutton2"
+		android:layout_marginTop="350px"
+		android:layout_marginLeft="40px"
+ 	/>
 
-		 <Button
- 			android:id="@+id/param_TrouverSoleil"
- 			android:layout_width="wrap_content"
- 			android:layout_height="wrap_content"
- 			android:layout_gravity="center"
- 			android:text="@string/param_TrouverSoleil"
- 			android:layout_marginTop="350px"
-			android:layout_centerHorizontal="true"
-			android:visibility="invisible"
- 		/>
-
-		 <Button
- 			android:id="@+id/param_retour"
- 			android:layout_width="wrap_content"
- 			android:layout_height="wrap_content"
- 			android:layout_gravity="center"
- 			android:text="@string/param_retour"
-			 android:layout_toRightOf="@id/param_TrouverSoleil"
-			 android:layout_alignBaseline="@id/param_TrouverSoleil"
- 		/>
+	<Button
+ 		android:id="@+id/param_retour"
+		android:layout_width="wrap_content"
+ 		android:layout_height="wrap_content"
+ 		android:text="@string/param_retour"
+		android:layout_toRightOf="@id/param_TrouverSoleil"
+		android:layout_alignBottom="@id/param_TrouverSoleil"
+		android:background="@drawable/mybutton2"
+		android:layout_marginLeft="35px"
+ 	/>
 		
-	
 </RelativeLayout>
