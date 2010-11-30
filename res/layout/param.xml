@@ -5,6 +5,7 @@
 	android:layout_height="fill_parent"
 	android:background="@color/background"
 	android:id="@+id/ChoixDateLayout"
+	android:orientation="vertical"
 	>
   
 	<TextView
@@ -127,39 +128,38 @@
  		android:layout_marginTop="2px"
 	/>
 
-	
-    
-	<RelativeLayout
+	<LinearLayout
 		android:id="@+id/precision"
-		android:layout_width="wrap_content"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_below="@id/seek"
+		android:gravity="center_horizontal|center_vertical"
 		android:layout_centerHorizontal="true"
-		android:layout_marginTop="25px"
+		android:layout_marginTop="20px"
+		android:layout_below="@id/seek"
 	>
 		<TextView
+			
 			android:id="@+id/param_precisiontext"
 			android:text="@string/param_precisiontext"
 			android:layout_width="wrap_content"
 			android:layout_height="fill_parent"
 			android:textSize="18px"
 			android:textColor="@color/texte"
+			android:gravity="center"
 		/>
 		
 		<Button
-			style="?android:attr/buttonStyleSmall"
 			android:id="@+id/param_precision_moins"
 		 	android:layout_width="wrap_content"
 		 	android:layout_height="wrap_content"
 		 	android:text=" – "
+			android:textSize="18px"
 	 		android:layout_toRightOf="@id/param_precisiontext"
 			android:layout_alignBaseline="@id/param_precisiontext"
 			android:layout_marginLeft="25px"
-			android:layout_centerHorizontal="true"
 	 	/>
 	 	
 	 	<Button
-	 		style="?android:attr/buttonStyleSmall"
 			android:id="@+id/param_precision_valeur"
 			android:text=" 2 "
 			android:layout_width="wrap_content"
@@ -167,42 +167,48 @@
 			android:textSize="18px"
 			android:textColor="#FFFFFF"
 			android:layout_toRightOf="@id/param_precision_moins"
-			android:layout_alignBaseline="@id/param_precisiontext"
 			android:background="@drawable/mybutton"
 		/>
-	 	
+
 	 	<Button
-	 		style="?android:attr/buttonStyleSmall"
 			android:id="@+id/param_precision_plus"
 		 	android:layout_width="wrap_content"
 		 	android:layout_height="wrap_content"
+			android:textSize="18px"
 		 	android:text=" + "
 	 		android:layout_toRightOf="@id/param_precision_valeur"
 			android:layout_alignBaseline="@id/param_precisiontext"
-	 	/>
-	
-	</RelativeLayout>
-	
-	<Button
-		android:id="@+id/param_TrouverSoleil"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
- 		android:text="@string/param_TrouverSoleil"
-		android:visibility="invisible"	
-		android:background="@drawable/mybutton2"
-		android:layout_marginTop="350px"
-		android:layout_marginLeft="40px"
- 	/>
+	 	/>	
+	</LinearLayout>
 
-	<Button
- 		android:id="@+id/param_retour"
-		android:layout_width="wrap_content"
- 		android:layout_height="wrap_content"
- 		android:text="@string/param_retour"
-		android:layout_toRightOf="@id/param_TrouverSoleil"
-		android:layout_alignBottom="@id/param_TrouverSoleil"
-		android:background="@drawable/mybutton2"
-		android:layout_marginLeft="35px"
- 	/>
+	
+	<RelativeLayout
+		android:id="@+id/param_boutonsbas"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@id/param_precision_valeur"
+		android:gravity="bottom|center"
+		android:layout_margin="10px"
+	>
+		<Button
+			android:id="@+id/param_TrouverSoleil"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+	 		android:text="@string/param_TrouverSoleil"
+			android:visibility="invisible"	
+			android:background="@drawable/mybutton2"
+			android:layout_margin="10px"
+	 	/>
+	 
+		<Button
+	 		android:id="@+id/param_retour"
+			android:layout_width="wrap_content"
+	 		android:layout_height="wrap_content"
+	 		android:text="@string/param_retour"
+			android:background="@drawable/mybutton2"
+			android:layout_toRightOf="@id/param_TrouverSoleil"
+			android:layout_margin="10px"
+	 	/>
+	 </RelativeLayout> 
 		
 </RelativeLayout>
