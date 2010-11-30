@@ -7,7 +7,7 @@
 	
 	<string name="accueil_calcul">Calcul d\'une direction</string>
 	<string name="accueil_mesures">Accès aux mesures</string>
-	<string name="accueil_aide">i</string>
+	<string name="accueil_aide">Infos</string>
 	<color name="ecriture">#F7230C</color>
 	<color name="background">#CCCCFF</color>
 	<color name="texte">#1560DB</color>
@@ -57,6 +57,16 @@
 
     
     <string name="param_precisiontext">Précision ?</string>
+    
+    <!-- aide.xml -->
+	
+	<string name="aide_titre">Aide</string>
+	<string name="aide_retour">"     Retour     "</string>
+	
+	<!-- accesmesures.xml -->
+	
+	<string name="accesmesures_titre">Accès aux mesures</string>
+	<string name="accesmesures_retour">"     Retour     "</string>
 
 
 </resources>

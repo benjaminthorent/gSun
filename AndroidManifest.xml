@@ -13,6 +13,8 @@
         </activity>
         <activity android:name=".Param"></activity>
         <activity android:name=".EcranRecherche"></activity>
+        <activity android:name=".Aide"></activity>
+        <activity android:name=".AccesMesures"></activity>
     </application>
 	<uses-permission android:name="android.permission.CAMERA" />
 </manifest>

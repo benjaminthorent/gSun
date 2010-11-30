@@ -17,6 +17,7 @@ public class gSun extends Activity {
         
 	    Button accueil_calcul =(Button)findViewById(R.id.accueil_calcul);
 	    Button accueil_mesures =(Button)findViewById(R.id.accueil_mesures);
+	    Button accueil_aide =(Button)findViewById(R.id.accueil_aide);
 	
 	     
 	    //On crée un écouteur d'évènement commun au deux Button
@@ -31,8 +32,13 @@ public class gSun extends Activity {
 		    		finish();
 		    		break;
 		    	case R.id.accueil_mesures:
-		    		Intent intent2 = new Intent(gSun.this, EcranRecherche.class);
+		    		Intent intent2 = new Intent(gSun.this, AccesMesures.class);
 					startActivity(intent2);
+					finish();
+		    		break;
+		    	case R.id.accueil_aide:
+		    		Intent intent3 = new Intent(gSun.this, Aide.class);
+					startActivity(intent3);
 					finish();
 		    		break;
 	    	}	
@@ -44,5 +50,6 @@ public class gSun extends Activity {
 	    //on affecte aux Button l'écouteur d'évènement
         accueil_calcul.setOnClickListener(onClickLister);
         accueil_mesures.setOnClickListener(onClickLister);
+        accueil_aide.setOnClickListener(onClickLister);
     }
 }
