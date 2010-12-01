@@ -209,6 +209,7 @@
 			android:layout_toRightOf="@id/param_TrouverSoleil"
 			android:layout_margin="10px"
 	 	/>
+	 	
 	 </RelativeLayout> 
 		
 </RelativeLayout>
