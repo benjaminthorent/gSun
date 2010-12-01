@@ -1,20 +1,12 @@
 package com.ei3info.gsun;
 
+
 public class PositionUtilisateur {
+	public double latitude; // en degrés
+	public double longitude; // en degrés
 	
-	public double latitude;
-	public double longitude;
-	public double fuseau;
-	
-	public double getFuseau() {
-		return fuseau;
-	}
 
-	public void setFuseau(double fuseau) {
-		this.fuseau = fuseau;
-	}
-
-	public PositionUtilisateur(double lat, double lon) {
+	public PositionUtilisateur(double lat, double lon){
 		this.latitude = lat;
 		this.longitude = lon;
 	}
@@ -34,5 +26,7 @@ public class PositionUtilisateur {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
+	
+	
 	
 }

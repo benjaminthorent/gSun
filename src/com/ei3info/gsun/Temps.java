@@ -1,7 +1,6 @@
 package com.ei3info.gsun;
 
 public class Temps {
-	
 	public int jour;
 	public int mois;
 	public int heure;
@@ -37,17 +36,20 @@ public class Temps {
 		this.heure = heure;
 	}
 	
-	public int getQuantiemeAnnee() {
+	public int getQuantiemeAnnee(){
 		float jour_decimal = (float) ((this.mois - 1)*365.25/12 + this.jour);
-		// round renvoie la partie entiere la plus proche
+		// round renvoie la partie entičre la plus proche
 		int jour_entier = Math.round(jour_decimal);
 		return jour_entier;
 	}
 	
-	public double getDeclinaisonSolaire() {
-		double arg = 0.986 * (this.getQuantiemeAnnee() + 284);
+	public double getDeclinaisonSolaire(){
+		double arg = 0.986 * (this.getQuantiemeAnnee() + 284) * Math.PI /180;
 		double delta = 23.45 * Math.sin(arg);
 		return delta;
 	}
+	
+	
+	
 	
 }
