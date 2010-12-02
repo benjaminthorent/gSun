@@ -1,25 +1,24 @@
 package com.ei3info.gsun;
 
-//import java.io.IOException;
 import java.util.Vector;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
-//import android.net.Uri;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-//import android.widget.Toast;
+import android.widget.Toast;
 
 public class EcranRecherche extends Activity implements OrientationListener{
 	 
 	private Preview mPreview;
 	private Guide mGuide;
 	private Bouton mBouton;
+	private Bouton mBouton2;
 	public static Vector<MediaPlayer> mMediaPlayer;
 	 	
 	 	@Override
@@ -31,43 +30,51 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 	        final FrameLayout frameLayout = new FrameLayout(this);
-	        /*
+	        
 	        //Mediaplayer
-	        mMediaPlayer = new Vector(0);
+	        mMediaPlayer = new Vector<MediaPlayer>(0);
 	        	//son 1
             mMediaPlayer.add(new MediaPlayer());
             Uri musicfile = Uri.parse("android.resource://" +
-                    getPackageName() + "/" + R.raw.test);
+                    getPackageName() + "/" + R.raw.bas);
             mMediaPlayer.get(0).reset();
             try {
                 mMediaPlayer.get(0).setDataSource(getApplicationContext(), musicfile);
+                mMediaPlayer.get(0).setLooping(true);
                 mMediaPlayer.get(0).prepare();
-           } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-           } catch (SecurityException e) {
-                e.printStackTrace();
-           } catch (IllegalStateException e) {
-                e.printStackTrace();
-           } catch (IOException e) {
-                e.printStackTrace();
+                mMediaPlayer.get(1).start();
+                mMediaPlayer.get(1).pause();
+           } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
            }
             	//son 2
             mMediaPlayer.add(new MediaPlayer());
             Uri musicfile2 = Uri.parse("android.resource://" +
-                    getPackageName() + "/" + R.raw.test2);
+                    getPackageName() + "/" + R.raw.haut);
             mMediaPlayer.get(1).reset();
             try {
                 mMediaPlayer.get(1).setDataSource(getApplicationContext(), musicfile2);
+                mMediaPlayer.get(1).setLooping(true);
                 mMediaPlayer.get(1).prepare();
-           } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-           } catch (SecurityException e) {
-                e.printStackTrace();
-           } catch (IllegalStateException e) {
-                e.printStackTrace();
-           } catch (IOException e) {
-                e.printStackTrace();
-           }*/
+                mMediaPlayer.get(1).start();
+                mMediaPlayer.get(1).pause();
+            } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
+          //son 3
+            mMediaPlayer.add(new MediaPlayer());
+            Uri musicfile3 = Uri.parse("android.resource://" +
+                    getPackageName() + "/" + R.raw.soleil);
+            mMediaPlayer.get(2).reset();
+            try {
+                mMediaPlayer.get(2).setDataSource(getApplicationContext(), musicfile3);
+                mMediaPlayer.get(2).setLooping(true);
+                mMediaPlayer.get(2).prepare();
+                mMediaPlayer.get(2).start();
+                mMediaPlayer.get(2).pause();
+            } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
             
 	        // Initialisation des differents elements de l'affichage
 	        mPreview = new Preview(this);
@@ -76,11 +83,14 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        //Fin Capteur
 	        
 	        mBouton = new Bouton(this,"Retour");
-	       
+	        //mBouton2 = new Bouton(this,"Photo");
 	        mBouton.setOnClickListener(
 	        	new OnClickListener() {
 	    	        @Override
 	    		    public void onClick(View v){
+	    	        	mMediaPlayer.get(0).stop();
+	    	        	mMediaPlayer.get(1).stop();
+	    	        	mMediaPlayer.get(2).stop();
 	    	        	Intent intent = new Intent(EcranRecherche.this, gSun.class);
 	    				startActivity(intent);
 	    				finish();
@@ -88,9 +98,28 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        	}
 	        );
 	       
+	    	//TODO Pour Shion, méthodes à décommenter pour la prise de photo
+
+	       /*
+	       mBouton2.setOnClickListener(
+		        	new OnClickListener() {
+		    	        @Override
+		    		    public void onClick(View v){
+		    	        	//mCamera.takePicture(null, mPictureCallback, mPictureCallback);
+		    	        	Toast.makeText(null, "Le petit oiseau va sortir !", 1000).show();
+		    	        	//mPreview.takePicture();
+		    	        	//Toast.makeText(null, "Photo prise !", 1000).show();
+		    	        }
+		        	}
+		   ); */
+		    
+	        
+	       
 	        frameLayout.addView(mPreview);
 	        frameLayout.addView(mGuide);
 	        frameLayout.addView(mBouton);
+	    	//TODO Pour Shion, méthodes à décommenter pour la prise de photo
+	        //frameLayout.addView(mBouton2);
 	    	
 	        
 	    	setContentView(frameLayout);
@@ -132,4 +161,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
         public void Ok() {  
             //Toast.makeText(this, "Well done !", 1000).show();  
         }
+
 }
+
+

@@ -1,8 +1,6 @@
 package com.ei3info.gsun;
 
-//import java.io.IOException;
 import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,7 +11,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-//import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -266,8 +263,8 @@ public class Guide extends View {
 	            roll = event.values[2];        // roll  
 	   
 	            //TODO A lier à la classe qui récupère les position objectif
-	            int azimuth_objectif = 180;
-	            int pitch_objectif = -30;
+	            int azimuth_objectif = 100;
+	            int pitch_objectif = -100;
 	            int precision_azimuth = 20;
 	            int precision_pitch = 20;
 	            
@@ -318,8 +315,9 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=0;
-	                        //EcranRecherche.mMediaPlayer.get(0).stop();
-	                        //EcranRecherche.mMediaPlayer.get(1).stop();
+	                        EcranRecherche.mMediaPlayer.get(0).pause();
+	                        EcranRecherche.mMediaPlayer.get(1).pause();
+	                        EcranRecherche.mMediaPlayer.get(2).pause();
 	                        break;  
 	                    case RIGHT :   
 	                        listener.GoRight(); 
@@ -328,8 +326,9 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=0;
-	                        //EcranRecherche.mMediaPlayer.get(0).stop();
-	                        //EcranRecherche.mMediaPlayer.get(1).stop();
+	                        EcranRecherche.mMediaPlayer.get(0).pause();
+	                        EcranRecherche.mMediaPlayer.get(1).pause();
+	                        EcranRecherche.mMediaPlayer.get(2).pause();
 	                        break;  
 	                    case UP:   
 	                        listener.GoUp(); 
@@ -338,9 +337,9 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=1;
 	                        etat_affichage[4]=0;
-	                        //EcranRecherche.mMediaPlayer.get(0).stop();
-	                        //EcranRecherche.mMediaPlayer.get(1).stop();
-	                        //EcranRecherche.mMediaPlayer.get(0).start();
+	                        EcranRecherche.mMediaPlayer.get(0).start();
+	                        EcranRecherche.mMediaPlayer.get(1).pause();
+	                        EcranRecherche.mMediaPlayer.get(2).pause();
 	                        break;  
 	                    case DOWN:   
 	                        listener.GoDown();
@@ -349,9 +348,9 @@ public class Guide extends View {
 	                        etat_affichage[2]=1;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=0;
-	                        //EcranRecherche.mMediaPlayer.get(0).stop();
-	                        //EcranRecherche.mMediaPlayer.get(1).stop();
-	                        //EcranRecherche.mMediaPlayer.get(1).start();
+	                        EcranRecherche.mMediaPlayer.get(0).pause();
+	                        EcranRecherche.mMediaPlayer.get(1).start();
+	                        EcranRecherche.mMediaPlayer.get(2).pause();
 	                        break; 
 	                    case OK:   
 	                        listener.Ok();
@@ -360,12 +359,13 @@ public class Guide extends View {
 	                        etat_affichage[2]=0;
 	                        etat_affichage[3]=0;
 	                        etat_affichage[4]=1;
-	                        //EcranRecherche.mMediaPlayer.get(0).stop();
-	                        //EcranRecherche.mMediaPlayer.get(1).stop();
+	                        EcranRecherche.mMediaPlayer.get(0).pause();
+	                        EcranRecherche.mMediaPlayer.get(1).pause();
+	                        EcranRecherche.mMediaPlayer.get(2).start();
 	                        break;
 	                }  
 	                oldDirection = currentDirection;  
-	                //Optimized invalidate ?
+	                //TODO Optimized invalidate ?
 	                invalidate();
 	            }
 	   
