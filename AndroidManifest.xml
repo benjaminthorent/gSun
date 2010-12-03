@@ -5,16 +5,25 @@
       android:versionName="1.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".gSun"
+        		  android:screenOrientation="portrait"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Param"></activity>
-        <activity android:name=".EcranRecherche"></activity>
-        <activity android:name=".Aide"></activity>
-        <activity android:name=".AccesMesures"></activity>
+        <activity android:name=".Param"
+        		  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".EcranRecherche"
+        		  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Aide"
+        		  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".AccesMesures"
+        		  android:screenOrientation="portrait">
+        </activity>
     </application>
 	<uses-permission android:name="android.permission.CAMERA" />
 </manifest>

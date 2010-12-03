@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -75,15 +77,30 @@ public class EcranRecherche extends Activity implements OrientationListener{
             } catch (Exception e) {
                 System.out.println("Erreur survenue : " + e);
            }
+          //son 3
+            mMediaPlayer.add(new MediaPlayer());
+            Uri musicfile4 = Uri.parse("android.resource://" +
+                    getPackageName() + "/" + R.raw.bas);
+            mMediaPlayer.get(3).reset();
+            try {
+                mMediaPlayer.get(3).setDataSource(getApplicationContext(), musicfile4);
+                mMediaPlayer.get(3).setLooping(true);
+                mMediaPlayer.get(3).prepare();
+                mMediaPlayer.get(3).start();
+                mMediaPlayer.get(3).pause();
+            } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
             
 	        // Initialisation des differents elements de l'affichage
 	        mPreview = new Preview(this);
 	        mGuide = new Guide(this);
 	        mGuide.startListening(this, this);
 	        //Fin Capteur
-	        
-	        mBouton = new Bouton(this,"Retour");
-	        //mBouton2 = new Bouton(this,"Photo");
+	        Display ecran = getWindowManager().getDefaultDisplay(); 
+	        int largeur= ecran.getWidth();
+	        mBouton = new Bouton(this,"Retour",15,largeur/2+20);
+	        mBouton2 = new Bouton(this,"Photo",15,30);
 	        mBouton.setOnClickListener(
 	        	new OnClickListener() {
 	    	        @Override
@@ -91,6 +108,11 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	    	        	mMediaPlayer.get(0).stop();
 	    	        	mMediaPlayer.get(1).stop();
 	    	        	mMediaPlayer.get(2).stop();
+	    	        	mMediaPlayer.get(3).stop();
+	    	        	//mMediaPlayer.get(0).release();
+	    	        	//mMediaPlayer.get(1).release();
+	    	        	//mMediaPlayer.get(2).release();
+	    	        	//mMediaPlayer.get(3).release();
 	    	        	Intent intent = new Intent(EcranRecherche.this, gSun.class);
 	    				startActivity(intent);
 	    				finish();
@@ -98,29 +120,23 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        	}
 	        );
 	       
-	    	//TODO Pour Shion, méthodes à décommenter pour la prise de photo
-
-	       /*
+	       //TODO Pour Shion, méthodes à décommenter pour la prise de photo
 	       mBouton2.setOnClickListener(
 		        	new OnClickListener() {
 		    	        @Override
 		    		    public void onClick(View v){
 		    	        	//mCamera.takePicture(null, mPictureCallback, mPictureCallback);
-		    	        	Toast.makeText(null, "Le petit oiseau va sortir !", 1000).show();
+		    	        	//Toast.makeText(null, "Le petit oiseau va sortir !", 1000).show();
 		    	        	//mPreview.takePicture();
 		    	        	//Toast.makeText(null, "Photo prise !", 1000).show();
 		    	        }
 		        	}
-		   ); */
-		    
-	        
+		   );      
 	       
 	        frameLayout.addView(mPreview);
 	        frameLayout.addView(mGuide);
 	        frameLayout.addView(mBouton);
-	    	//TODO Pour Shion, méthodes à décommenter pour la prise de photo
-	        //frameLayout.addView(mBouton2);
-	    	
+	        frameLayout.addView(mBouton2);   	
 	        
 	    	setContentView(frameLayout);
 	    	

@@ -62,12 +62,9 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         final Button param_retour = (Button)findViewById(R.id.param_retour);
         final Button param_TrouverSoleil = (Button)findViewById(R.id.param_TrouverSoleil);
         
-        final Temps temps = new Temps(1,1);
-        
-        // A modifier : recueillir les donnees du GPS
-        final PositionUtilisateur posUtilisateur = new PositionUtilisateur(5.0,4.0);
-       
-        final Calculs calcul = new Calculs(posUtilisateur,temps);
+        gSun.temps = new Temps(1,1);
+        gSun.posUtilisateur = new PositionUtilisateur(5.0,4.0);
+        gSun.calcul = new Calculs(gSun.posUtilisateur,gSun.temps);
         
         
         OnClickListener onClickLister = new OnClickListener() {
@@ -129,8 +126,8 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 			    			param_couchertext.setVisibility(3);
 			    			param_coucher.setVisibility(3);
 			    			
-			    			temps.setJour(21);
-			    			temps.setMois(6);
+			    			gSun.temps.setJour(21);
+			    			gSun.temps.setMois(6);
 			    			
 			    			heureLever = 6;
 			    			heureCoucher = 23;
@@ -161,10 +158,10 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 			    			param_couchertext.setVisibility(3);
 			    			param_coucher.setVisibility(3);
 	
-			    			temps.setJour(21);
-			    			temps.setMois(12);
-		    				heureLever = (int) calcul.getHeureLever();
-		    				heureCoucher = (int) calcul.getHeureCoucher();
+			    			gSun.temps.setJour(21);
+			    			gSun.temps.setMois(12);
+		    				heureLever = (int) gSun.calcul.getHeureLever();
+		    				heureCoucher = (int) gSun.calcul.getHeureCoucher();
 		    				
 		    				if (heureLever<10) {
 			    				param_lever.setText("0" + Integer.toString(heureLever) + ":00");
@@ -192,11 +189,11 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 			    			param_couchertext.setVisibility(3);
 			    			param_coucher.setVisibility(3);
 			    			
-			    			temps.setJour(21);
-			    			temps.setMois(03);
+			    			gSun.temps.setJour(21);
+			    			gSun.temps.setMois(03);
 		    				
-			    			heureLever = (int) calcul.getHeureLever();
-		    				heureCoucher = (int) calcul.getHeureCoucher();
+			    			heureLever = (int) gSun.calcul.getHeureLever();
+		    				heureCoucher = (int) gSun.calcul.getHeureCoucher();
 			    			
 		    				if (heureLever<10){
 		    					param_lever.setText("0" + Integer.toString(heureLever) + ":00");
@@ -248,17 +245,17 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    			param_mois_spinner.setVisibility(4);
 	    			break;
 	    		case 1:
-		    		temps.setJour(1);
+		    		gSun.temps.setJour(1);
 		    		param_mois_spinner.setVisibility(3);
 		    		param_typedate_spinner.setSelection(4);
 		    		break;
 	    		case 2:
-	    			temps.setJour(11);
+	    			gSun.temps.setJour(11);
 	    			param_mois_spinner.setVisibility(3);
 	    			param_typedate_spinner.setSelection(4);
 	    			break;
 	    		case 3:
-	    			temps.setJour(21);
+	    			gSun.temps.setJour(21);
 		    		param_mois_spinner.setVisibility(3);
 		    		switch (param_mois_spinner.getSelectedItemPosition()) {
 		    		case 3:
@@ -307,7 +304,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     			if(position == 0) {
 	    			//param_heure_spinner.setVisibility(4);
 	    		}else {
-		    		temps.setMois((int) parent.getItemIdAtPosition(position));
+		    		gSun.temps.setMois((int) parent.getItemIdAtPosition(position));
 	    			param_levertext.setVisibility(3);
 	    			param_lever.setVisibility(3);
 	    			mSeekBar.setVisibility(3);

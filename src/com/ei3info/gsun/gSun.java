@@ -10,6 +10,10 @@ import android.view.View.OnClickListener;
 public class gSun extends Activity {
     /** Called when the activity is first created. */
 	
+	protected static Temps temps;
+    protected static PositionUtilisateur posUtilisateur;
+    protected static Calculs calcul;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

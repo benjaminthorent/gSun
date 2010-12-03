@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 public class Guide extends View {
 	
@@ -60,6 +61,12 @@ public class Guide extends View {
     
     private static boolean running = false;
     
+    private int azimuth_objectif = (int) gSun.calcul.getAzimut();
+    private int pitch_objectif = (int) gSun.calcul.getHauteurSolaire();
+    
+    /*private boolean temps_ok;
+    private float temps;
+    private long start;*/
 
     /** Direction to give to the phone to reach the aim */  
     enum Direction {  
@@ -94,12 +101,18 @@ public class Guide extends View {
 	    Soleil = prepareBitmap(getResources().getDrawable(R.drawable.soleil), Soleill,
 	    		Soleilh);
 	    
-	   
+	    azimuth_objectif = (int) gSun.calcul.getAzimut();
+	    pitch_objectif = (int) gSun.calcul.getHauteurSolaire();
+	    
+	    Toast.makeText(getContext(), azimuth_objectif + " et " + pitch_objectif, 1000).show();
+	    
 	    texte_guide = new String[4];
-	    texte_guide[0]="gauche";
-	    texte_guide[1]="droite";
-	    texte_guide[2]="haut";
-	    texte_guide[3]="bas";
+	    texte_guide[0]="";
+	    texte_guide[1]="";
+	    texte_guide[2]="";
+	    texte_guide[3]="";
+	    
+	    //temps_ok=false;
 		
 	}
 	
@@ -125,6 +138,7 @@ public class Guide extends View {
 	 
 	    @Override
 	    protected void onDraw(Canvas canvas) {
+	    	
 		    FGX = 5;
 		    FGY = canvas.getHeight()-flechesGDh-10;
 		    FDX = canvas.getWidth()-flechesGDl-5;
@@ -167,42 +181,7 @@ public class Guide extends View {
 	    }
 	 
 	   
-	  /*@Override
-	   public boolean onTouchEvent(MotionEvent event) {
-	
-	       final int action = event.getAction();
-	       final float x = event.getX();
-	       final float y = event.getY();
-	       
-	
-	       switch (action) {
-	           case MotionEvent.ACTION_DOWN:
-	               if (x >= 0 && x <= 300 && y >= 0
-	                       && y <= 300) {
-	               	log("Start moving");
-	                  return true;
-	               }
-	               break;
-	
-	           case MotionEvent.ACTION_MOVE:
-	           	
-	           	etat_affichage[0] = 1;
-	           	
-	               optimizedInvalidate();
-	               
-	               return true;
-	
-	           case MotionEvent.ACTION_UP:
-	           	log("Stop moving");
-	           	etat_affichage[0] = 0;
-	               log("Maj");
-	               invalidate();
-	               return true;
-	       }
-	       return super.onTouchEvent(event);
-	   }
-	   
-	   
+	 
 	   
 	  
 	    /** 
@@ -218,8 +197,8 @@ public class Guide extends View {
 	    public void stopListening() {  
 	        running = false;  
 	        try {  
-	            if (sensorManager != null && sensorEventListener != null) {  
-	                sensorManager.unregisterListener(sensorEventListener);  
+	            if (sensorManager != null && getSensorEventListener() != null) {  
+	                sensorManager.unregisterListener(getSensorEventListener());  
 	            }  
 	        } catch (Exception e) {}  
 	    }  
@@ -236,7 +215,7 @@ public class Guide extends View {
 	        if (sensors.size() > 0) {  
 	            sensor = sensors.get(0);  
 	            running = sensorManager.registerListener(  
-	                    sensorEventListener, sensor,   
+	                    getSensorEventListener(), sensor,   
 	                    SensorManager.SENSOR_DELAY_FASTEST);  
 	            listener = orientationListener;  
 	        }  
@@ -262,45 +241,58 @@ public class Guide extends View {
 	            pitch = event.values[1];     // pitch  
 	            roll = event.values[2];        // roll  
 	   
-	            //TODO A lier ˆ la classe qui rŽcupre les position objectif
-	            int azimuth_objectif = 100;
-	            int pitch_objectif = -100;
-	            int precision_azimuth = 20;
-	            int precision_pitch = 20;
-	            
-	            /*if (azimuth > azimuth_objectif+precision_azimuth) {  
-	                // top side up  
-	                currentDirection = Direction.LEFT;  
-	            } else if (azimuth < azimuth_objectif-precision_azimuth) {  
-	                // bottom side up  
-	                currentDirection = Direction.RIGHT;  
-	            } else if (roll > 45) {  
-	                // right side up  
-	                //currentDirection = Direction.UP;  
-	            } else if (roll < -45) {  
-	                // left side up  
-	                //currentDirection = Direction.DOWN;  
-	            }  else if(azimuth<=azimuth_objectif+precision_azimuth && azimuth>=azimuth_objectif-precision_azimuth) {
-	                // left side up
-	            	currentDirection = Direction.OK;
-	            }*/
+	            //TODO A lier ˆ la prŽcision obtenue dans Param
+	            int precision_azimuth = 10;
+	            int precision_pitch = 10;
 	            
 	            if (azimuth > azimuth_objectif+precision_azimuth) {  
 	                // GoLeft  
+	            	texte_guide[0]=String.valueOf((int)(Math.abs(azimuth-azimuth_objectif)));
+                    texte_guide[1]="";
+                    texte_guide[2]="";
+                    texte_guide[3]="";
+                    //temps_ok=false;
 	                currentDirection = Direction.LEFT;  
 	            } else if (azimuth < azimuth_objectif-precision_azimuth) {  
 	                // GoRight 
+	            	texte_guide[0]="";
+                    texte_guide[1]=String.valueOf((int)(Math.abs(azimuth-azimuth_objectif)));
+                    texte_guide[2]="";
+                    texte_guide[3]="";
+                    //temps_ok=false;
 	                currentDirection = Direction.RIGHT;  
 	            } else {  
 	            	// Azimuth OK
 	            	if (pitch > pitch_objectif+precision_pitch) {  
 	            		// GoDown
+	            		texte_guide[0]="";
+                        texte_guide[1]="";
+                        texte_guide[2]=String.valueOf((int)(Math.abs(pitch-pitch_objectif)));
+                        texte_guide[3]="";
+                        //temps_ok=false;
 		                currentDirection = Direction.DOWN;
 	            	} else if (pitch < pitch_objectif-precision_pitch) {
 	            		// GoUp 
+	            		texte_guide[0]="";
+                        texte_guide[1]="";
+                        texte_guide[2]="";
+                        texte_guide[3]=String.valueOf((int)(Math.abs(pitch-pitch_objectif)));
+                        //temps_ok=false;
 		                currentDirection = Direction.UP;
 	            	} else {
 	            		// Objective reached !
+	            		texte_guide[0]="";
+                        texte_guide[1]="";
+                        texte_guide[2]="";
+                        texte_guide[3]="";
+                        /*if(!temps_ok){
+                        	temps_ok=true;
+                        	start = System.currentTimeMillis();
+                        }else{
+                        	if(Math.abs(System.currentTimeMillis()-start)>5000){
+                        		Toast.makeText(getContext(), "Test ok !", 1000);
+                        	}
+                        }*/
 		            	currentDirection = Direction.OK;
 	            	}
 	            } 
@@ -318,6 +310,7 @@ public class Guide extends View {
 	                        EcranRecherche.mMediaPlayer.get(0).pause();
 	                        EcranRecherche.mMediaPlayer.get(1).pause();
 	                        EcranRecherche.mMediaPlayer.get(2).pause();
+	                        EcranRecherche.mMediaPlayer.get(3).pause();
 	                        break;  
 	                    case RIGHT :   
 	                        listener.GoRight(); 
@@ -329,6 +322,7 @@ public class Guide extends View {
 	                        EcranRecherche.mMediaPlayer.get(0).pause();
 	                        EcranRecherche.mMediaPlayer.get(1).pause();
 	                        EcranRecherche.mMediaPlayer.get(2).pause();
+	                        EcranRecherche.mMediaPlayer.get(3).pause();
 	                        break;  
 	                    case UP:   
 	                        listener.GoUp(); 
@@ -340,6 +334,7 @@ public class Guide extends View {
 	                        EcranRecherche.mMediaPlayer.get(0).start();
 	                        EcranRecherche.mMediaPlayer.get(1).pause();
 	                        EcranRecherche.mMediaPlayer.get(2).pause();
+	                        EcranRecherche.mMediaPlayer.get(3).start();
 	                        break;  
 	                    case DOWN:   
 	                        listener.GoDown();
@@ -351,6 +346,7 @@ public class Guide extends View {
 	                        EcranRecherche.mMediaPlayer.get(0).pause();
 	                        EcranRecherche.mMediaPlayer.get(1).start();
 	                        EcranRecherche.mMediaPlayer.get(2).pause();
+	                        EcranRecherche.mMediaPlayer.get(3).pause();
 	                        break; 
 	                    case OK:   
 	                        listener.Ok();
@@ -362,35 +358,20 @@ public class Guide extends View {
 	                        EcranRecherche.mMediaPlayer.get(0).pause();
 	                        EcranRecherche.mMediaPlayer.get(1).pause();
 	                        EcranRecherche.mMediaPlayer.get(2).start();
+	                        EcranRecherche.mMediaPlayer.get(3).pause();
 	                        break;
 	                }  
-	                oldDirection = currentDirection;  
-	                //TODO Optimized invalidate ?
-	                invalidate();
+	                oldDirection = currentDirection;
+	                
 	            }
+	            
+	            invalidate();
 	   
 	            // forwards orientation to the OrientationListener  
 	            listener.onOrientationChanged(azimuth, pitch, roll); 
 	        }  
 	   
 	    };  
-
-	    
-	   
-	   
-	  
-	   @SuppressWarnings("unused")
-	   private void optimizedInvalidate() {
-	      
-	       
-	       final int l = (int)FGX;
-	       final int t = (int)FGY;
-	       
-	       final int b = (int)(FGX+flechesGDl);
-	       final int r = (int)(FGY+flechesGDh);
-	      
-	       invalidate(l, t, b, r);
-	   }
 	   
 	   /**
 	    * Utility that displays debug messages.
@@ -403,4 +384,18 @@ public class Guide extends View {
 	           Log.d(LOG_TAG, log);
 	       }
 	   }
+
+	/**
+	 * @param sensorEventListener the sensorEventListener to set
+	 */
+	public void setSensorEventListener(SensorEventListener sensorEventListener) {
+		this.sensorEventListener = sensorEventListener;
+	}
+
+	/**
+	 * @return the sensorEventListener
+	 */
+	public SensorEventListener getSensorEventListener() {
+		return sensorEventListener;
+	}
 }

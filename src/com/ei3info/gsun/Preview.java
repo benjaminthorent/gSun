@@ -3,14 +3,8 @@ package com.ei3info.gsun;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
  
 public class Preview extends SurfaceView implements SurfaceHolder.Callback{
@@ -33,6 +27,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		// to draw.
 		mCamera = Camera.open();
 		try {
+		   mCamera.setDisplayOrientation(90);
 		   mCamera.setPreviewDisplay(holder);
 		} catch (IOException exception) {
 			mCamera.release();
