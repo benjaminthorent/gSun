@@ -3,8 +3,14 @@ package com.ei3info.gsun;
 import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
+import android.os.AsyncTask;
+import android.os.Environment;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
  
 public class Preview extends SurfaceView implements SurfaceHolder.Callback{
@@ -53,7 +59,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	}
 	
 	//TODO Pour Shion, méthodes à décommenter pour la prise de photo
-	/*
+	
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
 			new SavePhotoTask().execute(data);
@@ -66,10 +72,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	}
  	
 	class SavePhotoTask extends AsyncTask<byte[], String, String> {
-		@Override
 		protected String doInBackground(byte[]... jpeg) {
-			File photo=new File(Environment.DIRECTORY_PICTURES,
-													"photo.jpg");
+			File photo=new File(Environment.DIRECTORY_PICTURES,"photo.jpg");
  
 			if (photo.exists()) {
 				photo.delete();
@@ -86,5 +90,5 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 			return(null);
 		}
 	}
-	*/
+	
 }

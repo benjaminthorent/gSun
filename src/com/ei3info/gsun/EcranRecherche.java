@@ -63,10 +63,11 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		        	new OnClickListener() {
 		    	        @Override
 		    		    public void onClick(View v){
-		    	        	//mCamera.takePicture(null, mPictureCallback, mPictureCallback);
-		    	        	//Toast.makeText(null, "Le petit oiseau va sortir !", 1000).show();
-		    	        	//mPreview.takePicture();
-		    	        	//Toast.makeText(null, "Photo prise !", 1000).show();
+		    	        	mPreview.takePicture();
+		    	        	//TODO Enregistrer au bon endroit & RŽaliser traitement image (soleil au centre)
+		    	        	Intent intent2 = new Intent(EcranRecherche.this, gSun.class);
+		    				startActivity(intent2);
+		    				finish();
 		    	        }
 		        	}
 		   );      
