@@ -17,10 +17,6 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	SeekBar mSeekBar;
 	TextView mProgressText;
 	
-	protected int precision=2;
-	protected int precisionMax=5;
-	protected int precisionMin=0;
-
 	protected int compteur=0;
 	protected int heureLever;
 	protected int heureCoucher;
@@ -30,6 +26,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.param);
+
 	
         //Spinner choix type date
 			final Spinner param_typedate_spinner=(Spinner) findViewById(R.id.param_typedate);
@@ -49,24 +46,34 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 			param_typedate_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			param_jour_spinner.setAdapter(param_jour_adapter);
        
-        final TextView param_lever = (TextView)findViewById(R.id.param_lever);
-        final TextView param_coucher = (TextView)findViewById(R.id.param_coucher);
-        final TextView param_levertext = (TextView)findViewById(R.id.param_levertext);
-        final TextView param_couchertext = (TextView)findViewById(R.id.param_couchertext);
-        final TextView param_precisiontext = (TextView)findViewById(R.id.param_precisiontext);
-        
-        final Button param_precision_moins = (Button)findViewById(R.id.param_precision_moins);
-        final Button param_precision_valeur = (Button)findViewById(R.id.param_precision_valeur);
-        final Button param_precision_plus = (Button)findViewById(R.id.param_precision_plus);
-       
-        final Button param_retour = (Button)findViewById(R.id.param_retour);
-        final Button param_TrouverSoleil = (Button)findViewById(R.id.param_TrouverSoleil);
+		//Textes
+	        final TextView param_lever = (TextView)findViewById(R.id.param_lever);
+	        final TextView param_coucher = (TextView)findViewById(R.id.param_coucher);
+	        final TextView param_levertext = (TextView)findViewById(R.id.param_levertext);
+	        final TextView param_couchertext = (TextView)findViewById(R.id.param_couchertext);
+	    
+	    //Boutons
+	        final Button param_precision_moins = (Button)findViewById(R.id.param_precision_moins);
+	        final Button param_precision_valeur = (Button)findViewById(R.id.param_precision_valeur);
+	        final Button param_precision_plus = (Button)findViewById(R.id.param_precision_plus);
+	        final Button param_retour = (Button)findViewById(R.id.param_retour);
+	        final Button param_TrouverSoleil = (Button)findViewById(R.id.param_TrouverSoleil);
+	        final Button param_precisiontext = (Button)findViewById(R.id.param_precisiontext);
         
         gSun.temps = new Temps(1,1);
         gSun.posUtilisateur = new PositionUtilisateur(5.0,4.0);
         gSun.calcul = new Calculs(gSun.posUtilisateur,gSun.temps);
+
+
+		param_precision_valeur.setText(" " + gSun.precision + " ");
+		if (gSun.precision==gSun.precisionMax) {
+			param_precision_plus.setVisibility(4);
+		}
+		if (gSun.precision==gSun.precisionMin) {
+			param_precision_moins.setVisibility(4);
+		}
         
-        
+        //Clics sur les boutons annuler et valider et précision
         OnClickListener onClickLister = new OnClickListener() {
             public void onClick(View v){
             	switch(v.getId()){
@@ -80,15 +87,34 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         			startActivity(intent2);
         			finish();
             		break;
+            	case R.id.param_precisiontext:
+            		if (gSun.precision < gSun.precisionMax && gSun.precision > gSun.precisionMin) {
+            			param_precision_moins.setVisibility(7-param_precision_moins.getVisibility());
+                		param_precision_valeur.setVisibility(7-param_precision_valeur.getVisibility());
+                		param_precision_plus.setVisibility(7-param_precision_plus.getVisibility());
+            		} else if (gSun.precision == gSun.precisionMax) {
+            			param_precision_moins.setVisibility(7-param_precision_moins.getVisibility());
+                		param_precision_valeur.setVisibility(7-param_precision_valeur.getVisibility());
+                		param_precision_plus.setVisibility(4);
+            		} else if (gSun.precision == gSun.precisionMin) {
+            			param_precision_plus.setVisibility(7-param_precision_moins.getVisibility());
+                		param_precision_valeur.setVisibility(7-param_precision_valeur.getVisibility());
+                		param_precision_moins.setVisibility(4);
+            		}
+            		
             	}
             }
         };
         
-        //on affecte aux boutons l'ecouteur d'evenement
+        //On affecte aux boutons l'ecouteur d'evenement
 			param_retour.setOnClickListener(onClickLister);
 			param_TrouverSoleil.setOnClickListener(onClickLister);
-        
-	
+			param_precisiontext.setOnClickListener(onClickLister);
+
+
+
+
+			
 	   //Choix type date
 		    OnItemSelectedListener onItemSelectedListenerPerso = new OnItemSelectedListener() {
 		    	//@Override
@@ -96,119 +122,171 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		    	public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 		    		switch ((int) parent.getItemIdAtPosition(position)) {
 		    			case 0:
-		    				param_jour_spinner.setVisibility(4);
-		    				param_mois_spinner.setVisibility(4);
-			    			param_levertext.setVisibility(4);
-			    			param_lever.setVisibility(4);
-			    			mSeekBar.setVisibility(4);
-			    			mProgressText.setVisibility(4);
-			    			param_precisiontext.setVisibility(4);
-			    	        param_precision_moins.setVisibility(4);
-			    	        param_precision_valeur.setVisibility(4);
-			    	        param_precision_plus.setVisibility(4);
-			    			param_couchertext.setVisibility(4);
-			    			param_coucher.setVisibility(4);
+		    				//On masque les autres champs
+			    				param_jour_spinner.setVisibility(4);
+			    				param_mois_spinner.setVisibility(4);
+				    			param_levertext.setVisibility(4);
+				    			param_lever.setVisibility(4);
+				    			mSeekBar.setVisibility(4);
+				    			mProgressText.setVisibility(4);
+				    			param_precisiontext.setVisibility(4);
+				    	        param_precision_moins.setVisibility(4);
+				    	        param_precision_valeur.setVisibility(4);
+				    	        param_precision_plus.setVisibility(4);
+				    			param_couchertext.setVisibility(4);
+				    			param_coucher.setVisibility(4);
+				    			
+				    		//On mets les champs à 0
+				    			param_jour_spinner.setSelection(0);
+				    			param_mois_spinner.setSelection(0);
+			    			
+				    		break;
+		    			
+		    			case 2: //Solstice d'ete (21 juin)
+		    	    		//On fait apparaitre tous les champs
+				    			param_jour_spinner.setVisibility(3);
+				    			param_mois_spinner.setVisibility(3);
+				    			param_levertext.setVisibility(3);
+				    			param_lever.setVisibility(3);
+				    			mSeekBar.setVisibility(3);
+				    			mProgressText.setVisibility(3);
+				    			param_precisiontext.setVisibility(3);
+				    			param_couchertext.setVisibility(3);
+				    			param_coucher.setVisibility(3);
+				    			param_TrouverSoleil.setVisibility(3);
+			    			
+				    		//On affiche la date : 21 juin
+			    				param_jour_spinner.setSelection(3);
+			        			param_mois_spinner.setSelection(6);
+			        		
+				    		//On communique la date
+				    			gSun.temps.setJour(21);
+				    			gSun.temps.setMois(6);
+			    			
+				    		//Affichage des heures de lever et de coucher (de part et d'autre de la SeekBar)
+				    			heureLever = (int) gSun.calcul.getHeureLever();
+				    			heureCoucher = (int) gSun.calcul.getHeureCoucher();
+				    			
+				    			if (heureLever<10) {
+				    				param_lever.setText("0" + heureLever + ":00");
+				    			} else {
+				    				param_lever.setText("" + heureLever + ":00");
+				    			}
+				    					
+				    			param_coucher.setText(heureCoucher + ":00");
+			    			
 			    			break;
-		    			case 1:
-		    				//Solstice d'ete (21 juin)
-		    	    		param_jour_spinner.setSelection(3);
-		        			param_mois_spinner.setSelection(6);
-			    			param_jour_spinner.setVisibility(3);
-			    			param_mois_spinner.setVisibility(3);
-			    			param_levertext.setVisibility(3);
-			    			param_lever.setVisibility(3);
-			    			mSeekBar.setVisibility(3);
-			    			mProgressText.setVisibility(3);
-			    			param_precisiontext.setVisibility(3);
-			    	        param_precision_moins.setVisibility(3);
-			    	        param_precision_valeur.setVisibility(3);
-			    	        param_precision_plus.setVisibility(3);
-			    			param_couchertext.setVisibility(3);
-			    			param_coucher.setVisibility(3);
-			    			
-			    			gSun.temps.setJour(21);
-			    			gSun.temps.setMois(6);
-			    			
-			    			heureLever = 6;
-			    			heureCoucher = 23;
-			    			
-			    			if (heureLever<10) {
-			    				param_lever.setText("0" + heureLever + ":00");
-			    			} else {
-			    				param_lever.setText("" + heureLever + ":00");
-			    			}
-			    					
-			    			param_coucher.setText(heureCoucher + ":00");
-			    			param_TrouverSoleil.setVisibility(3);
-			    			break;
-		    			case 2:	
-		    				//Solstice d'hiver (21 décembre)
-		    	    		param_jour_spinner.setSelection(3);
-		        			param_mois_spinner.setSelection(12);
-		    				param_jour_spinner.setVisibility(3);
-		    				param_mois_spinner.setVisibility(3);
-			    			param_levertext.setVisibility(3);
-			    			param_lever.setVisibility(3);
-			    			mSeekBar.setVisibility(3);
-			    			mProgressText.setVisibility(3);
-			    			param_precisiontext.setVisibility(3);
-			    	        param_precision_moins.setVisibility(3);
-			    	        param_precision_valeur.setVisibility(3);
-			    	        param_precision_plus.setVisibility(3);
-			    			param_couchertext.setVisibility(3);
-			    			param_coucher.setVisibility(3);
+		    			
+		    			case 4:	//Solstice d'hiver (21 decembre)
+		    	    		//On fait apparaître tous les champs
+			        			param_jour_spinner.setVisibility(3);
+			    				param_mois_spinner.setVisibility(3);
+				    			param_levertext.setVisibility(3);
+				    			param_lever.setVisibility(3);
+				    			mSeekBar.setVisibility(3);
+				    			mProgressText.setVisibility(3);
+				    			param_precisiontext.setVisibility(3);
+				    			param_couchertext.setVisibility(3);
+				    			param_coucher.setVisibility(3);
+				    			param_TrouverSoleil.setVisibility(3);
 	
-			    			gSun.temps.setJour(21);
-			    			gSun.temps.setMois(12);
-		    				heureLever = (int) gSun.calcul.getHeureLever();
-		    				heureCoucher = (int) gSun.calcul.getHeureCoucher();
+				    		//On affiche la date : 21 decembre
+				    			param_jour_spinner.setSelection(3);
+			        			param_mois_spinner.setSelection(12);
+			    				
+			        		//On communique la date
+				    			gSun.temps.setJour(21);
+				    			gSun.temps.setMois(12);
 		    				
-		    				if (heureLever<10) {
-			    				param_lever.setText("0" + Integer.toString(heureLever) + ":00");
-			    			} else {
-			    				param_lever.setText("" + heureLever + ":00");
-			    			}
+				    		//On affiche les heures de lever et de coucher (de part et d'autre de la SeekBar)
+				    			heureLever = (int) gSun.calcul.getHeureLever();
+				    			heureCoucher = (int) gSun.calcul.getHeureCoucher();
 		    				
-			    			param_coucher.setText(Integer.toString(heureCoucher) + ":00");
-			    			param_TrouverSoleil.setVisibility(3);
+			    				if (heureLever<10) {
+				    				param_lever.setText("0" + heureLever + ":00");
+				    			} else {
+				    				param_lever.setText("" + heureLever + ":00");
+				    			}
+		    				
+			    				param_coucher.setText("" + heureCoucher + ":00");
+			    			
 		    				break;
-		    			case 3:
-		    				//Equinoxes
-		    	    		param_jour_spinner.setSelection(3);
-		        			param_mois_spinner.setSelection(3);
-			    			param_jour_spinner.setVisibility(3);
-			    			param_mois_spinner.setVisibility(3);
-			    			param_levertext.setVisibility(3);
-			    			param_lever.setVisibility(3);
-			    			mSeekBar.setVisibility(3);
-			    			mProgressText.setVisibility(3);
-			    			param_precisiontext.setVisibility(3);
-			    	        param_precision_moins.setVisibility(3);
-			    	        param_precision_valeur.setVisibility(3);
-			    	        param_precision_plus.setVisibility(3);
-			    			param_couchertext.setVisibility(3);
-			    			param_coucher.setVisibility(3);
+		    			
+		    			case 1: //Equinoxe de printemps (21 mars)
+		    	    		
+		        			//On fait apparaitre tous les champs
+			        			param_jour_spinner.setVisibility(3);
+				    			param_mois_spinner.setVisibility(3);
+				    			param_levertext.setVisibility(3);
+				    			param_lever.setVisibility(3);
+				    			mSeekBar.setVisibility(3);
+				    			mProgressText.setVisibility(3);
+				    			param_precisiontext.setVisibility(3);
+				    			param_couchertext.setVisibility(3);
+				    			param_coucher.setVisibility(3);
+				    			param_TrouverSoleil.setVisibility(3);
 			    			
-			    			gSun.temps.setJour(21);
-			    			gSun.temps.setMois(03);
+				    		//On affiche la date : 21 mars
+			    				param_jour_spinner.setSelection(3);
+			        			param_mois_spinner.setSelection(3);
+				    		
+			        		//On communique la date
+				    			gSun.temps.setJour(21);
+				    			gSun.temps.setMois(3);
 		    				
-			    			heureLever = (int) gSun.calcul.getHeureLever();
-		    				heureCoucher = (int) gSun.calcul.getHeureCoucher();
+				    		//On affiche les heures de lever et de coucher (de part et d'autre de la SeekBar)
+				    			heureLever = (int) gSun.calcul.getHeureLever();
+			    				heureCoucher = (int) gSun.calcul.getHeureCoucher();
 			    			
-		    				if (heureLever<10){
-		    					param_lever.setText("0" + Integer.toString(heureLever) + ":00");
-		    				} else {
-		    					param_lever.setText("" + Integer.toString(heureLever) + ":00");
-		    				}
-		    				
-		    				
-			    			param_coucher.setText(Integer.toString(heureCoucher) + ":00");
-			    			
-			    			param_TrouverSoleil.setVisibility(3);
-			    			//param_heure_spinner.setVisibility(3);
+			    				if (heureLever<10){
+			    					param_lever.setText("0" + heureLever + ":00");
+			    				} else {
+			    					param_lever.setText("" + heureLever + ":00");
+			    				}
+			    				
+				    			param_coucher.setText("" + heureCoucher + ":00");
+				    			
 			    			break;
-		    			case 4:
-		    				param_jour_spinner.setVisibility(3);
+		    			
+		    			case 3: //Equinoxe d'automne (21 septembre)
+		    	    		
+		        			//On fait apparaitre tous les champs
+			        			param_jour_spinner.setVisibility(3);
+				    			param_mois_spinner.setVisibility(3);
+				    			param_levertext.setVisibility(3);
+				    			param_lever.setVisibility(3);
+				    			mSeekBar.setVisibility(3);
+				    			mProgressText.setVisibility(3);
+				    			param_precisiontext.setVisibility(3);
+				    			param_couchertext.setVisibility(3);
+				    			param_coucher.setVisibility(3);
+				    			param_TrouverSoleil.setVisibility(3);
+			    			
+				    		//On affiche la date : 21 mars
+			    				param_jour_spinner.setSelection(3);
+			        			param_mois_spinner.setSelection(9);
+				    		
+			        		//On communique la date
+				    			gSun.temps.setJour(21);
+				    			gSun.temps.setMois(9);
+		    				
+				    		//On affiche les heures de lever et de coucher (de part et d'autre de la SeekBar)
+				    			heureLever = (int) gSun.calcul.getHeureLever();
+			    				heureCoucher = (int) gSun.calcul.getHeureCoucher();
+			    			
+			    				if (heureLever<10){
+			    					param_lever.setText("0" + heureLever + ":00");
+			    				} else {
+			    					param_lever.setText("" + heureLever + ":00");
+			    				}
+			    				
+				    			param_coucher.setText("" + heureCoucher + ":00");
+				    			
+			    			break;
+			    				
+		    			case 5: //Date perso
+		    				//On fait apparaitre le champ jour
+		    					param_jour_spinner.setVisibility(3);
 		    				break;
 		    		}
 		    	}
@@ -227,48 +305,100 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    	//@Override
         	//@SuppressWarnings("unchecked")
 	    	public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-    			if(param_typedate_spinner.getSelectedItemPosition()==0){
-    	    		param_levertext.setVisibility(4);
-        			param_lever.setVisibility(4);
-	    			mSeekBar.setVisibility(4);
-	    			mProgressText.setVisibility(4);
-	    			param_precisiontext.setVisibility(4);
-	    	        param_precision_moins.setVisibility(4);
-	    	        param_precision_valeur.setVisibility(4);
-	    	        param_precision_plus.setVisibility(4);
-        			param_couchertext.setVisibility(4);
-        			param_coucher.setVisibility(4);
-    			}
-				
 	    		switch ((int) parent.getItemIdAtPosition(position)) {
 	    		case 0:
-	    			param_mois_spinner.setVisibility(4);
+	    			//On masque le champ mois et on le met à 0
+	    				param_mois_spinner.setVisibility(4);
+	    				param_mois_spinner.setSelection(0);
+	    				
+	    				param_levertext.setVisibility(4);
+	        			param_lever.setVisibility(4);
+		    			mSeekBar.setVisibility(4);
+		    			mProgressText.setVisibility(4);
+		    			param_precisiontext.setVisibility(4);
+		    	        param_precision_moins.setVisibility(4);
+		    	        param_precision_valeur.setVisibility(4);
+		    	        param_precision_plus.setVisibility(4);
+	        			param_couchertext.setVisibility(4);
+	        			param_coucher.setVisibility(4);
 	    			break;
+	    		
 	    		case 1:
 		    		gSun.temps.setJour(1);
 		    		param_mois_spinner.setVisibility(3);
-		    		param_typedate_spinner.setSelection(4);
+		    		param_typedate_spinner.setSelection(5);
+		    		
+		    		if (param_mois_spinner.getSelectedItemPosition()!=0) {
+		    			gSun.temps.setMois(param_mois_spinner.getSelectedItemPosition());
+		    			
+		    			heureLever = (int) gSun.calcul.getHeureLever();
+		    			heureCoucher = (int) gSun.calcul.getHeureCoucher();
+		    			
+		    			if (heureLever<10) {
+		    				param_lever.setText("0" + heureLever + ":00");
+		    			} else {
+		    				param_lever.setText("" + heureLever + ":00");
+		    			}
+		    					
+		    			param_coucher.setText(heureCoucher + ":00");
+		    		}
+		    		
 		    		break;
+	    		
 	    		case 2:
 	    			gSun.temps.setJour(11);
 	    			param_mois_spinner.setVisibility(3);
-	    			param_typedate_spinner.setSelection(4);
+	    			param_typedate_spinner.setSelection(5);
+	    			
+	    			if (param_mois_spinner.getSelectedItemPosition()!=0) {
+		    			gSun.temps.setMois(param_mois_spinner.getSelectedItemPosition());
+		    			
+		    			heureLever = (int) gSun.calcul.getHeureLever();
+		    			heureCoucher = (int) gSun.calcul.getHeureCoucher();
+		    			
+		    			if (heureLever<10) {
+		    				param_lever.setText("0" + heureLever + ":00");
+		    			} else {
+		    				param_lever.setText("" + heureLever + ":00");
+		    			}
+		    					
+		    			param_coucher.setText(heureCoucher + ":00");
+		    		}
+	    			
 	    			break;
+	    		
 	    		case 3:
 	    			gSun.temps.setJour(21);
 		    		param_mois_spinner.setVisibility(3);
+		    		
+		    		if (param_mois_spinner.getSelectedItemPosition()!=0) {
+		    			gSun.temps.setMois(param_mois_spinner.getSelectedItemPosition());
+		    			
+		    			heureLever = (int) gSun.calcul.getHeureLever();
+		    			heureCoucher = (int) gSun.calcul.getHeureCoucher();
+		    			
+		    			if (heureLever<10) {
+		    				param_lever.setText("0" + heureLever + ":00");
+		    			} else {
+		    				param_lever.setText("" + heureLever + ":00");
+		    			}
+		    					
+		    			param_coucher.setText(heureCoucher + ":00");
+		    		}
+		    		
+		    		
 		    		switch (param_mois_spinner.getSelectedItemPosition()) {
 		    		case 3:
-		    			param_typedate_spinner.setSelection(3);
+		    			param_typedate_spinner.setSelection(1);
 		    			break;
 		    		case 6:
-		    			param_typedate_spinner.setSelection(1);
+		    			param_typedate_spinner.setSelection(2);
 		    			break;
 		    		case 9:
 		    			param_typedate_spinner.setSelection(3);
 		    			break;
 		    		case 12:
-		    			param_typedate_spinner.setSelection(2);
+		    			param_typedate_spinner.setSelection(4);
 		    			break;
 		    		}
 		    		break;
@@ -285,37 +415,49 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    
 	    
 	    
+	    
 	    OnItemSelectedListener onItemSelectedListenerPersoMois = new OnItemSelectedListener() {
 	    	//@Override
         	//@SuppressWarnings("unchecked")
 	    	public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
-    			param_levertext.setVisibility(4);
-    			mSeekBar.setVisibility(4);
-    			mProgressText.setVisibility(4);
-    			param_precisiontext.setVisibility(4);
-    	        param_precision_moins.setVisibility(4);
-    	        param_precision_valeur.setVisibility(4);
-    	        param_precision_plus.setVisibility(4);
-    			param_lever.setVisibility(4);
-    			param_couchertext.setVisibility(4);
-    			param_coucher.setVisibility(4);
-    			
-	    		   			
     			if(position == 0) {
-	    			//param_heure_spinner.setVisibility(4);
-	    		}else {
+    				param_levertext.setVisibility(4);
+        			mSeekBar.setVisibility(4);
+        			mProgressText.setVisibility(4);
+        			param_precisiontext.setVisibility(4);
+        	        param_precision_moins.setVisibility(4);
+        	        param_precision_valeur.setVisibility(4);
+        	        param_precision_plus.setVisibility(4);
+        			param_lever.setVisibility(4);
+        			param_couchertext.setVisibility(4);
+        			param_coucher.setVisibility(4);
+	    		} else {
 		    		gSun.temps.setMois((int) parent.getItemIdAtPosition(position));
-	    			param_levertext.setVisibility(3);
+	    			
+		    		param_levertext.setVisibility(3);
 	    			param_lever.setVisibility(3);
 	    			mSeekBar.setVisibility(3);
 	    			mProgressText.setVisibility(3);
 	    			param_precisiontext.setVisibility(3);
-	    	        param_precision_moins.setVisibility(3);
-	    	        param_precision_valeur.setVisibility(3);
-	    	        param_precision_plus.setVisibility(3);
 	    			param_couchertext.setVisibility(3);
 	    			param_coucher.setVisibility(3);
 	    			param_TrouverSoleil.setVisibility(3);
+	    			
+	    			if (param_jour_spinner.getSelectedItemPosition()!=0) {
+		    			gSun.temps.setJour(21);
+					
+		    			//Affichage des heures de lever et de coucher (de part et d'autre de la SeekBar)
+			    			heureLever = (int) gSun.calcul.getHeureLever();
+			    			heureCoucher = (int) gSun.calcul.getHeureCoucher();
+			    			
+			    			if (heureLever<10) {
+			    				param_lever.setText("0" + heureLever + ":00");
+			    			} else {
+			    				param_lever.setText("" + heureLever + ":00");
+			    			}
+			    					
+			    			param_coucher.setText(heureCoucher + ":00");
+	    			}
 	    		}
 	    		
     			
@@ -324,34 +466,34 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     				break;
     			case 3:
     				if (param_jour_spinner.getSelectedItemPosition() == 3) {
-	    				param_typedate_spinner.setSelection(3);
+	    				param_typedate_spinner.setSelection(1);
 	    			} else {
-	    				param_typedate_spinner.setSelection(4);
+	    				param_typedate_spinner.setSelection(5);
 	    			}
     				break;
     			case 6:
     				if (param_jour_spinner.getSelectedItemPosition() == 3) {
-	    				param_typedate_spinner.setSelection(1);
+	    				param_typedate_spinner.setSelection(2);
 	    			} else {
-	    				param_typedate_spinner.setSelection(4);
+	    				param_typedate_spinner.setSelection(5);
 	    			}
     				break;
     			case 9:
     				if (param_jour_spinner.getSelectedItemPosition() == 3) {
 	    				param_typedate_spinner.setSelection(3);
 	    			} else {
-	    				param_typedate_spinner.setSelection(4);
+	    				param_typedate_spinner.setSelection(5);
 	    			}
     				break;
     			case 12:
     				if (param_jour_spinner.getSelectedItemPosition() == 3) {
-	    				param_typedate_spinner.setSelection(2);
-	    			} else {
 	    				param_typedate_spinner.setSelection(4);
+	    			} else {
+	    				param_typedate_spinner.setSelection(5);
 	    			}
     				break;
     			default:
-    				param_typedate_spinner.setSelection(4);
+    				param_typedate_spinner.setSelection(5);
     				break;
     			}
 	    	}
@@ -377,8 +519,12 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         OnClickListener onClickPlus = new OnClickListener() {
             public void onClick(View v){
             	if (v.getId() == R.id.param_precision_plus) {
-            		precision=Math.min(precision+1, precisionMax);
-            		param_precision_valeur.setText(" " + Integer.toString(precision) + " ");
+            		gSun.precision=Math.min(gSun.precision+1, gSun.precisionMax);
+            		param_precision_valeur.setText(" " + gSun.precision + " ");
+            		param_precision_moins.setVisibility(3);
+            		if (gSun.precision==gSun.precisionMax) {
+            			param_precision_plus.setVisibility(4);
+            		}
             	}
             }
         };
@@ -387,8 +533,12 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         OnClickListener onClickMoins = new OnClickListener() {
             public void onClick(View v){
             	if (v.getId() == R.id.param_precision_moins) {
-            		precision=Math.max(precision-1, precisionMin);
-            		param_precision_valeur.setText(" " + Integer.toString(precision) + " ");
+            		gSun.precision=Math.max(gSun.precision-1, gSun.precisionMin);
+            		param_precision_valeur.setText(" " + gSun.precision + " ");
+            		param_precision_plus.setVisibility(3);
+            		if (gSun.precision==gSun.precisionMin) {
+            			param_precision_moins.setVisibility(4);
+            		}
             	}
             }
         };

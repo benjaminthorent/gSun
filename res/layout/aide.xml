@@ -18,6 +18,14 @@
 		android:textColor="#0000FF"
 	/>
 	
+	<TextView
+		android:id="@+id/aide_texte"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/aide_texte"
+		android:textSize="12px"
+	/>
+	
 	<Button
  		android:id="@+id/aide_retour"
 		android:layout_width="wrap_content"

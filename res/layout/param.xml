@@ -128,6 +128,8 @@
  		android:layout_marginTop="2px"
 	/>
 
+	
+	
 	<LinearLayout
 		android:id="@+id/precision"
 		android:layout_width="fill_parent"
@@ -137,8 +139,8 @@
 		android:layout_marginTop="20px"
 		android:layout_below="@id/seek"
 	>
-		<TextView
-			
+		<Button
+
 			android:id="@+id/param_precisiontext"
 			android:text="@string/param_precisiontext"
 			android:layout_width="wrap_content"
@@ -146,8 +148,9 @@
 			android:textSize="18px"
 			android:textColor="@color/texte"
 			android:gravity="center"
+			android:background="@null"
 		/>
-		
+
 		<Button
 			android:id="@+id/param_precision_moins"
 		 	android:layout_width="wrap_content"
@@ -157,17 +160,18 @@
 	 		android:layout_toRightOf="@id/param_precisiontext"
 			android:layout_alignBaseline="@id/param_precisiontext"
 			android:layout_marginLeft="25px"
+			android:visibility="invisible"
 	 	/>
-	 	
+
 	 	<Button
 			android:id="@+id/param_precision_valeur"
-			android:text=" 2 "
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textSize="18px"
 			android:textColor="#FFFFFF"
 			android:layout_toRightOf="@id/param_precision_moins"
 			android:background="@drawable/mybutton"
+			android:visibility="invisible"
 		/>
 
 	 	<Button
@@ -178,6 +182,7 @@
 		 	android:text=" + "
 	 		android:layout_toRightOf="@id/param_precision_valeur"
 			android:layout_alignBaseline="@id/param_precisiontext"
+			android:visibility="invisible"
 	 	/>	
 	</LinearLayout>
 

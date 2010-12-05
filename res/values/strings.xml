@@ -22,9 +22,10 @@
 	
 	<string-array name="param_typedate_array">
 		<item>Date ?</item>
+		<item>Équinoxe de printemps</item>
 		<item>Solstice d"'"été</item>
+		<item>Équinoxe d"'"automne</item>
 		<item>Solstice d"'"hiver</item>
-		<item>Équinoxe</item>
 		<item>Personnalisée</item>
 	</string-array>
 
@@ -62,11 +63,20 @@
 	
 	<string name="aide_titre">Aide</string>
 	<string name="aide_retour">"     Retour     "</string>
+	<string name="aide_ok">"Ok"</string>
 	
 	<!-- accesmesures.xml -->
 	
 	<string name="accesmesures_titre">Accès aux mesures</string>
 	<string name="accesmesures_retour">"     Retour     "</string>
 
+	<string name="aide_texte">"Cette application permet de connaître la direction apparente du soleil à une date et une heure choisies.
+
+Projet initié par Daniel Siret et Myriam Servières (CERMA)
+	
+Projet développé par Niki Banerjee, Nicolas Carougeau, Raphaëlle Chapuis, Benjamin Hervy, Shion Kashimura, Benjamin Thorent et Benoît Vandevelde (École Centrale de Nantes)
+	
+Version alpha
+	"</string>
 
 </resources>

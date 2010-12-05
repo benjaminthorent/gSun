@@ -1,6 +1,8 @@
 package com.ei3info.gsun;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.*;
@@ -13,6 +15,9 @@ public class gSun extends Activity {
 	protected static Temps temps;
     protected static PositionUtilisateur posUtilisateur;
     protected static Calculs calcul;
+	protected static int precisionMin=1;
+	protected static int precisionMax=3;
+	protected static int precision=3;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,11 +45,6 @@ public class gSun extends Activity {
 					startActivity(intent2);
 					finish();
 		    		break;
-		    	case R.id.accueil_aide:
-		    		Intent intent3 = new Intent(gSun.this, Aide.class);
-					startActivity(intent3);
-					finish();
-		    		break;
 	    	}	
 	    };
 	    
@@ -54,6 +54,23 @@ public class gSun extends Activity {
 	    //on affecte aux Button l'écouteur d'évènement
         accueil_calcul.setOnClickListener(onClickLister);
         accueil_mesures.setOnClickListener(onClickLister);
-        accueil_aide.setOnClickListener(onClickLister);
+        
+        
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.aide_texte)
+            .setCancelable(false)
+            .setTitle(R.string.aide_titre)
+            .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+                }
+            });
+        final AlertDialog alert = builder.create();
+        
+        accueil_aide.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                alert.show();
+            }
+            });
     }
 }
