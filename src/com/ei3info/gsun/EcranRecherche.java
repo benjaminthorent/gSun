@@ -6,21 +6,19 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 public class EcranRecherche extends Activity implements OrientationListener{
 	 
-	private Preview mPreview;
-	private Guide mGuide;
-	private Bouton mBouton;
-	private Bouton mBouton2;
+	protected static Preview mPreview;
+	protected static Guide mGuide;
+	protected static Bouton mBouton;
+	protected static Bouton mBouton2;
 	public static Vector<MediaPlayer> mMediaPlayer;
 	 	
 	 	@Override
@@ -33,64 +31,8 @@ public class EcranRecherche extends Activity implements OrientationListener{
 
 	        final FrameLayout frameLayout = new FrameLayout(this);
 	        
-	        //Mediaplayer
-	        mMediaPlayer = new Vector<MediaPlayer>(0);
-	        	//son 1
-            mMediaPlayer.add(new MediaPlayer());
-            Uri musicfile = Uri.parse("android.resource://" +
-                    getPackageName() + "/" + R.raw.bas);
-            mMediaPlayer.get(0).reset();
-            try {
-                mMediaPlayer.get(0).setDataSource(getApplicationContext(), musicfile);
-                mMediaPlayer.get(0).setLooping(true);
-                mMediaPlayer.get(0).prepare();
-                mMediaPlayer.get(1).start();
-                mMediaPlayer.get(1).pause();
-           } catch (Exception e) {
-                System.out.println("Erreur survenue : " + e);
-           }
-            	//son 2
-            mMediaPlayer.add(new MediaPlayer());
-            Uri musicfile2 = Uri.parse("android.resource://" +
-                    getPackageName() + "/" + R.raw.haut);
-            mMediaPlayer.get(1).reset();
-            try {
-                mMediaPlayer.get(1).setDataSource(getApplicationContext(), musicfile2);
-                mMediaPlayer.get(1).setLooping(true);
-                mMediaPlayer.get(1).prepare();
-                mMediaPlayer.get(1).start();
-                mMediaPlayer.get(1).pause();
-            } catch (Exception e) {
-                System.out.println("Erreur survenue : " + e);
-           }
-          //son 3
-            mMediaPlayer.add(new MediaPlayer());
-            Uri musicfile3 = Uri.parse("android.resource://" +
-                    getPackageName() + "/" + R.raw.soleil);
-            mMediaPlayer.get(2).reset();
-            try {
-                mMediaPlayer.get(2).setDataSource(getApplicationContext(), musicfile3);
-                mMediaPlayer.get(2).setLooping(true);
-                mMediaPlayer.get(2).prepare();
-                mMediaPlayer.get(2).start();
-                mMediaPlayer.get(2).pause();
-            } catch (Exception e) {
-                System.out.println("Erreur survenue : " + e);
-           }
-          //son 3
-            mMediaPlayer.add(new MediaPlayer());
-            Uri musicfile4 = Uri.parse("android.resource://" +
-                    getPackageName() + "/" + R.raw.bas);
-            mMediaPlayer.get(3).reset();
-            try {
-                mMediaPlayer.get(3).setDataSource(getApplicationContext(), musicfile4);
-                mMediaPlayer.get(3).setLooping(true);
-                mMediaPlayer.get(3).prepare();
-                mMediaPlayer.get(3).start();
-                mMediaPlayer.get(3).pause();
-            } catch (Exception e) {
-                System.out.println("Erreur survenue : " + e);
-           }
+	        //Initialisation Mediaplayer
+	        mMediaPlayer = prepareMediaplayer();
             
 	        // Initialisation des differents elements de l'affichage
 	        mPreview = new Preview(this);
@@ -99,8 +41,8 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        //Fin Capteur
 	        Display ecran = getWindowManager().getDefaultDisplay(); 
 	        int largeur= ecran.getWidth();
-	        mBouton = new Bouton(this,"Retour",15,largeur/2+20);
-	        mBouton2 = new Bouton(this,"Photo",15,30);
+	        mBouton = new Bouton(this,"Retour",80,30,largeur/2+20);
+	        mBouton2 = new Bouton(this,"Photo",80,30,-(largeur/2)+20);
 	        mBouton.setOnClickListener(
 	        	new OnClickListener() {
 	    	        @Override
@@ -109,10 +51,6 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	    	        	mMediaPlayer.get(1).stop();
 	    	        	mMediaPlayer.get(2).stop();
 	    	        	mMediaPlayer.get(3).stop();
-	    	        	//mMediaPlayer.get(0).release();
-	    	        	//mMediaPlayer.get(1).release();
-	    	        	//mMediaPlayer.get(2).release();
-	    	        	//mMediaPlayer.get(3).release();
 	    	        	Intent intent = new Intent(EcranRecherche.this, gSun.class);
 	    				startActivity(intent);
 	    				finish();
@@ -141,43 +79,87 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	    	setContentView(frameLayout);
 	    	
 	    }
-
-	 	@Override  
-        public void onOrientationChanged(float azimuth,   
-                float pitch, float roll) {  
-            /*((TextView) findViewById(R.id.azimuth)).setText(  
-                    String.valueOf(azimuth));  
-            ((TextView) findViewById(R.id.pitch)).setText(  
-                    String.valueOf(pitch));  
-            ((TextView) findViewById(R.id.roll)).setText(  
-                    String.valueOf(roll));  */
-        } 
-	 	
-	 	@Override  
-        public void GoLeft() {  
-            //Toast.makeText(this, "Go Left !", 1000).show();
-        }  
-       
-        @Override  
-        public void GoRight() {  
-            //Toast.makeText(this, "Go Right !", 1000).show();  
-        }  
-       
-        @Override  
-        public void GoUp() {  
-            //Toast.makeText(this, "Go Up !", 1000).show();  
-        }  
-       
-        @Override  
-        public void GoDown() {  
-            //Toast.makeText(this, "Go Down !", 1000).show();  
-        } 
+        
+        public Vector<MediaPlayer> prepareMediaplayer(){
+        	Vector<MediaPlayer> mp;
+        	mp = new Vector<MediaPlayer>(0);
+        	
+        	//son 1
+            mp.add(new MediaPlayer());
+            Uri musicfile = Uri.parse("android.resource://" +
+                    getPackageName() + "/" + R.raw.bas);
+            mp.get(0).reset();
+            try {
+                mp.get(0).setDataSource(getApplicationContext(), musicfile);
+                mp.get(0).setLooping(true);
+                mp.get(0).prepare();
+                mp.get(1).start();
+                mp.get(1).pause();
+           } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
+            	//son 2
+            mp.add(new MediaPlayer());
+            Uri musicfile2 = Uri.parse("android.resource://" +
+                    getPackageName() + "/" + R.raw.haut);
+            mp.get(1).reset();
+            try {
+                mp.get(1).setDataSource(getApplicationContext(), musicfile2);
+                mp.get(1).setLooping(true);
+                mp.get(1).prepare();
+                mp.get(1).start();
+                mp.get(1).pause();
+            } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
+          //son 3
+            mp.add(new MediaPlayer());
+            Uri musicfile3 = Uri.parse("android.resource://" +
+                    getPackageName() + "/" + R.raw.soleil);
+            mp.get(2).reset();
+            try {
+                mp.get(2).setDataSource(getApplicationContext(), musicfile3);
+                mp.get(2).setLooping(true);
+                mp.get(2).prepare();
+                mp.get(2).start();
+                mp.get(2).pause();
+            } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
+          //son 3
+            mp.add(new MediaPlayer());
+            Uri musicfile4 = Uri.parse("android.resource://" +
+                    getPackageName() + "/" + R.raw.bas);
+            mp.get(3).reset();
+            try {
+                mp.get(3).setDataSource(getApplicationContext(), musicfile4);
+                mp.get(3).setLooping(true);
+                mp.get(3).prepare();
+                mp.get(3).start();
+                mp.get(3).pause();
+            } catch (Exception e) {
+                System.out.println("Erreur survenue : " + e);
+           }
+        	return mp;
+        }
+        
+        //Méthodes n'ayant pas besoin d'être implantées dans notre cas
         
         @Override  
-        public void Ok() {  
-            //Toast.makeText(this, "Well done !", 1000).show();  
-        }
+        public void onOrientationChanged(float azimuth, float pitch, float roll) {} 
+	 	@Override  
+        public void GoLeft() {}
+        @Override  
+        public void GoRight() {}
+        @Override  
+        public void GoUp() {}
+        @Override  
+        public void GoDown() {}
+        @Override  
+        public void Ok() {}
 
 }
+
+
 
 

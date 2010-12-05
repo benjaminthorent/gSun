@@ -64,9 +64,8 @@ public class Guide extends View {
     private int azimuth_objectif = (int) gSun.calcul.getAzimut();
     private int pitch_objectif = (int) gSun.calcul.getHauteurSolaire();
     
-    /*private boolean temps_ok;
-    private float temps;
-    private long start;*/
+    private boolean temps_ok;
+    private long start;
 
     /** Direction to give to the phone to reach the aim */  
     enum Direction {  
@@ -82,12 +81,12 @@ public class Guide extends View {
 	public Guide(Context context) {
 	    
 		super(context);
-	    flechesGDh = 60;
-	    flechesGDl = 30;
-	    flechesHBh = 30;
-	    flechesHBl = 60;
-	    Soleilh = 100;
-	    Soleill = 100;
+	    flechesGDh = 80;
+	    flechesGDl = 60;
+	    flechesHBh = 40;
+	    flechesHBl = 80;
+	    Soleilh = 120;
+	    Soleill = 120;
 	    
 	 
 	    FlecheGauche = prepareBitmap(getResources().getDrawable(R.drawable.fg), flechesGDl,
@@ -104,15 +103,13 @@ public class Guide extends View {
 	    azimuth_objectif = (int) gSun.calcul.getAzimut();
 	    pitch_objectif = (int) gSun.calcul.getHauteurSolaire();
 	    
-	    Toast.makeText(getContext(), azimuth_objectif + " et " + pitch_objectif, 1000).show();
-	    
 	    texte_guide = new String[4];
 	    texte_guide[0]="";
 	    texte_guide[1]="";
 	    texte_guide[2]="";
 	    texte_guide[3]="";
 	    
-	    //temps_ok=false;
+	    temps_ok=false;
 		
 	}
 	
@@ -140,13 +137,13 @@ public class Guide extends View {
 	    protected void onDraw(Canvas canvas) {
 	    	
 		    FGX = 5;
-		    FGY = canvas.getHeight()-flechesGDh-10;
+		    FGY = canvas.getHeight()-flechesGDh-20-EcranRecherche.mBouton.getHeight();
 		    FDX = canvas.getWidth()-flechesGDl-5;
-		    FDY = canvas.getHeight()-flechesGDh-10;
+		    FDY = canvas.getHeight()-flechesGDh-20-EcranRecherche.mBouton.getHeight();
 		    FHX = canvas.getWidth()/2-flechesHBl/2;
 		    FHY = 5;
 		    FBX = canvas.getWidth()/2-flechesHBl/2;
-		    FBY = canvas.getHeight()-flechesHBl-5;
+		    FBY = canvas.getHeight()-flechesHBl-15-EcranRecherche.mBouton.getHeight();
 		    SX = canvas.getWidth()/2-Soleill/2;
 		    SY = canvas.getHeight()/2-Soleilh/2;
 		    
@@ -171,10 +168,10 @@ public class Guide extends View {
 			paint.setStyle(Paint.Style.FILL);
 			paint.setColor(Color.RED);
 			//draw texts
-			canvas.drawText(texte_guide[0], 10, canvas.getHeight()-flechesHBl-15, paint);  //Texte gauche
-			canvas.drawText(texte_guide[1], canvas.getWidth()-38, canvas.getHeight()-flechesHBl-15, paint);  //Texte droit
-			canvas.drawText(texte_guide[2], canvas.getWidth()/2-12, flechesHBl + 15, paint);  //Texte haut
-			canvas.drawText(texte_guide[3], canvas.getWidth()/2-8, canvas.getHeight()-flechesHBl-15, paint);  //Texte bas
+			canvas.drawText(texte_guide[0], 8+flechesGDl/2, canvas.getHeight()-flechesHBl-25-EcranRecherche.mBouton.getHeight(), paint);  //Texte gauche
+			canvas.drawText(texte_guide[1], canvas.getWidth()-18-flechesGDl/2, canvas.getHeight()-flechesHBl-25-EcranRecherche.mBouton.getHeight(), paint);  //Texte droit
+			canvas.drawText(texte_guide[2], canvas.getWidth()/2-5, flechesHBl + 15, paint);  //Texte haut
+			canvas.drawText(texte_guide[3], canvas.getWidth()/2-5, canvas.getHeight()-flechesHBl-25-EcranRecherche.mBouton.getHeight(), paint);  //Texte bas
 			
 			//Affichage
 	    	super.onDraw(canvas);
@@ -251,7 +248,7 @@ public class Guide extends View {
                     texte_guide[1]="";
                     texte_guide[2]="";
                     texte_guide[3]="";
-                    //temps_ok=false;
+                    temps_ok=false;
 	                currentDirection = Direction.LEFT;  
 	            } else if (azimuth < azimuth_objectif-precision_azimuth) {  
 	                // GoRight 
@@ -259,7 +256,7 @@ public class Guide extends View {
                     texte_guide[1]=String.valueOf((int)(Math.abs(azimuth-azimuth_objectif)));
                     texte_guide[2]="";
                     texte_guide[3]="";
-                    //temps_ok=false;
+                    temps_ok=false;
 	                currentDirection = Direction.RIGHT;  
 	            } else {  
 	            	// Azimuth OK
@@ -269,7 +266,7 @@ public class Guide extends View {
                         texte_guide[1]="";
                         texte_guide[2]=String.valueOf((int)(Math.abs(pitch-pitch_objectif)));
                         texte_guide[3]="";
-                        //temps_ok=false;
+                        temps_ok=false;
 		                currentDirection = Direction.DOWN;
 	            	} else if (pitch < pitch_objectif-precision_pitch) {
 	            		// GoUp 
@@ -277,7 +274,7 @@ public class Guide extends View {
                         texte_guide[1]="";
                         texte_guide[2]="";
                         texte_guide[3]=String.valueOf((int)(Math.abs(pitch-pitch_objectif)));
-                        //temps_ok=false;
+                        temps_ok=false;
 		                currentDirection = Direction.UP;
 	            	} else {
 	            		// Objective reached !
@@ -285,14 +282,15 @@ public class Guide extends View {
                         texte_guide[1]="";
                         texte_guide[2]="";
                         texte_guide[3]="";
-                        /*if(!temps_ok){
+                        if(!temps_ok){
                         	temps_ok=true;
                         	start = System.currentTimeMillis();
                         }else{
                         	if(Math.abs(System.currentTimeMillis()-start)>5000){
-                        		Toast.makeText(getContext(), "Test ok !", 1000);
+                        		Toast.makeText(getContext(), "Action !", 1000).show();
+                        		//TODO Rajouter prise de photo et envoi vers nouvelle activité
                         	}
-                        }*/
+                        }
 		            	currentDirection = Direction.OK;
 	            	}
 	            } 
