@@ -61,8 +61,8 @@ public class Guide extends View {
     
     private static boolean running = false;
     
-    private int azimuth_objectif = (int) gSun.calcul.getAzimut();
-    private int pitch_objectif = (int) gSun.calcul.getHauteurSolaire();
+    private int azimuth_objectif;
+    private int pitch_objectif;
     
     private boolean temps_ok;
     private long start;
@@ -100,8 +100,11 @@ public class Guide extends View {
 	    Soleil = prepareBitmap(getResources().getDrawable(R.drawable.soleil), Soleill,
 	    		Soleilh);
 	    
-	    azimuth_objectif = (int) gSun.calcul.getAzimut();
-	    pitch_objectif = (int) gSun.calcul.getHauteurSolaire();
+	    // Conversion valeurs angle vers position smartphone
+	    // --> Le smartphone doit ętre positionné perpendiculairement par rapport au pitch obtenu qui pointe le soleil
+	    // --> L'azimuth obtenu donne donne l'angle par rapport au Sud alors que l'azimuth 0 issu des capteurs pointe vers le Nord
+	    azimuth_objectif = (180 + (int) gSun.calcul.getAzimut())%360;
+	    pitch_objectif = (90 + (int) gSun.calcul.getHauteurSolaire())%360;
 	    
 	    texte_guide = new String[4];
 	    texte_guide[0]="";
@@ -228,19 +231,35 @@ public class Guide extends View {
 	        private Direction oldDirection = null;  
 	        private float azimuth;  
 	        private float pitch;  
-	        private float roll;  
+	        private float roll;   
+	        private int precision_azimuth;
+            private	int precision_pitch; 
 	   
 	        public void onAccuracyChanged(Sensor sensor, int accuracy) {}  
 	   
+	        
 	        public void onSensorChanged(SensorEvent event) {  
 	   
+	        	Toast.makeText(getContext(),String.valueOf(pitch_objectif),1000).show();
+	        	
 	            azimuth = event.values[0];     // azimuth  
 	            pitch = event.values[1];     // pitch  
 	            roll = event.values[2];        // roll  
 	   
-	            //TODO A lier � la pr�cision obtenue dans Param
-	            int precision_azimuth = 10;
-	            int precision_pitch = 10;
+	            //Lien entre ecran paramétrage et valeur de précision
+	            //Etalonnage de la precision pour le positionnement:
+	            //Issue de l'écran Param : valeur = 1,2,3 -> precision(°) = 4,7,10
+	            switch(gSun.precision){
+	            case 1 :
+	            	precision_azimuth = 4;
+	            	precision_pitch = 4;
+	            case 2 :
+	            	precision_azimuth = 7;
+	            	precision_pitch = 7;
+	            case 3 :
+	            	precision_azimuth = 10;
+	            	precision_pitch = 10;
+	            }
 	            
 	            if (azimuth > azimuth_objectif+precision_azimuth) {  
 	                // GoLeft  
@@ -288,7 +307,7 @@ public class Guide extends View {
                         }else{
                         	if(Math.abs(System.currentTimeMillis()-start)>5000){
                         		Toast.makeText(getContext(), "Action !", 1000).show();
-                        		//TODO Rajouter prise de photo et envoi vers nouvelle activit�
+                        		//TODO Rajouter prise de photo et envoi vers nouvelle activité
                         	}
                         }
 		            	currentDirection = Direction.OK;

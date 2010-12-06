@@ -83,6 +83,11 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
             		finish();
             		break;
             	case R.id.param_TrouverSoleil:
+            		//TODO Récupérer heure, mois, jour
+            		//gSun.temps.setHeure(heure);
+            		//gSun.temps.setMois(heure);
+            		//gSun.temps.setJour(heure);
+            		
             		Intent intent2 = new Intent(Param.this, EcranRecherche.class);
         			startActivity(intent2);
         			finish();
