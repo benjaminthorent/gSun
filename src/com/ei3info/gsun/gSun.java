@@ -60,7 +60,7 @@ public class gSun extends Activity {
         builder.setMessage(R.string.aide_texte)
             .setCancelable(false)
             .setTitle(R.string.aide_titre)
-            .setPositiveButton("Done", new DialogInterface.OnClickListener() {
+            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
                 }
