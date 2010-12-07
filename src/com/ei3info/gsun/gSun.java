@@ -45,10 +45,9 @@ public class gSun extends Activity {
 					startActivity(intent2);
 					finish();
 		    		break;
-	    	}	
+		    	}	
+	    	};
 	    };
-	    
-	 };
 	  
     
 	    //on affecte aux Button l'écouteur d'évènement

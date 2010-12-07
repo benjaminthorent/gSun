@@ -20,6 +20,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	protected int compteur=0;
 	protected int heureLever;
 	protected int heureCoucher;
+	protected int heure=12;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,8 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
             		finish();
             		break;
             	case R.id.param_TrouverSoleil:
+            		gSun.temps.heure=heure;
+            		
             		Intent intent2 = new Intent(Param.this, EcranRecherche.class);
         			startActivity(intent2);
         			finish();
@@ -549,7 +552,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     }
     
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-    	int heureChoisie = heureLever-1;
+    	heure = heureLever-1;
         int nbIntervalles = heureCoucher-heureLever+1;
         int tailleIntervalle = (int) (100.0 / nbIntervalles);
         int borneSupIntervalle = tailleIntervalle;
@@ -557,7 +560,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         boolean arretboucle = false;
       
        	while(!arretboucle){
-        	heureChoisie=Math.min(heureChoisie+1,heureCoucher) ;
+        	heure=Math.min(heure+1,heureCoucher) ;
         	if (nbIntervallesRestants != 0) {
 	        	tailleIntervalle = (int) ((100.0-borneSupIntervalle)/nbIntervallesRestants);
 	        }
@@ -570,10 +573,10 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	        }
         }
     	
-    	if (heureChoisie<10) {
-    		mProgressText.setText("0" + heureChoisie + ":00"/*+"=" + fromTouch*/);
+    	if (heure<10) {
+    		mProgressText.setText("0" + heure + ":00"/*+"=" + fromTouch*/);
        	} else {
-       		mProgressText.setText("" + heureChoisie + ":00"/*+"=" + fromTouch*/);
+       		mProgressText.setText("" + heure + ":00"/*+"=" + fromTouch*/);
        	}
     }
 
