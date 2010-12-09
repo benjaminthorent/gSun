@@ -18,6 +18,26 @@
 		android:textColor="#0000FF"
 	/>
 	
+		<Button
+ 		android:id="@+id/accesmesures_photo"
+		android:layout_width="wrap_content"
+ 		android:layout_height="wrap_content"
+ 		android:layout_gravity="center"
+ 		android:text="@string/accesmesures_photo"
+ 		android:layout_marginTop="200px"
+		android:layout_centerHorizontal="true"
+ 	/>
+	
+	<Button
+ 		android:id="@+id/accesmesures_synthese"
+		android:layout_width="wrap_content"
+ 		android:layout_height="wrap_content"
+ 		android:layout_gravity="center"
+ 		android:text="@string/accesmesures_synthese"
+ 		android:layout_marginTop="250px"
+		android:layout_centerHorizontal="true"
+ 	/>
+	
 	<Button
  		android:id="@+id/accesmesures_retour"
 		android:layout_width="wrap_content"

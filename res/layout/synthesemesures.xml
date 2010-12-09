@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background"
+    >
+    
+<TextView
+	android:id="@+id/synthese_titre"
+	android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:text="@string/synthese_titre"
+    android:layout_gravity="center"
+    android:textSize="25px"
+    android:layout_marginTop="10px"
+    android:textColor="#0000FF"
+    android:layout_centerHorizontal="true">
+   
+</TextView>
+
+	<Button
+ 		android:id="@+id/synthese_retour"
+		android:layout_width="wrap_content"
+ 		android:layout_height="wrap_content"
+ 		android:layout_gravity="center"
+ 		android:layout_below="@id/synthese_titre"
+ 		android:text="@string/synthese_retour"
+		android:layout_centerHorizontal="true"
+ 	/>
+
+<TextView
+	android:id="@+id/synthese_reptexte"
+	android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:text="@string/synthese_reptexte"
+    android:layout_below="@id/synthese_retour"
+    android:layout_gravity="left"
+    android:layout_marginLeft="10px"
+    android:textSize="15px"
+    android:layout_marginTop="20px"
+    android:textColor="#000000"/>
+    
+    
+    <TextView
+    android:id="@+id/synthese_rep"
+	android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:text="/"
+    android:layout_below="@id/synthese_reptexte"
+    android:layout_gravity="left"
+    android:layout_marginLeft="10px"
+    android:textSize="15px"
+    android:textColor="#000000"/>
+    
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:stretchColumns="4"
+    android:layout_marginTop="10px"
+    android:id="@+id/synthese_tableau"
+    android:layout_below="@id/synthese_rep"
+>
+
+    <TableRow>
+        <TextView
+            android:layout_column="1"
+            android:text="Lieu"
+            android:padding="3dip" 
+        android:textColor="#ED0000"
+        />
+        <TextView
+        	android:layout_column="2"
+            android:text="Date"
+            android:padding="3dip"
+            android:textColor="#ED0000"
+            android:layout_marginLeft="10px"
+          />
+        <TextView
+            android:layout_column="3"
+            android:text="Heure"
+            android:padding="3dip" 
+            android:textColor="#ED0000"
+            android:layout_marginLeft="20px"
+          />
+        <TextView
+        	android:layout_column="4"
+            android:text="Etat"
+            android:padding="3dip"
+            android:textColor="#ED0000"
+          />
+    </TableRow>
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+            
+
+</TableLayout>
+
+
+
+</RelativeLayout>

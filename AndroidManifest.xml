@@ -12,6 +12,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SyntheseMesures"
+        		  android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".Param"
         		  android:screenOrientation="portrait">
         </activity>

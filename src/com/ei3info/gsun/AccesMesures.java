@@ -15,20 +15,43 @@ public class AccesMesures extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.accesmesures);
 		
+		Button accesmesures_photo = (Button)findViewById(R.id.accesmesures_photo);
+		Button accesmesures_synthese =(Button)findViewById(R.id.accesmesures_synthese);
 		Button accesmesures_retour =(Button)findViewById(R.id.accesmesures_retour);
+		
 		
 		 OnClickListener onClickLister = new OnClickListener() {
 			 
 		    	@Override
 		    	public void onClick(View v){
-		    		Intent intent = new Intent(AccesMesures.this, gSun.class);
-					startActivity(intent);
-		    		finish();
+		    		switch(v.getId()){
+			    	case R.id.accesmesures_retour:
+				    	Intent intent1 = new Intent(AccesMesures.this, gSun.class);
+						startActivity(intent1);
+				    	finish();
+			    	break;
+			    	case R.id.accesmesures_synthese:
+				    	Intent intent2 = new Intent(AccesMesures.this, SyntheseMesures.class);
+						startActivity(intent2);
+				    	finish();
+				    break;
+			    	
+			    	 case R.id.accesmesures_photo:
+			    		 /**
+					    	 A RAJOUTER QUAND LA CLASSE CaractMesures sera construite
+			    		 Intent intent3 = new Intent(AccesMesures.this, CaractMesures.class);
+						startActivity(intent3);
+				    	finish();**/
+				    break;			    		
+			    	}
 		    	}
 		 };
 		
-		//on affecte aux Button l'couteur d'vnement
+		//on affecte aux Button l'ÂŽcouteur d'ÂŽvÂ�nement
+		 accesmesures_photo.setOnClickListener(onClickLister);
+		 accesmesures_synthese.setOnClickListener(onClickLister);
 		 accesmesures_retour.setOnClickListener(onClickLister);
+		 
 	}
 
 }
