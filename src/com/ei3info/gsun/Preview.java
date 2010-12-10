@@ -1,6 +1,9 @@
 package com.ei3info.gsun;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.os.AsyncTask;
@@ -9,13 +12,16 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
  
 public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	SurfaceHolder mHolder;
 	Camera mCamera;
+	boolean test = false;
  
 	Preview(Context context) {
 		super(context);
@@ -26,6 +32,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		mHolder = getHolder();
 		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		mHolder.addCallback(this);
+		
 	}
  
 	public void surfaceCreated(SurfaceHolder holder) {
@@ -58,20 +65,39 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
         mCamera.startPreview();
 	}
 	
-	//TODO Pour Shion, mŽthodes ˆ dŽcommenter pour la prise de photo
+	//TODO Pour Shion, mï¿½thodes ï¿½ dï¿½commenter pour la prise de photo
 	
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
-			new SavePhotoTask().execute(data);
-			camera.startPreview();
+			//new SavePhotoTask().execute(data);
+			//camera.startPreview();
+			try {
+				savePicture(data);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	};
+	
+	public void savePicture(byte[] data) throws IOException {
+		//File photo1 = new File("/data/data/com.ei3info.gsun/app_data/photo1nom");
+		//FileOutputStream fOut = new FileOutputStream(photo1.getPath());
+		FileOutputStream fOut = EcranRecherche.mGuide.getContext().openFileOutput("photo1nom",Context.MODE_PRIVATE);
+		BufferedOutputStream bufOut = new BufferedOutputStream(fOut);
+		//Bitmap myPic = BitmapFactory.decodeByteArray(data,0,data.length);
+		//myPic.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+		bufOut.write(data);
+		bufOut.flush();
+		bufOut.close();
+		test = true;
+	}
+	
 	
  	public void takePicture() {
 		mCamera.takePicture(null, null, photoCallback);
 	}
  	
-	class SavePhotoTask extends AsyncTask<byte[], String, String> {
+	/*class SavePhotoTask extends AsyncTask<byte[], String, String> {
 		protected String doInBackground(byte[]... jpeg) {
 			File photo=new File(Environment.DIRECTORY_PICTURES,"photo.jpg");
  
@@ -89,6 +115,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 			}
 			return(null);
 		}
-	}
+	}*/
 	
 }
+

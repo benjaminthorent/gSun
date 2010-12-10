@@ -307,9 +307,9 @@ public class Guide extends View {
                         	if(Math.abs(System.currentTimeMillis()-start)>1500){
                         		Toast.makeText(getContext(), "Action !", 1000).show();
                         		//TODO Rajouter prise de photo et envoi vers nouvelle activité
-                        		//Intent intent = new Intent(Intent.ACTION_VIEW, null, getContext(), gSun.class);
-                                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
-                                //getContext().getApplicationContext().startActivity(intent);
+                        		Intent intent = new Intent(Intent.ACTION_VIEW, null, getContext(), gSun.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
+                                getContext().getApplicationContext().startActivity(intent);
                         	}
                         }
 		            	currentDirection = Direction.OK;

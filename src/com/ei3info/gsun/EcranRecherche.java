@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 public class EcranRecherche extends Activity implements OrientationListener{
 	 
@@ -68,8 +69,11 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		    	        @Override
 		    		    public void onClick(View v){
 		    	        	mPreview.takePicture();
+		    	        	/*while(!mPreview.test){
+		    	        		Toast.makeText(mGuide.getContext(), "attente", 1000);
+		    	        	}*/
 		    	        	//TODO Enregistrer au bon endroit & RŽaliser traitement image (soleil au centre)
-		    	        	Intent intent2 = new Intent(EcranRecherche.this, gSun.class);
+		    	        	Intent intent2 = new Intent(EcranRecherche.this, Enregistrement.class);
 		    				startActivity(intent2);
 		    				finish();
 		    	        }

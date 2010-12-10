@@ -1,7 +1,11 @@
 package com.ei3info.gsun;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +16,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
 public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	SeekBar mSeekBar;
@@ -27,6 +32,19 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.param);
+        
+        //Getting longitude & lattitude    
+        LocationManager objgps = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);        
+        Location location = objgps.getLastKnownLocation("gps");
+        
+        //double latitude = location.getLatitude();
+        //int longitude = (int)(location.getLongitude());
+        if(location==null){
+        	Toast.makeText(this, "Pb !", 1000).show();
+        }else{
+        	Toast.makeText(this, (int) location.getLatitude(), 1000).show();
+        }
+        
 
 	
         //Spinner choix type date
@@ -545,9 +563,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
             	}
             }
         };
-        param_precision_moins.setOnClickListener(onClickMoins);
-        
-        
+        param_precision_moins.setOnClickListener(onClickMoins);  
         
     }
     
