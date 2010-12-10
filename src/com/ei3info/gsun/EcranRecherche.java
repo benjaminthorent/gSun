@@ -73,6 +73,12 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		    	        		Toast.makeText(mGuide.getContext(), "attente", 1000);
 		    	        	}*/
 		    	        	//TODO Enregistrer au bon endroit & RŽaliser traitement image (soleil au centre)
+		    	        	try{
+		    	        		Thread.currentThread();
+		    	        		Thread.sleep(500);
+		    	        	}catch(InterruptedException e){
+		    	        		e.printStackTrace();
+		    	        	}
 		    	        	Intent intent2 = new Intent(EcranRecherche.this, Enregistrement.class);
 		    				startActivity(intent2);
 		    				finish();
