@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 public class EcranRecherche extends Activity implements OrientationListener{
 	 
@@ -25,6 +24,10 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	protected static BoutonImage mBouton3;
 	public static Vector<MediaPlayer> mMediaPlayer;
 	 	
+		/**
+		 * Standard class that is called when an EcranRecherche is created (creation and definition of every element present in the window)
+		 * @param savedInstanceState type Bundle, standard param.
+		 */
 	 	@Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -33,30 +36,34 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
 	        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+	        // Create the FrameLayout that contains all the element in the window
 	        final FrameLayout frameLayout = new FrameLayout(this);
 	        
-	        //Initialisation Mediaplayer
+	        // Creation the MediaPlayer that allows to play music (sounds giving the direction to follow UP/DOWN/SUN FOUND)
 	        mMediaPlayer = prepareMediaplayer();
             
-	        // Initialisation des differents elements de l'affichage
+	        // Preview creation (camera display), Guide creation (arrows and text informations to find the sun), Buttons creation (Saving, Back, info)
 	        mPreview = new Preview(this);
 	        mGuide = new Guide(this);
 	        mGuide.startListening(this, this);
-	        //Fin Capteur
-	        Display ecran = getWindowManager().getDefaultDisplay(); 
-	        int largeur= ecran.getWidth();
+	        	// Getting screen size
+		        Display ecran = getWindowManager().getDefaultDisplay(); 
+		        int largeur= ecran.getWidth();
 	        mBouton = new Bouton(this,"Retour",100,30,largeur/2+20);
 	        mBouton2 = new Bouton(this,"Enregistrer",100,30,-(largeur/2)+20);
 	        mBouton3 = new BoutonImage(this,R.drawable.info,35,0x30+0x05,0,0);
 	        
+	        //Back button action when clicked
 	        mBouton.setOnClickListener(
 	        	new OnClickListener() {
 	    	        @Override
 	    		    public void onClick(View v){
+	    	        	//Stop MediaPLayer
 	    	        	mMediaPlayer.get(0).stop();
 	    	        	mMediaPlayer.get(1).stop();
 	    	        	mMediaPlayer.get(2).stop();
 	    	        	mMediaPlayer.get(3).stop();
+	    	        	//Go to the Param Activity (definition of the parameters of the sun research -> previous screen)
 	    	        	Intent intent = new Intent(EcranRecherche.this, Param.class);
 	    				startActivity(intent);
 	    				finish();
@@ -64,21 +71,21 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        	}
 	        );
 	       
+	        //Saving button action when clicked
 	       mBouton2.setOnClickListener(
 		        	new OnClickListener() {
 		    	        @Override
 		    		    public void onClick(View v){
+		    	        	//Take the picture corresponding to the preview
 		    	        	mPreview.takePicture();
-		    	        	/*while(!mPreview.test){
-		    	        		Toast.makeText(mGuide.getContext(), "attente", 1000);
-		    	        	}*/
-		    	        	//TODO Enregistrer au bon endroit & Réaliser traitement image (soleil au centre)
+		    	        	//TODO Améliorer le sleep
 		    	        	try{
 		    	        		Thread.currentThread();
-		    	        		Thread.sleep(500);
+		    	        		Thread.sleep(1000);
 		    	        	}catch(InterruptedException e){
 		    	        		e.printStackTrace();
 		    	        	}
+		    	        	//Go to the Enregistrement Activity (screen where the user must say whether the sun is visible or not)
 		    	        	Intent intent2 = new Intent(EcranRecherche.this, Enregistrement.class);
 		    				startActivity(intent2);
 		    				finish();
@@ -86,7 +93,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		        	}
 		   ); 
 	       
-	       //Génération de l'aide
+	       //Creation of the help text
 	       AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	        builder.setMessage(R.string.aide_texte)
 	            .setCancelable(false)
@@ -97,7 +104,8 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	                }
 	            });
 	        final AlertDialog alert = builder.create();
-	        
+	       
+	      //Help button action when clicked (display previous help text)
 	       mBouton3.setOnClickListener(
 		        	new OnClickListener() {
 		    	        @Override
@@ -107,21 +115,28 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		        	}
 		   ); 
 	       
+	       	//Add all the element previously defined to the Framelayout
 	        frameLayout.addView(mPreview);
 	        frameLayout.addView(mGuide);
 	        frameLayout.addView(mBouton);
 	        frameLayout.addView(mBouton2);
 	        frameLayout.addView(mBouton3); 
 	        
+	        //Display the framelayout
 	    	setContentView(frameLayout);
 	    	
 	    }
         
+	 	/**
+	 	 * Method that creates the Vector of Mediaplayers with all the necessary sounds for the application
+	 	 * @return Vector that contains all tha mediaplayers containing the sounds needed in the application [down,up,sun_reache,down]
+	 	 */
+	 	
         public Vector<MediaPlayer> prepareMediaplayer(){
         	Vector<MediaPlayer> mp;
         	mp = new Vector<MediaPlayer>(0);
         	
-        	//son 1
+        	//sound 1 : Go down
             mp.add(new MediaPlayer());
             Uri musicfile = Uri.parse("android.resource://" +
                     getPackageName() + "/" + R.raw.bas);
@@ -135,7 +150,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
            } catch (Exception e) {
                 System.out.println("Erreur survenue : " + e);
            }
-            	//son 2
+            	//sound 2 : Go up
             mp.add(new MediaPlayer());
             Uri musicfile2 = Uri.parse("android.resource://" +
                     getPackageName() + "/" + R.raw.haut);
@@ -149,7 +164,8 @@ public class EcranRecherche extends Activity implements OrientationListener{
             } catch (Exception e) {
                 System.out.println("Erreur survenue : " + e);
            }
-          //son 3
+            
+          //sound 3 : Sun reached
             mp.add(new MediaPlayer());
             Uri musicfile3 = Uri.parse("android.resource://" +
                     getPackageName() + "/" + R.raw.soleil);
@@ -163,7 +179,8 @@ public class EcranRecherche extends Activity implements OrientationListener{
             } catch (Exception e) {
                 System.out.println("Erreur survenue : " + e);
            }
-          //son 3
+            
+          //sound 4 : Go down
             mp.add(new MediaPlayer());
             Uri musicfile4 = Uri.parse("android.resource://" +
                     getPackageName() + "/" + R.raw.bas);
@@ -180,8 +197,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
         	return mp;
         }
         
-        //Méthodes n'ayant pas besoin d'être implantées dans notre cas
-        
+        //Methods needed because of "implement" but that do not need to be defined in our case   
         @Override  
         public void onOrientationChanged(float azimuth, float pitch, float roll) {} 
 	 	@Override  

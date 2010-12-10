@@ -1,7 +1,19 @@
 package com.ei3info.gsun;
 
+/**
+ * Listener to define actions when the state (go left, right, up, down or stop) changes
+ * @author bthorent
+ *
+ */
 public interface OrientationListener {  
 	   
+	/**
+	 * Listener for change in orientation
+	 * @param azimuth
+	 * @param pitch
+	 * @param roll
+	 */
+	
     public void onOrientationChanged(float azimuth,   
             float pitch, float roll);  
    

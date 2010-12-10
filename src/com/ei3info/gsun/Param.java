@@ -3,7 +3,6 @@ package com.ei3info.gsun;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -80,7 +79,8 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	        final Button param_precisiontext = (Button)findViewById(R.id.param_precisiontext);
         
         gSun.temps = new Temps(1,1);
-        gSun.posUtilisateur = new PositionUtilisateur(5.0,4.0);
+        // TODO Bien instancier !!!
+        gSun.posUtilisateur = new PositionUtilisateur(48.8,-1.583);
         gSun.calcul = new Calculs(gSun.posUtilisateur,gSun.temps);
 
 

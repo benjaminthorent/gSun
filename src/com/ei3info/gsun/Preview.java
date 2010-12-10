@@ -1,28 +1,28 @@
 package com.ei3info.gsun;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
  
+/**
+ * Class that enable to display the camera display
+ * @author bthorent
+ *
+ */
 public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	SurfaceHolder mHolder;
 	Camera mCamera;
 	boolean test = false;
  
+	/**
+	 * Preview Constructor that creates the Preview holder
+	 * @param context of the current application
+	 */
 	Preview(Context context) {
 		super(context);
  
@@ -35,6 +35,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		
 	}
  
+	/**
+	 * Method called when a Preview is created
+	 */
 	public void surfaceCreated(SurfaceHolder holder) {
 		// The Surface has been created, acquire the camera and tell it where
 		// to draw.
@@ -49,6 +52,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		}
 	}
  
+	/**
+	 * Method called when the Preview Holder is destroyed (application or activity ended)
+	 */
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// Surface will be destroyed when we return, so stop the preview.
 		// Because the CameraDevice object is not a shared resource, it's very
@@ -58,6 +64,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		mCamera = null;
 	}
 
+	/**
+	 * Method called when the Preview Holder is changed (change of orientation,...)
+	 */
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,int height) {
 		Parameters params = mCamera.getParameters();
@@ -65,12 +74,11 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
         mCamera.startPreview();
 	}
 	
-	//TODO Pour Shion, m�thodes � d�commenter pour la prise de photo
-	
+	/**
+	 * Method to PictureCallback needed to save a picture (needed when taking a picture -> see take picture method)
+	 */
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
-			//new SavePhotoTask().execute(data);
-			//camera.startPreview();
 			try {
 				savePicture(data);
 			} catch (IOException e) {
@@ -79,43 +87,28 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		}
 	};
 	
+	/**
+	 * Method to save a picture (see method above : Picture Callback)
+	 * @param data
+	 * @throws IOException
+	 */
 	public void savePicture(byte[] data) throws IOException {
-		//File photo1 = new File("/data/data/com.ei3info.gsun/app_data/photo1nom");
-		//FileOutputStream fOut = new FileOutputStream(photo1.getPath());
+		//Prepare a buffer to save the picture
 		FileOutputStream fOut = EcranRecherche.mGuide.getContext().openFileOutput("photo1nom",Context.MODE_PRIVATE);
 		BufferedOutputStream bufOut = new BufferedOutputStream(fOut);
-		//Bitmap myPic = BitmapFactory.decodeByteArray(data,0,data.length);
-		//myPic.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+		//Save the picture by copying all the corresponding informations -> bites 
 		bufOut.write(data);
 		bufOut.flush();
 		bufOut.close();
 		test = true;
 	}
 	
-	
+	/**
+	 * Method that actually take a picture corresponding to the current state of the preview
+	 */
  	public void takePicture() {
 		mCamera.takePicture(null, null, photoCallback);
 	}
- 	
-	/*class SavePhotoTask extends AsyncTask<byte[], String, String> {
-		protected String doInBackground(byte[]... jpeg) {
-			File photo=new File(Environment.DIRECTORY_PICTURES,"photo.jpg");
- 
-			if (photo.exists()) {
-				photo.delete();
-			}
- 
-			try {
-				FileOutputStream fos=new FileOutputStream(photo.getPath());
-				fos.write(jpeg[0]);
-				fos.close();
-			}
-			catch (java.io.IOException e) {
-				Log.e("PictureDemo", "Exception in photoCallback", e);
-			}
-			return(null);
-		}
-	}*/
 	
 }
 
