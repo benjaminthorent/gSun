@@ -2,6 +2,8 @@ package com.ei3info.gsun;
 
 import java.util.Vector;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,6 +21,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	protected static Guide mGuide;
 	protected static Bouton mBouton;
 	protected static Bouton mBouton2;
+	protected static BoutonImage mBouton3;
 	public static Vector<MediaPlayer> mMediaPlayer;
 	 	
 	 	@Override
@@ -41,8 +44,10 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        //Fin Capteur
 	        Display ecran = getWindowManager().getDefaultDisplay(); 
 	        int largeur= ecran.getWidth();
-	        mBouton = new Bouton(this,"Retour",80,30,largeur/2+20);
-	        mBouton2 = new Bouton(this,"Photo",80,30,-(largeur/2)+20);
+	        mBouton = new Bouton(this,"Retour",100,30,largeur/2+20);
+	        mBouton2 = new Bouton(this,"Enregistrer",100,30,-(largeur/2)+20);
+	        mBouton3 = new BoutonImage(this,R.drawable.info,35,0x30+0x05,0,0);
+	        
 	        mBouton.setOnClickListener(
 	        	new OnClickListener() {
 	    	        @Override
@@ -51,14 +56,13 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	    	        	mMediaPlayer.get(1).stop();
 	    	        	mMediaPlayer.get(2).stop();
 	    	        	mMediaPlayer.get(3).stop();
-	    	        	Intent intent = new Intent(EcranRecherche.this, gSun.class);
+	    	        	Intent intent = new Intent(EcranRecherche.this, Param.class);
 	    				startActivity(intent);
 	    				finish();
 	    	        }
 	        	}
 	        );
 	       
-	       //TODO Pour Shion, méthodes à décommenter pour la prise de photo
 	       mBouton2.setOnClickListener(
 		        	new OnClickListener() {
 		    	        @Override
@@ -70,12 +74,34 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		    				finish();
 		    	        }
 		        	}
-		   );      
+		   ); 
+	       
+	       //Génération de l'aide
+	       AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setMessage(R.string.aide_texte)
+	            .setCancelable(false)
+	            .setTitle(R.string.aide_titre)
+	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                dialog.dismiss();
+	                }
+	            });
+	        final AlertDialog alert = builder.create();
+	        
+	       mBouton3.setOnClickListener(
+		        	new OnClickListener() {
+		    	        @Override
+		    		    public void onClick(View v){
+		    	        	alert.show();
+		    	        }
+		        	}
+		   ); 
 	       
 	        frameLayout.addView(mPreview);
 	        frameLayout.addView(mGuide);
 	        frameLayout.addView(mBouton);
-	        frameLayout.addView(mBouton2);   	
+	        frameLayout.addView(mBouton2);
+	        frameLayout.addView(mBouton3); 
 	        
 	    	setContentView(frameLayout);
 	    	

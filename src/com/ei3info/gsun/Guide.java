@@ -2,6 +2,7 @@ package com.ei3info.gsun;
 
 import java.util.List;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -240,9 +241,7 @@ public class Guide extends View {
 	        
 	        public void onSensorChanged(SensorEvent event) {  
 	   
-	        	Toast.makeText(getContext(),String.valueOf(pitch_objectif),1000).show();
-	        	
-	            azimuth = event.values[0];     // azimuth  
+	        	azimuth = event.values[0];     // azimuth  
 	            pitch = event.values[1];     // pitch  
 	            roll = event.values[2];        // roll  
 	   
@@ -305,9 +304,12 @@ public class Guide extends View {
                         	temps_ok=true;
                         	start = System.currentTimeMillis();
                         }else{
-                        	if(Math.abs(System.currentTimeMillis()-start)>5000){
+                        	if(Math.abs(System.currentTimeMillis()-start)>1500){
                         		Toast.makeText(getContext(), "Action !", 1000).show();
                         		//TODO Rajouter prise de photo et envoi vers nouvelle activité
+                        		//Intent intent = new Intent(Intent.ACTION_VIEW, null, getContext(), gSun.class);
+                                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
+                                //getContext().getApplicationContext().startActivity(intent);
                         	}
                         }
 		            	currentDirection = Direction.OK;
