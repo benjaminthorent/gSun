@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	android:background="@color/background">
+	
+	
+	<TextView
+		android:id="@+id/caractmesures_titre"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/caractmesures_titre"
+		android:textSize="22px"
+		android:layout_marginTop="10px"
+		android:layout_gravity="center_horizontal"
+		android:layout_centerHorizontal="true"
+		android:textColor="#0000FF"
+		/>
+	
+	<Button 
+		android:id="@+id/caractmesures_photo"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:text="@string/caractmesures_photo"
+		android:layout_marginTop="15px"
+		android:layout_below="@id/caractmesures_titre"
+		android:background="@drawable/mybutton2"
+		android:layout_margin="10px"
+		/>
+	<Button 
+		android:id="@+id/caractmesures_retour"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:text="@string/caractmesures_retour"
+		android:layout_marginTop="15px"
+		android:layout_alignBaseline="@id/caractmesures_photo"
+		android:layout_toRightOf="@id/caractmesures_photo"
+		android:background="@drawable/mybutton2"
+		android:layout_margin="10px"
+		/>
+			
+	
+	<Gallery 
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/caractmesures_gallery" 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/caractmesures_photo"
+		android:layout_marginTop="15px" 
+		/>
+		
+	<ImageView 
+		android:id="@+id/ImageView01"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_below="@id/caractmesures_gallery"
+		/>
+		
+
+</RelativeLayout>

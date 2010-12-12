@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -28,6 +28,7 @@
  		android:layout_below="@id/synthese_titre"
  		android:text="@string/synthese_retour"
 		android:layout_centerHorizontal="true"
+		android:background="@drawable/mybutton2"
  	/>
 
 <TextView
@@ -57,47 +58,134 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
-    android:stretchColumns="4"
-    android:layout_marginTop="10px"
-    android:id="@+id/synthese_tableau"
-    android:layout_below="@id/synthese_rep"
->
+    android:stretchColumns="5"
+    android:layout_marginTop="40px"
+    android:id="@+id/synthese_tableau">
 
-    <TableRow>
+    <TableRow android:id="@+id/synthese_tableau_row0">
         <TextView
             android:layout_column="1"
-            android:text="Lieu"
-            android:padding="3dip" 
-        android:textColor="#ED0000"
+            android:text="Photo"  
+        	android:textColor="#ED0000"
+        	android:paddingLeft="10px"
+        	
         />
         <TextView
         	android:layout_column="2"
             android:text="Date"
-            android:padding="3dip"
             android:textColor="#ED0000"
-            android:layout_marginLeft="10px"
+            android:paddingLeft="10px"
           />
         <TextView
             android:layout_column="3"
             android:text="Heure"
-            android:padding="3dip" 
             android:textColor="#ED0000"
-            android:layout_marginLeft="20px"
+            android:paddingLeft="10px"
           />
         <TextView
         	android:layout_column="4"
             android:text="Etat"
-            android:padding="3dip"
             android:textColor="#ED0000"
+            android:paddingLeft="10px"
+          />
+        <TextView
+        	android:layout_column="5"
+            android:text="Précision"
+            android:textColor="#ED0000"
+            android:paddingLeft="10px"
           />
     </TableRow>
     <View
         android:layout_height="2dip"
         android:background="#FF909090" />
+       
             
+     <TableRow
+     android:id="@+id/synthese_tableau_row1">
+        <Button
+            android:id="@+id/synthese_l1c1"
+            android:layout_column="1"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px"
+            android:background="@null"
+            />
+            
+  	    <TextView
+            android:id="@+id/synthese_l1c2"
+            android:layout_column="2"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px"
+            />
+            
+        <TextView
+            android:id="@+id/synthese_l1c3"
+            android:layout_column="3"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px"
+            />      
+            
+        <Spinner
+            android:id="@+id/synthese_l1c4"
+            android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:paddingLeft="10px"
+            android:background="@null"
+            android:textColor="@color/couleurTableau"
+            />
+		<TextView
+            android:id="@+id/synthese_l1c5"
+            android:layout_column="5"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px"
+            />        
+	</TableRow>
+	<View
+       android:layout_height="2dip"
+       android:background="#FF909090"/>
+           
+           
+           
+     <TableRow android:id="@+id/synthese_tableau_row2">
+        <Button
+            android:id="@+id/synthese_l2c1"
+            android:layout_column="1"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px"
+            android:background="@null" />
+            
+  	    <TextView
+            android:id="@+id/synthese_l2c2"
+            android:layout_column="2"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px" />
+            
+        <TextView
+            android:id="@+id/synthese_l2c3"
+            android:layout_column="3"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px" />      
+            
+        <Spinner
+            android:id="@+id/synthese_l2c4"
+            android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:paddingLeft="10px"
+            android:background="@null"
+            android:textColor="@color/couleurTableau" /> 
+         <TextView
+            android:id="@+id/synthese_l2c5"
+            android:layout_column="5"
+            android:textColor="@color/couleurTableau"
+            android:paddingLeft="10px" />       
+	</TableRow>
+	<View
+       android:layout_height="2dip"
+       android:background="#FF909090" />
 
 </TableLayout>
 
 
 
-</RelativeLayout>
+</LinearLayout>

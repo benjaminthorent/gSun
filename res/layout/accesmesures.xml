@@ -24,8 +24,9 @@
  		android:layout_height="wrap_content"
  		android:layout_gravity="center"
  		android:text="@string/accesmesures_photo"
- 		android:layout_marginTop="200px"
+ 		android:layout_marginTop="100px"
 		android:layout_centerHorizontal="true"
+		android:background="@drawable/mybutton2"
  	/>
 	
 	<Button
@@ -34,8 +35,9 @@
  		android:layout_height="wrap_content"
  		android:layout_gravity="center"
  		android:text="@string/accesmesures_synthese"
- 		android:layout_marginTop="250px"
+ 		android:layout_marginTop="170px"
 		android:layout_centerHorizontal="true"
+		android:background="@drawable/mybutton2"
  	/>
 	
 	<Button
@@ -46,6 +48,7 @@
  		android:text="@string/accesmesures_retour"
  		android:layout_marginTop="350px"
 		android:layout_centerHorizontal="true"
+		android:background="@drawable/mybutton2"
  	/>
 
 

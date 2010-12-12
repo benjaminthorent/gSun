@@ -36,6 +36,7 @@
  	android:layout_marginTop="50px"
  	android:layout_marginLeft="40px"
  	android:layout_marginRight="40px"
+ 	android:background="@drawable/mybutton2"
  	/>
  	
   <Button
@@ -47,7 +48,7 @@
  	android:layout_marginTop="20px"
  	android:layout_marginLeft="40px"
  	android:layout_marginRight="40px"
- 
+ 	android:background="@drawable/mybutton2"
  	/>
  	
   <Button
@@ -58,6 +59,7 @@
  	android:text="@string/accueil_aide"
  	android:layout_marginRight="15px"
  	android:layout_marginBottom="15px"
+ 	android:background="@drawable/mybutton2"
  	/>
     
 </LinearLayout>

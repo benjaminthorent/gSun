@@ -37,11 +37,10 @@ public class AccesMesures extends Activity{
 				    break;
 			    	
 			    	 case R.id.accesmesures_photo:
-			    		 /**
-					    	 A RAJOUTER QUAND LA CLASSE CaractMesures sera construite
+			    		
 			    		 Intent intent3 = new Intent(AccesMesures.this, CaractMesures.class);
 						startActivity(intent3);
-				    	finish();**/
+				    	finish();
 				    break;			    		
 			    	}
 		    	}

@@ -27,6 +27,9 @@
         <activity android:name=".AccesMesures"
         		  android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".CaractMesures"
+        		  android:screenOrientation="portrait">
+        </activity>
         <activity android:name=".Enregistrement"
         		  android:screenOrientation="portrait">
         </activity>

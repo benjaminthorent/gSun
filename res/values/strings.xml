@@ -70,13 +70,24 @@
 	<string name="accesmesures_titre">Accès aux mesures</string>
 	<string name="accesmesures_photo">Photographies de l\'emplacement</string>
 	<string name="accesmesures_synthese">Synthèse des mesures</string>
-	<string name="accesmesures_retour">"     Retour     "</string>
+	<string name="accesmesures_retour">"   Annuler   "</string>
 
 	<!-- synthesemesures.xml -->
 	
-	<string name="synthese_titre">Synthèse des mesures</string>
+		<string name="synthese_titre">Synthèse des mesures</string>
     <string name="synthese_reptexte">Répertoire courrant :</string>
-    <string name="synthese_retour">Retour</string>
+    <string name="synthese_retour">"   Annuler   "</string>
+        <string-array name="etat_array">	
+		<item>S</item>
+		<item>N</item>
+		<item>\?</item>
+	</string-array>
+	<color name="couleurTableau">#000000</color>
+	
+	<!-- caractmesures.xml -->
+	<string name="caractmesures_titre">Caractérisation des mesures</string>
+	<string name="caractmesures_photo">Prendre une nouvelle Photo</string>
+	<string name="caractmesures_retour">"   Annuler   "</string>
 
 
 	<string name="aide_texte">"Cette application permet de connaître la direction apparente du soleil à une date et une heure choisies.
