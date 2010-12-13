@@ -75,6 +75,7 @@ public class Guide extends View {
     //Time information to help to take picture when sun was found 2 seconds ago
     private boolean temps_ok;
     private long start;
+    private boolean photo_non_prise;
 
     /** Direction to give to the phone to reach the aim */  
     enum Direction {  
@@ -129,6 +130,7 @@ public class Guide extends View {
 	    texte_guide[3]="";
 	    
 	    temps_ok=false;
+	    photo_non_prise=true;
 		
 	}
 	
@@ -362,13 +364,26 @@ public class Guide extends View {
                         	temps_ok=true;
                         	start = System.currentTimeMillis();
                         }else{
-                        	//After 1.5 seconds in the correct position
-                        	if(Math.abs(System.currentTimeMillis()-start)>5000){
+                        	//After 2 seconds in the correct position
+                        	if((Math.abs(System.currentTimeMillis()-start)>2000)&&(photo_non_prise)){
                         		Toast.makeText(getContext(), "Action !", 1000).show();
-                        		//TODO Rajouter prise de photo 
-                        		//Take picture
+                        		//Take the picture corresponding to the preview
+    		    	        	EcranRecherche.mPreview.takePicture();
+    		    	        	photo_non_prise=false;
+    		    	        	//TODO Améliorer le sleep
+    		    	        	try{
+    		    	        		Thread.currentThread();
+    		    	        		Thread.sleep(1000);
+    		    	        	}catch(InterruptedException e){
+    		    	        		e.printStackTrace();
+    		    	        	}
+    		    	        	//Stop sound
+    		    	        	EcranRecherche.mMediaPlayer.get(0).stop();
+    		    	        	EcranRecherche.mMediaPlayer.get(1).stop();
+    		    	        	EcranRecherche.mMediaPlayer.get(2).stop();
+    		    	        	EcranRecherche.mMediaPlayer.get(3).stop();
                         		//Go to next activity where shadow or sun state has to be defined by user
-                        		Intent intent = new Intent(Intent.ACTION_VIEW, null, getContext(), gSun.class);
+                        		Intent intent = new Intent(Intent.ACTION_VIEW, null, getContext(), DefinitionPhoto.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);    
                                 getContext().getApplicationContext().startActivity(intent);
                         	}

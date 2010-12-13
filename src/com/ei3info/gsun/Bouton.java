@@ -21,7 +21,7 @@ public class Bouton extends Button{
 	 * @param hauteur : desired height for the button
 	 * @param margin : margin with the middle of the screen width (if negative on the left, on the right if positive)
 	 */
-	public Bouton(Context context,String texte, int largeur, int hauteur, int margin){
+	public Bouton(Context context,String texte, int gravity, int largeur, int hauteur, int margin){
 		super(context);
 		//Layout parameters definition for the button
 		LayoutParams l = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 
@@ -31,9 +31,9 @@ public class Bouton extends Button{
 	    this.setWidth(largeur);
 	    this.setHeight(hauteur);
 	    //button on the bottom of the screen
-		l.gravity=0x50;
+		l.gravity=gravity;
 		//Definition of the margin as described in the parameters description
-		if(margin>0){
+		if(margin>=0){
 			l.leftMargin=margin;
 		}else{
 			l.leftMargin=-margin-largeur;

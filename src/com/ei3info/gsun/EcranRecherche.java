@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Display;
+//import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,8 +20,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	protected static Preview mPreview;
 	protected static Guide mGuide;
 	protected static Bouton mBouton;
-	protected static Bouton mBouton2;
-	protected static BoutonImage mBouton3;
+	protected static BoutonImage mBouton2;
 	public static Vector<MediaPlayer> mMediaPlayer;
 	 	
 		/**
@@ -47,11 +46,10 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        mGuide = new Guide(this);
 	        mGuide.startListening(this, this);
 	        	// Getting screen size
-		        Display ecran = getWindowManager().getDefaultDisplay(); 
-		        int largeur= ecran.getWidth();
-	        mBouton = new Bouton(this,"Retour",100,30,largeur/2+20);
-	        mBouton2 = new Bouton(this,"Enregistrer",100,30,-(largeur/2)+20);
-	        mBouton3 = new BoutonImage(this,R.drawable.info,35,0x30+0x05,0,0);
+		        //Display ecran = getWindowManager().getDefaultDisplay(); 
+		        //int largeur= ecran.getWidth();
+	        mBouton = new Bouton(this,"Retour",0x50+0x01,80,30,0);
+	        mBouton2 = new BoutonImage(this,R.drawable.info,35,0x30+0x05,0,0);
 	        
 	        //Back button action when clicked
 	        mBouton.setOnClickListener(
@@ -70,7 +68,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	    	        }
 	        	}
 	        );
-	       
+	       /*
 	        //Saving button action when clicked
 	       mBouton2.setOnClickListener(
 		        	new OnClickListener() {
@@ -78,7 +76,6 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		    		    public void onClick(View v){
 		    	        	//Take the picture corresponding to the preview
 		    	        	mPreview.takePicture();
-		    	        	//TODO Améliorer le sleep
 		    	        	try{
 		    	        		Thread.currentThread();
 		    	        		Thread.sleep(1000);
@@ -86,12 +83,12 @@ public class EcranRecherche extends Activity implements OrientationListener{
 		    	        		e.printStackTrace();
 		    	        	}
 		    	        	//Go to the Enregistrement Activity (screen where the user must say whether the sun is visible or not)
-		    	        	Intent intent2 = new Intent(EcranRecherche.this, Enregistrement.class);
+		    	        	Intent intent2 = new Intent(EcranRecherche.this, DefinitionPhoto.class);
 		    				startActivity(intent2);
 		    				finish();
 		    	        }
 		        	}
-		   ); 
+		   ); */
 	       
 	       //Creation of the help text
 	       AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -106,7 +103,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        final AlertDialog alert = builder.create();
 	       
 	      //Help button action when clicked (display previous help text)
-	       mBouton3.setOnClickListener(
+	       mBouton2.setOnClickListener(
 		        	new OnClickListener() {
 		    	        @Override
 		    		    public void onClick(View v){
@@ -120,7 +117,6 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	        frameLayout.addView(mGuide);
 	        frameLayout.addView(mBouton);
 	        frameLayout.addView(mBouton2);
-	        frameLayout.addView(mBouton3); 
 	        
 	        //Display the framelayout
 	    	setContentView(frameLayout);
