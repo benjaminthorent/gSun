@@ -118,7 +118,8 @@ public class Guide extends View {
 	    // --> The smartphone must be perpendicular to our position in reference to the given pitch that aims to the sun
 	    // --> The azimuth obtained gives the angle to South whereas azimuth=0 from captors aim to North
 	    azimuth_objectif = (180 + (int) gSun.calcul.getAzimut())%360;
-	    pitch_objectif = (90 + (int) gSun.calcul.getHauteurSolaire())%360;
+	    pitch_objectif = (-90-(int) gSun.calcul.getHauteurSolaire());
+	    //Toast.makeText(getContext(), azimuth_objectif + " et " + pitch_objectif, 1000).show();
 	    
 	    //Creating text information array
 	    texte_guide = new String[4];
@@ -285,20 +286,21 @@ public class Guide extends View {
 	        	azimuth = event.values[0];     // azimuth  
 	            pitch = event.values[1];     // pitch  
 	            roll = event.values[2];        // roll  
+	            
 	   
 	            //Link between Param screen and accuracy value
 	            //Defining accuracy
 	            //From param parameters and choices : values = 1,2,3 -> accuracy(°) = 4,7,10
 	            switch(gSun.precision){
 	            case 1 :
-	            	precision_azimuth = 4;
-	            	precision_pitch = 4;
+	            	precision_azimuth = 10;
+	            	precision_pitch = 10;
 	            case 2 :
 	            	precision_azimuth = 7;
 	            	precision_pitch = 7;
 	            case 3 :
-	            	precision_azimuth = 10;
-	            	precision_pitch = 10;
+	            	precision_azimuth = 4;
+	            	precision_pitch = 4;
 	            }
 	            
 	            //Actions according to the azimuth and pitch
@@ -361,7 +363,7 @@ public class Guide extends View {
                         	start = System.currentTimeMillis();
                         }else{
                         	//After 1.5 seconds in the correct position
-                        	if(Math.abs(System.currentTimeMillis()-start)>1500){
+                        	if(Math.abs(System.currentTimeMillis()-start)>5000){
                         		Toast.makeText(getContext(), "Action !", 1000).show();
                         		//TODO Rajouter prise de photo 
                         		//Take picture

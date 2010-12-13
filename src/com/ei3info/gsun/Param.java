@@ -1,9 +1,14 @@
 package com.ei3info.gsun;
 
+import java.util.List;
+
+
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +30,8 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	protected int heureLever;
 	protected int heureCoucher;
 	protected int heure=12;
+	LocationManager lm;
+    private LocationListener locationListener;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,20 +39,25 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.param);
         
-        //Getting longitude & lattitude    
-        LocationManager objgps = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);        
-        Location location = objgps.getLastKnownLocation("gps");
-        
-        //double latitude = location.getLatitude();
-        //int longitude = (int)(location.getLongitude());
-        if(location==null){
-        	Toast.makeText(this, "Pb !", 1000).show();
-        }else{
-        	Toast.makeText(this, (int) location.getLatitude(), 1000).show();
-        }
-        
+        lm=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
+ 
+        locationListener = new MyLocationListener();
 
-	
+        lm.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                3000,           // ms since last call
+                0,              //  m movement
+                locationListener);    
+
+        lm.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                200,            // ms since last call
+                0,              //  m movement
+                locationListener);  
+
+      
+        double[] GPS = this.getGPS();
+        //lm.removeUpdates(locationListener);
         //Spinner choix type date
 			final Spinner param_typedate_spinner=(Spinner) findViewById(R.id.param_typedate);
 			ArrayAdapter<CharSequence> param_typedate_adapter = ArrayAdapter.createFromResource(this, R.array.param_typedate_array, android.R.layout.simple_spinner_item);
@@ -79,8 +91,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	        final Button param_precisiontext = (Button)findViewById(R.id.param_precisiontext);
         
         gSun.temps = new Temps(1,1);
-        // TODO Bien instancier !!!
-        gSun.posUtilisateur = new PositionUtilisateur(48.8,-1.583);
+        gSun.posUtilisateur = new PositionUtilisateur(GPS[0], GPS[1]);
         gSun.calcul = new Calculs(gSun.posUtilisateur,gSun.temps);
 
 
@@ -92,7 +103,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 			param_precision_moins.setVisibility(4);
 		}
         
-        //Clics sur les boutons annuler et valider et prŽcision
+        //Clics sur les boutons annuler et valider et prÂŽcision
         OnClickListener onClickLister = new OnClickListener() {
             public void onClick(View v){
             	switch(v.getId()){
@@ -103,7 +114,10 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
             		break;
             	case R.id.param_TrouverSoleil:
             		gSun.temps.heure=heure;
-            		
+            		//TODO A nettoyer
+            		gSun.posUtilisateur.setLatitude(48.8);
+            		gSun.posUtilisateur.setLongitude(-1.583);
+            		Toast.makeText(getBaseContext(), gSun.posUtilisateur.latitude + " " + gSun.posUtilisateur.longitude, 2000).show();
             		Intent intent2 = new Intent(Param.this, EcranRecherche.class);
         			startActivity(intent2);
         			finish();
@@ -157,7 +171,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 				    			param_couchertext.setVisibility(4);
 				    			param_coucher.setVisibility(4);
 				    			
-				    		//On mets les champs ˆ 0
+				    		//On mets les champs Âˆ 0
 				    			param_jour_spinner.setSelection(0);
 				    			param_mois_spinner.setSelection(0);
 			    			
@@ -199,7 +213,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 			    			break;
 		    			
 		    			case 4:	//Solstice d'hiver (21 decembre)
-		    	    		//On fait appara”tre tous les champs
+		    	    		//On fait apparaÂ”tre tous les champs
 			        			param_jour_spinner.setVisibility(3);
 			    				param_mois_spinner.setVisibility(3);
 				    			param_levertext.setVisibility(3);
@@ -328,7 +342,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	    	public void onItemSelected (AdapterView<?> parent, View view, int position, long id) {
 	    		switch ((int) parent.getItemIdAtPosition(position)) {
 	    		case 0:
-	    			//On masque le champ mois et on le met ˆ 0
+	    			//On masque le champ mois et on le met Âˆ 0
 	    				param_mois_spinner.setVisibility(4);
 	    				param_mois_spinner.setSelection(0);
 	    				
@@ -566,6 +580,58 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
         param_precision_moins.setOnClickListener(onClickMoins);  
         
     }
+	
+	public class MyLocationListener implements LocationListener
+	{
+	    public void onLocationChanged(Location loc) {  
+	            @SuppressWarnings("unused")
+				double coordinates[] = getGPS();               
+	    }
+
+	   
+
+	        public void onProviderDisabled(String provider) {
+	        	
+	        }
+
+	   
+
+	        public void onProviderEnabled(String provider) {
+
+	        }  
+
+	        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+	        }
+
+	}
+
+	//onLocationChanged calls getGPS()
+	private double[] getGPS() {
+
+	   List<String> providers = lm.getProviders(true);
+	    double[] gps = new double[2];
+
+	    /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
+
+	    Location l = null;
+
+	    for (int i=providers.size()-1; i>=0; i--) {
+
+	            @SuppressWarnings("unused")
+				String s = providers.get(i);
+	            //Log.d("LocServ",String.format("provider (%d) is %s",i,s));
+	            l = lm.getLastKnownLocation(providers.get(i));  
+	            if (l != null) {
+
+	                    gps[0] = l.getLatitude();
+	                    gps[1] = l.getLongitude();
+	                    //Log.d("LocServ",String.format("Lat %f, Long %f accuracy=%f",gps[0],gps[1],l.getAccuracy()));
+	            }      
+	    }
+	    return gps;
+	}
+
     
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
     	heure = heureLever-1;
@@ -605,4 +671,6 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
     }
     
 }
+
+
 
