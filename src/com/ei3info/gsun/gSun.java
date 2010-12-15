@@ -1,5 +1,7 @@
 package com.ei3info.gsun;
 
+import java.io.File;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,11 +20,19 @@ public class gSun extends Activity {
 	protected static int precisionMin=1;
 	protected static int precisionMax=3;
 	protected static int precision=3;
+	
+	protected static File gsun;
+	protected static File temp;
+	protected static File temptxt;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        gsun = this.getApplicationContext().getDir("gsun", MODE_PRIVATE); 
+        new File(gsun, "defaut").mkdirs();
+        new File(gsun.getAbsolutePath() + File.separator + "defaut" + File.separator + "carac").mkdirs();
         
 	    Button accueil_calcul =(Button)findViewById(R.id.accueil_calcul);
 	    Button accueil_mesures =(Button)findViewById(R.id.accueil_mesures);

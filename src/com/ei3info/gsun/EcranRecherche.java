@@ -68,27 +68,6 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	    	        }
 	        	}
 	        );
-	       /*
-	        //Saving button action when clicked
-	       mBouton2.setOnClickListener(
-		        	new OnClickListener() {
-		    	        @Override
-		    		    public void onClick(View v){
-		    	        	//Take the picture corresponding to the preview
-		    	        	mPreview.takePicture();
-		    	        	try{
-		    	        		Thread.currentThread();
-		    	        		Thread.sleep(1000);
-		    	        	}catch(InterruptedException e){
-		    	        		e.printStackTrace();
-		    	        	}
-		    	        	//Go to the Enregistrement Activity (screen where the user must say whether the sun is visible or not)
-		    	        	Intent intent2 = new Intent(EcranRecherche.this, DefinitionPhoto.class);
-		    				startActivity(intent2);
-		    				finish();
-		    	        }
-		        	}
-		   ); */
 	       
 	       //Creation of the help text
 	       AlertDialog.Builder builder = new AlertDialog.Builder(this);

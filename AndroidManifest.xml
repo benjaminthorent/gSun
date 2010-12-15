@@ -33,6 +33,12 @@
         <activity android:name=".DefinitionPhoto"
         		  android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".AffichagePhotoSynthese"
+        		  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".PhotoCaracterisation"
+        		  android:screenOrientation="portrait">
+        </activity>
     </application>
 	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

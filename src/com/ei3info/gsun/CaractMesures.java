@@ -35,7 +35,7 @@ public class CaractMesures extends Activity{
             public void onClick(View v){
             	switch(v.getId()){
             	case R.id.caractmesures_retour:
-            		Intent intent = new Intent(CaractMesures.this, AccesMesures.class);
+            		Intent intent = new Intent(CaractMesures.this, PhotoCaracterisation.class);
         			startActivity(intent);
             		finish();
             		break;

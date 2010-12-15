@@ -57,7 +57,7 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 
       
         double[] GPS = this.getGPS();
-        //lm.removeUpdates(locationListener);
+        lm.removeUpdates(locationListener);
         //Spinner choix type date
 			final Spinner param_typedate_spinner=(Spinner) findViewById(R.id.param_typedate);
 			ArrayAdapter<CharSequence> param_typedate_adapter = ArrayAdapter.createFromResource(this, R.array.param_typedate_array, android.R.layout.simple_spinner_item);

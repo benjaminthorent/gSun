@@ -7,12 +7,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.TextView;
 
 
 public class SyntheseMesures extends Activity {
 
+	protected static Bitmap imageAAfficher;
 	    /** Called when the activity is first created. */
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
@@ -34,21 +36,22 @@ public class SyntheseMesures extends Activity {
                     dialog.dismiss();
                     }
                 });
-            final AlertDialog alert = builder.create();
+            @SuppressWarnings("unused")
+			final AlertDialog alert = builder.create();
             
-            l1c1.setOnClickListener(new View.OnClickListener() {
+            /**l1c1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     alert.show();
                 }
-                });
-            /**l1c1.setOnClickListener(new View.OnClickListener() {
+                });**/
+            l1c1.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //ouverture de la femetre widget  	 
-               	 Intent intent = new Intent(HelloTableLayout.this, EcranBis.class);
+               	 Intent intent = new Intent(SyntheseMesures.this, AffichagePhotoSynthese.class);
 	 				startActivity(intent);
 	 		    	finish();
                 }
-            });**/
+            });
    
             TextView l1c2 = (TextView)findViewById(R.id.synthese_l1c2);
             l1c2.setText("11/09");

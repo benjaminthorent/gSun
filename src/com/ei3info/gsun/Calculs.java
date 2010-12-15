@@ -1,6 +1,7 @@
 package com.ei3info.gsun;
 
 public class Calculs {
+	
 	//class which allows to provide Solar Azimuth and Solar Height
 	//depending on the user position and the date
 	private PositionUtilisateur position;
@@ -16,24 +17,23 @@ public class Calculs {
 	//Return the time difference (in hour) between a civil day (24) and the solar day duration (variable
 	//according to the specific day
 	public double EquationTemps(){
-		//anomalie moyenne en degrčs
+		//average anomaly in degrees
 		double M = (357 + 0.9856 * date.getQuantiemeAnnee())*Math.PI/180;
-		//equation du centre
+		//center equation
 		double C = 1.914 * Math.sin(M) + 0.02 * Math.sin(2*M);
-		//Longitude vraie du Soleil en degrčs
+		// True Solar longitude in degrees
 		double L = (280 + C + 0.9856 * date.getQuantiemeAnnee())*Math.PI/180 ;
-		//Reduction ŕ l'équateur
+		//Reduction to the equator
 		double R = -2.465 * Math.sin(2*L) + 0.053 * Math.sin(4*L);
-		//Equation du temps en minutes
+		//Time equation in minutes 
 		double ET = (C + R) * 4;
-		//conversion en heures
+		//Translation into hours
 		ET /= 60;
 		return ET;
 	}
 	
 	// it is a parameter necessary to compute the rise and the fall of the sun 
 	public double parametreLeverCoucher(){
-		//correspond au HO du pdf théorique
 		double H1 = (-0.01454 - Math.sin(date.getDeclinaisonSolaire()*Math.PI/180) * Math.sin(position.getLatitude()*Math.PI/180)) / (Math.cos(date.getDeclinaisonSolaire()*Math.PI/180) * Math.cos(position.getLatitude()*Math.PI/180));
 		double H0 =0;
 		if (H1 < -1 || H1 > 1){
@@ -42,7 +42,7 @@ public class Calculs {
 		} else {
 			H0 = Math.acos(H1)*180/Math.PI;
 		}
-		// conversion en heure décimale
+		// Translation into hours
 		H0 /= 15;
 		return H0;
 	}
@@ -52,18 +52,19 @@ public class Calculs {
 		//temps solaire moyen
 		double TSM = (double)(date.getHeure() + position.getLongitude()/15);
 		//temps solaire vrai
-		double TSV = TSM - this.EquationTemps() - this.fuseau();
-		TSV = this.offsetInverseHeure(TSV);
+		double TSV = TSM - this.EquationTemps() - this.fuseau() - majorationHoraire();
+		
 		return TSV;
 	}
 	
 	
+	// Returns the hour angle
 	public double angleHoraire(){
 		double AH = 15*(this.tempsSolaireVrai() - 12);
 		return AH;
 	}
 	
-	
+	// Returns the Solar Azimuth
 	public double getAzimut(){
 		double num = Math.sin(position.getLatitude()*Math.PI/180) * Math.cos(date.getDeclinaisonSolaire()*Math.PI/180) * Math.cos(this.angleHoraire()*Math.PI/180) - Math.cos(position.getLatitude()*Math.PI/180) * Math.sin(date.getDeclinaisonSolaire()*Math.PI/180);
 		double cosA = (num)/(Math.cos(this.getHauteurSolaire()*Math.PI/180));
@@ -77,6 +78,7 @@ public class Calculs {
 		return Azimut;
 	}
 	
+	// Returns the Solar Height 
 	public double getHauteurSolaire(){
 		double sinH = Math.sin(position.getLatitude()*Math.PI/180) * Math.sin(date.getDeclinaisonSolaire()*Math.PI/180) + Math.cos(position.getLatitude()*Math.PI/180) * Math.cos(date.getDeclinaisonSolaire()*Math.PI/180) * Math.cos(this.angleHoraire()*Math.PI/180);
 		return Math.asin(sinH) * 180/Math.PI;
@@ -84,61 +86,49 @@ public class Calculs {
 	
 	
 	// Add an hour or two according to the period ( winter or summer), from Solar time to civil time 
-	public double offsetHeure(double heure){
-		double offset = heure;
+	public double majorationHoraire(){
+		double offset = 0;
 		if (date.mois == 7 || date.mois == 8 || date.mois == 6 && date.jour >=21 || date.mois == 9 && date.jour <=21){
-			offset += 1;
+			offset = 1;
 		} else if (date.mois == 11 || date.mois == 12 || date.mois == 1 || date.mois == 2 || date.mois == 3 && date.jour <=21){
-			offset += 0;
-		} else {offset+=1;}
+			offset = 0;
+		} else {offset=1;}
 		
 		return offset;
 	}
-	
-	// Do the same thing than before, but for the conversion Civil Time to Solar Time
-	public double offsetInverseHeure(double heure){
-		double offset = heure;
-		if (date.mois == 7 || date.mois == 8 || date.mois == 6 && date.jour >=21 || date.mois == 9 && date.jour <=21){
-			offset -= 1;
-		} else if (date.mois == 1 || date.mois == 2 || date.mois == 12 && date.jour >=21 || date.mois == 3 && date.jour <=21){
-			offset += 0;
-		} else {offset-=1;}
 		
-		return offset;
-	}
 	
-	// Returns the French "fuseau"
+	// Returns the French time zone
 	public double fuseau(){
 		return 1;
 	}
 	
 	//Returns the hour the Sun is rising
 	public double getHeureLever(){
-		//heure vraie
+		//true solar hour
 		double VL = 12 - this.parametreLeverCoucher();
-		// longitude en heures
+		// longitude expressed in hours
 		double longitude = position.getLongitude()/15;
-		//heure UTC
+		//UTC hour
 		double TL = VL + this.EquationTemps() - longitude + this.fuseau();
-		// heure légale
 		
-		// + 1 heure en hiver, + 2 heures en été
-		double HL = offsetHeure(TL);
+		//legal hour : add 1 hour for summer
+		double HL = TL + majorationHoraire();
 		return HL;
 		//return TL;
 	}
 	
 	//Returns the hour the Sin is setting
 	public double getHeureCoucher(){
-		//heure vraie
+		//true solar hour
 		double VC = 12 + this.parametreLeverCoucher();
-		// longitude en heures
+		// longitude expressed in hours
 		double longitude = position.getLongitude()/15;
-		//heure UTC
+		//UTC hour
 		double TC = VC + this.EquationTemps() - longitude + this.fuseau();
-		// heure légale
-		//attention il manque + 1 haure en été
-		double HC = offsetHeure(TC);
+		
+		//legal hour : add 1 hour for summer
+		double HC = TC + majorationHoraire();
 		return HC;	
 		}
 	
@@ -146,3 +136,4 @@ public class Calculs {
 	
 
 }
+

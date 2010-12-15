@@ -5,8 +5,6 @@ import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
  
 /**
@@ -14,7 +12,7 @@ import java.io.IOException;
  * @author bthorent
  *
  */
-public class Preview extends SurfaceView implements SurfaceHolder.Callback{
+public class Preview2 extends SurfaceView implements SurfaceHolder.Callback{
 	SurfaceHolder mHolder;
 	Camera mCamera;
 	boolean test = false;
@@ -23,7 +21,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	 * Preview Constructor that creates the Preview holder
 	 * @param context of the current application
 	 */
-	Preview(Context context) {
+	Preview2(Context context) {
 		super(context);
  
 		// Install a SurfaceHolder.Callback so we get notified when the
@@ -80,33 +78,13 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
 			try {
-				Fichier.saveTempFile(data); //TODO a joindre avec classe Fichier de Shion
+				//TODO Nouvelle fonction de Shion ˆ la place !
+				Fichier.saveTempFile(data);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 	};
-	
-	
-	//MŽthode suivante ˆ supprimer
-	/**
-	 * Method to save a picture (see method above : Picture Callback)
-	 * @param data
-	 * @throws IOException
-	 */
-	public void savePicture(byte[] data) throws IOException {
-		//Prepare a buffer to save the picture
-		FileOutputStream fOut = EcranRecherche.mGuide.getContext().openFileOutput("photo1nom",Context.MODE_PRIVATE);
-		BufferedOutputStream bufOut = new BufferedOutputStream(fOut);
-		//Save the picture by copying all the corresponding informations -> bites 
-		bufOut.write(data);
-		bufOut.flush();
-		bufOut.close();
-		test = true;
-	}
-	
-	
-	
 	
 	/**
 	 * Method that actually take a picture corresponding to the current state of the preview
