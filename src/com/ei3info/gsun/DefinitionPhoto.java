@@ -44,7 +44,7 @@ public class DefinitionPhoto extends Activity {
         
         spinner = new Spin(this,60,150);
         @SuppressWarnings({ "rawtypes", "unchecked" })
-		ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,new String[] {"Au soleil","A l'ombre","Indéfini","Non spécifié"});
+		ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,new String[] {"Non spécifié","Au soleil","A l'ombre","Indéfini"});
         spinner.setAdapter(spinnerArrayAdapter);
 
             //Background Picture
