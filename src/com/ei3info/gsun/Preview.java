@@ -79,11 +79,9 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 	 */
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
-			try {
-				Fichier.saveTempFile(data); //TODO a joindre avec classe Fichier de Shion
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
+				Fichier.setTempPicture(data); 
+			
 		}
 	};
 	

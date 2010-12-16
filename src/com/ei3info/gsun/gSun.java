@@ -1,11 +1,15 @@
 package com.ei3info.gsun;
 
 import java.io.File;
-
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
@@ -20,26 +24,44 @@ public class gSun extends Activity {
 	protected static int precisionMin=1;
 	protected static int precisionMax=3;
 	protected static int precision=3;
-	
 	protected static File gsun;
 	protected static File temp;
 	protected static File temptxt;
+	protected static int fileCount;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
         gsun = this.getApplicationContext().getDir("gsun", MODE_PRIVATE); 
-        new File(gsun, "defaut").mkdirs();
-        new File(gsun.getAbsolutePath() + File.separator + "defaut" + File.separator + "carac").mkdirs();
+        Fichier.newDir("defaut");
+        Fichier.newDir("defaut" + File.separator + "carac");
+        
+        //FOR TEST : CREATES gsun/rep1/photo1, gsun/rep1/photo1txt, gsun/rep1/carac/photocarac
+        Fichier.newDir("rep1");
+        File photo1 = Fichier.File("rep1", "photo1");
+		Fichier.create(photo1);
+		File photo1txt = Fichier.File("rep1", "photo1txt");
+		Fichier.create(photo1txt);
+		File photocarac = Fichier.File("rep1", "carac", "photocarac");
+		Fichier.create(photocarac);
+        Bitmap bmp = Fichier.drawableToBitmap(getResources().getDrawable(R.drawable.chrysanthemum));
+        byte[] data = Fichier.bitmapToByte(bmp);
+        Fichier.setPicture(photo1, data);
+        Bitmap bmp2 = Fichier.drawableToBitmap(getResources().getDrawable(R.drawable.desert));
+        byte[] data2 = Fichier.bitmapToByte(bmp2);
+        Fichier.setPicture(photocarac, data2);
+        Fichier.setInfo(photo1txt, "15/12", "15:00", "2", "soleil");
         
 	    Button accueil_calcul =(Button)findViewById(R.id.accueil_calcul);
 	    Button accueil_mesures =(Button)findViewById(R.id.accueil_mesures);
 	    Button accueil_aide =(Button)findViewById(R.id.accueil_aide);
+	    
+
+
 	
 	     
-	    //On crée un écouteur d'évènement commun au deux Button
+	    //On crÔøΩe un ÔøΩcouteur d'ÔøΩvÔøΩnement commun au deux Button
 	    OnClickListener onClickLister = new OnClickListener() {
 	 
 	    	@Override
@@ -60,7 +82,7 @@ public class gSun extends Activity {
 	    };
 	  
     
-	    //on affecte aux Button l'écouteur d'évènement
+	    //on affecte aux Button l'ÔøΩcouteur d'ÔøΩvÔøΩnement
         accueil_calcul.setOnClickListener(onClickLister);
         accueil_mesures.setOnClickListener(onClickLister);
         
@@ -80,6 +102,10 @@ public class gSun extends Activity {
             public void onClick(View v) {
                 alert.show();
             }
-            });
-    }
+            });}
+        
+    
+        
+        
+    
 }

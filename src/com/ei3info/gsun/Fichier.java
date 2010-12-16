@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,18 +15,166 @@ import java.util.ArrayList;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.drawable.Drawable;
 
-/* A copier au début de gSun.java :
- * protected static File gsun;
- * protected static File temp;
- * protected static File temptxt;
- * A copier au début du onCreate dans gSun.java :
- * gsun = this.getApplicationContext().getDir("gsun", MODE_PRIVATE); 
- * new File(gsun, "defaut").mkdirs();
- * new File(gsun.getAbsolutePath() + File.separator + "defaut" + File.separator + "carac").mkdirs();
+/*Some methods take a File into parameters, but some constructors are defined to
+ * create new object File easily. 
  */
 
 public class Fichier {
+	
+	//Create an object File with the path : gsun/nameDir
+	public static File File(String nameDir) {
+		return new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir);
+	}
+	//Create an object File with the path : gsun/nameDir/nameFile
+	public static File File(String nameDir, String nameFile) {
+		return new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + nameFile);
+	}
+	//Create an object File with the path : gsun/nameDir/nameFile/namePic
+	public static File File(String nameDir, String nameFile, String namePic) {
+		return new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + nameFile + File.separator + namePic);
+	}
+	
+	//Effectively creates the File file. 
+	public static void create(File file) {
+		try {file.createNewFile();} catch (IOException e) {e.printStackTrace();}
+	}
+	
+	//Convert a Drawable into a bitmap. A Drawable can be for example :
+	//getResources().getDrawable(R.drawable.picture)
+	public static Bitmap drawableToBitmap(Drawable drawable) {
+		Bitmap bmp = Bitmap.createBitmap(200, 200, Bitmap.Config.ARGB_8888);
+    	drawable.setBounds(0, 0, 200, 200);
+        Canvas canvas = new Canvas(bmp);
+        drawable.draw(canvas);
+        return bmp;
+	}
+	
+	//Convert a bitmap into byte array
+	public static byte[] bitmapToByte(Bitmap bmp) {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bmp.compress(CompressFormat.PNG, 0, bos);
+        return bos.toByteArray();
+	}
+	
+	//General method to get a picture stored in a file as a Bitmap
+	public static Bitmap getPicture(File file) {
+		Bitmap picToDisplay = null;
+		try {
+			FileInputStream fIn = new FileInputStream(file);
+			BufferedInputStream bufIn = new BufferedInputStream(fIn);
+			//Decodes the picture into a bitmap
+			picToDisplay = BitmapFactory.decodeStream(bufIn);
+			/*This can be used to display the bitmap in an ImageView for example :
+			ImageView ViewPhoto = new ImageView(this);
+			ViewPhoto.setImageBitmap(photoAafficher);
+			this.setContentView(ViewPhoto);*/
+			bufIn.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return picToDisplay;
+	}
+	
+	//General method to save an array of bytes into a file
+	public static void setPicture(File file, byte[] data) {
+		try {
+			FileOutputStream fOut = new FileOutputStream(file);
+			BufferedOutputStream bufOut = new BufferedOutputStream(fOut);
+			bufOut.write(data);
+			bufOut.flush();
+			bufOut.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//Save an array of bytes into the "carac" folder of the nameDir directory
+	public static void setCaracPicture(String nameDir, byte[] data) {
+		int count = File(nameDir, "carac").list().length;
+		setPicture(File(nameDir, "carac", String.valueOf(count+1)), data);
+	}
+	
+	//General method to get information about a picture stored in a file
+	public static String[] getInfo(File file) {
+		String[] listInfo = new String[4];
+		try {
+			FileInputStream fIn = new FileInputStream(file);
+			InputStreamReader isr = new InputStreamReader(fIn);
+			BufferedReader bfr = new BufferedReader(isr);
+			listInfo[0] = bfr.readLine();//date
+			listInfo[1] = bfr.readLine();//time
+			listInfo[2] = bfr.readLine();//precision
+			listInfo[3] = bfr.readLine();//state(in the sun, in the shade...)
+			bfr.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return listInfo;
+	}
+	
+	//General method to save information in a file
+	public static void setInfo(File file, String date, String time, String precision, String state) {
+		try {
+			FileOutputStream fOut = new FileOutputStream(file);
+			OutputStreamWriter osw = new OutputStreamWriter(fOut);
+			BufferedWriter bfw = new BufferedWriter(osw);
+			bfw.write(date);
+			bfw.newLine();
+			bfw.write(time);
+			bfw.newLine();
+			bfw.write(precision);
+			bfw.newLine();
+			bfw.write(state);
+			bfw.flush();
+			bfw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	//General method to get the state(in the sun/in the shade...) of a picture in a file
+	public static String getState(File file) {
+		return getInfo(file)[3];
+	}
+	
+	//General method to save the state(in the sun/in the shade...) of a picture in a file
+	public static void setState(File file, String state) {
+		//Gets information before deleting
+		String[] listInfo = getInfo(file);
+		//Delete the content of the temporary file
+		file.delete();
+		create(file);
+		//Save all new information
+		setInfo(file, listInfo[0], listInfo[1], listInfo[2], state);
+	}
+	
+	//Save the picture and its information in temporary files when the picture has been taken.
+	public static void setTempPicture(byte[] data) {
+		//Delete the content of temporary files in case it contains data of a previous picture
+		gSun.temp = File("temp");
+		if (gSun.temp.exists()) {
+			gSun.temp.delete();
+		}
+		create(gSun.temp);
+		gSun.temptxt = File("temptxt");
+		if (gSun.temptxt.exists()) {
+			gSun.temptxt.delete();
+		}
+		create(gSun.temptxt);
+		//Save the picture in a temporary file
+		setPicture(gSun.temp, data);
+		//Save information about the picture in another temporary file
+		setInfo(gSun.temptxt, conversionDate(gSun.temps.jour, gSun.temps.mois), conversionHeure(gSun.temps.heure), String.valueOf(gSun.precision), "");
+	}
+	
+	//Returns a bitmap containing the picture stored in the temporary file
+	public static Bitmap getTempPicture() {
+		return getPicture(gSun.temp);
+	}
 	
 	//Convert the date into a string format
 	public static String conversionDate(int jour, int mois) {
@@ -41,111 +190,6 @@ public class Fichier {
 		return String.valueOf(heure) + ":00";
 	}
 	
-	//Save the picture and its information in temporary files when the picture has been taken.
-	//Information are stored in this order : date, time, precision, state(in the sun/in the shade...)
-	public static void saveTempFile(byte[] data) throws IOException {
-		//Delete the content of temporary files in case it contains data of a previous picture
-		gSun.temp = new File(gSun.gsun, "temp");
-		if (gSun.temp.exists()) {
-			gSun.temp.delete();
-		}
-		try {
-			gSun.temp.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		gSun.temptxt = new File(gSun.gsun, "temptxt");
-		if (gSun.temptxt.exists()) {
-			gSun.temptxt.delete();
-		}
-		try {
-			gSun.temptxt.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Save the picture in a temporary file
-		FileOutputStream fOut = new FileOutputStream(gSun.temp);
-		BufferedOutputStream bufOut = new BufferedOutputStream(fOut);
-		bufOut.write(data);
-		bufOut.flush();
-		bufOut.close();
-		//Save information about the picture in another temporary file
-		try {
-			FileOutputStream fOut2 = new FileOutputStream(gSun.temptxt);
-			OutputStreamWriter osw = new OutputStreamWriter(fOut2);
-			BufferedWriter bfw = new BufferedWriter(osw);
-			bfw.write(conversionDate(gSun.temps.jour, gSun.temps.mois));
-			bfw.newLine();
-			bfw.write(conversionHeure(gSun.temps.heure));
-			bfw.newLine();
-			bfw.write(String.valueOf(gSun.precision));
-			bfw.flush();
-			bfw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//Returns a bitmap containing the picture stored in the temporary file
-	public static Bitmap getTempPicture() {
-		Bitmap picToDisplay = null;
-		try {
-			FileInputStream fIn = new FileInputStream(gSun.temp);
-			BufferedInputStream bufIn = new BufferedInputStream(fIn);
-			//Decodes the picture into a bitmap
-			picToDisplay = BitmapFactory.decodeStream(bufIn);
-			/*This can be used to display the bitmap in an ImageView for example. 
-			ImageView ViewPhoto = new ImageView(this);
-			ViewPhoto.setImageBitmap(photoAafficher);
-			this.setContentView(ViewPhoto);*/
-			bufIn.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return picToDisplay;
-	}
-	
-	//Save the state(in the sun/in the shade...) in the temporary file
-	public static void saveState(String state) {
-		//Gets information before deleting
-		String[] listInfo = new String[3];
-		try {
-			FileInputStream fIn = new FileInputStream(gSun.temptxt);
-			InputStreamReader isr = new InputStreamReader(fIn);
-			BufferedReader bfr = new BufferedReader(isr);
-			listInfo[0] = bfr.readLine();
-			listInfo[1] = bfr.readLine();
-			listInfo[2] = bfr.readLine();
-			bfr.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Delete the content of the temporary file
-		gSun.temptxt.delete();
-		try {
-			gSun.temptxt.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Save all new information
-		try {
-			FileOutputStream fOut = new FileOutputStream(gSun.temptxt);
-			OutputStreamWriter osw = new OutputStreamWriter(fOut);
-			BufferedWriter bfw = new BufferedWriter(osw);
-			bfw.write(listInfo[0]);
-			bfw.newLine();
-			bfw.write(listInfo[1]);
-			bfw.newLine();
-			bfw.write(listInfo[2]);
-			bfw.newLine();
-			bfw.write(state);
-			bfw.flush();
-			bfw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	//Returns the list of all directories of gsun
 	public static ArrayList<String> getAllDir() {
 		ArrayList<String> listDir = new ArrayList<String>();
@@ -158,7 +202,7 @@ public class Fichier {
 		return listDir;
 	}
 	
-	/*Creates a new directory in gsun. 
+	/*Creates a new directory in gsun, and its sub-directory "carac". 
 	 * The method returns false and the directory is not effectively created if
 	 * a directory which has the same name already exists.
 	 * */
@@ -171,7 +215,8 @@ public class Fichier {
 			}
 		}
 		if (success = true) {
-			new File(gSun.gsun, nameDir).mkdirs();
+			File(nameDir).mkdirs();
+			File(nameDir, "carac").mkdirs();
 		}
 		return success;
 	}
@@ -179,14 +224,18 @@ public class Fichier {
 	//Returns the list of the name of all pictures stored in a directory 
 	public static ArrayList<String> getAllPic(String nameDir) {
 		ArrayList<String> listPic = new ArrayList<String>();
-		File dir = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir);
-		String[] vectorFiles = dir.list();
+		String[] vectorFiles = File(nameDir).list();
 		for (String name : vectorFiles) {
 			if (!name.endsWith("txt") && !name.equals("carac")) {
 				listPic.add(name);
 			}
 		}
 		return listPic;
+	}
+	
+	//Returns the default name of a file
+	public static String getDefaultName() {
+		return "gSun_" + String.valueOf(gSun.temps.jour) + String.valueOf(gSun.temps.mois) + "_" + String.valueOf(gSun.temps.heure) + "_" + String.valueOf(gSun.fileCount+1);
 	}
 	
 	/*Create a new pair of files for a picture, and copy data from temporary files.
@@ -212,110 +261,19 @@ public class Fichier {
 			File picInfo = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic + "txt");
 			gSun.temptxt.renameTo(picInfo);
 		}
+		if (nameDir.equals("defaut")) {
+			gSun.fileCount += 1;
+		}
 		return success;
 	}
 	
-	//Returns information about a picture. 
-	//This methods needs the name of the directory which contains this picture.
-	public static String[] getPicInfo(String namePic, String nameDir) {
-		String[] info = new String[4];
-		File picInfo = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic + "txt");
-		try {
-			FileInputStream fIn = new FileInputStream(picInfo);
-			InputStreamReader isr = new InputStreamReader(fIn);
-			BufferedReader bfr = new BufferedReader(isr);
-			info[0] = bfr.readLine();//date
-			info[1] = bfr.readLine();//time
-			info[2] = bfr.readLine();//precision
-			info[3] = bfr.readLine();//state
-			bfr.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+	//Returns an ArrayList of all characterization pictures of a directory as Bitmaps
+	public static ArrayList<Bitmap> getAllCaracPic(String nameDir) {
+		ArrayList<Bitmap> listPic = new ArrayList<Bitmap>();
+		for (String name : File(nameDir, "carac").list()) {
+			listPic.add(getPicture(File(nameDir, "carac", name)));
 		}
-		return info;
-	}
-	
-	//Returns the state of a picture. 
-	//This methods needs the name of the directory which contains this picture.
-	public static String getPicState(String namePic, String nameDir) {
-		String info = "";
-		File picInfo = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic + "txt");
-		try {
-			FileInputStream fIn = new FileInputStream(picInfo);
-			InputStreamReader isr = new InputStreamReader(fIn);
-			BufferedReader bfr = new BufferedReader(isr);
-			bfr.readLine();
-			bfr.readLine();
-			bfr.readLine();
-			info = bfr.readLine();
-			bfr.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return info;
-	}
-	
-	//Set the state(in the sun/in the shade...) of a picture. 
-	//This methods needs the name of the directory which contains this picture.
-	public static void setPicState(String state, String namePic, String nameDir) {
-		File picInfo = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic + "txt");
-		//Gets information before deleting
-		String[] listInfo = new String[3];
-		try {
-			FileInputStream fIn = new FileInputStream(picInfo);
-			InputStreamReader isr = new InputStreamReader(fIn);
-			BufferedReader bfr = new BufferedReader(isr);
-			listInfo[0] = bfr.readLine();
-			listInfo[1] = bfr.readLine();
-			listInfo[2] = bfr.readLine();
-			bfr.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Delete the content of the information file
-		picInfo.delete();
-		try {
-			picInfo.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Save all new information
-		try {
-			FileOutputStream fOut = new FileOutputStream(picInfo);
-			OutputStreamWriter osw = new OutputStreamWriter(fOut);
-			BufferedWriter bfw = new BufferedWriter(osw);
-			bfw.write(listInfo[0]);
-			bfw.newLine();
-			bfw.write(listInfo[1]);
-			bfw.newLine();
-			bfw.write(listInfo[2]);
-			bfw.newLine();
-			bfw.write(state);
-			bfw.flush();
-			bfw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	//Returns the picture stored in the file named "namePic" as a Bitmap
-	public static Bitmap getPicture(String namePic, String nameDir) {
-		Bitmap picToDisplay = null;
-		File pic = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic);
-		try {
-			FileInputStream fIn = new FileInputStream(pic);
-			BufferedInputStream bufIn = new BufferedInputStream(fIn);
-			//Decodes the picture into a bitmap
-			picToDisplay = BitmapFactory.decodeStream(bufIn);
-			/*This can be used to display the bitmap in an ImageView for example. 
-			ImageView ViewPhoto = new ImageView(this);
-			ViewPhoto.setImageBitmap(photoAafficher);
-			this.setContentView(ViewPhoto);*/
-			bufIn.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return picToDisplay;
+		return listPic;
 	}
 	
 }
