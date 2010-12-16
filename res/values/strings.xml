@@ -3,31 +3,31 @@
     <string name="hello">Bienvenue</string>
     <string name="app_name">gSun</string>
 
-	<!-- main.xml -->
-	
-	<string name="accueil_calcul">Calcul d\'une direction</string>
-	<string name="accueil_mesures">Accès aux mesures</string>
-	<string name="accueil_aide">Infos</string>
-	<color name="ecriture">#F7230C</color>
-	<color name="background">#CCCCFF</color>
-	<color name="texte">#1560DB</color>
+<!-- main.xml -->
 
-	
-	<!-- param.xml -->
-	
-	<string name="param_titre">Paramétrage</string>
-	
-	<string name="param_retour">"     Annuler     "</string>
-	<string name="param_TrouverSoleil">"     Valider     "</string>
-	
-	<string-array name="param_typedate_array">
-		<item>Date ?</item>
-		<item>Équinoxe de printemps</item>
-		<item>Solstice d"'"été</item>
-		<item>Équinoxe d"'"automne</item>
-		<item>Solstice d"'"hiver</item>
-		<item>Personnalisée</item>
-	</string-array>
+<string name="accueil_calcul">Calcul d\'une direction</string>
+<string name="accueil_mesures">Accès aux mesures</string>
+<string name="accueil_aide">Infos</string>
+<color name="ecriture">#F7230C</color>
+<color name="background">#CCCCFF</color>
+<color name="texte">#1560DB</color>
+
+
+<!-- param.xml -->
+
+<string name="param_titre">Paramétrage</string>
+
+<string name="param_retour">" Annuler "</string>
+<string name="param_TrouverSoleil">" Valider "</string>
+
+<string-array name="param_typedate_array">
+<item>Date ?</item>
+<item>Équinoxe de printemps</item>
+<item>Solstice d"'"été</item>
+<item>Équinoxe d"'"automne</item>
+<item>Solstice d"'"hiver</item>
+<item>Personnalisée</item>
+</string-array>
 
     <string-array name="param_mois_array">
         <item>Mois ?</item>
@@ -46,10 +46,10 @@
     </string-array>
     
     <string-array name="param_jour_array">
-    	<item>Jour ?</item>
+     <item>Jour ?</item>
         <item>1er</item>
-     	<item>11</item>
-		<item>21</item>
+      <item>11</item>
+<item>21</item>
     </string-array>
     
     <string name="param_levertext">"Lever"</string>
@@ -60,43 +60,137 @@
     <string name="param_precisiontext">Précision ?</string>
     
     <!-- aide.xml -->
-	
-	<string name="aide_titre">Aide</string>
-	<string name="aide_retour">"     Retour     "</string>
-	<string name="aide_ok">"Ok"</string>
-	
-	<!-- accesmesures.xml -->
-	
-	<string name="accesmesures_titre">Accès aux mesures</string>
-	<string name="accesmesures_photo">Photographies de l\'emplacement</string>
-	<string name="accesmesures_synthese">Synthèse des mesures</string>
-	<string name="accesmesures_retour">"   Annuler   "</string>
 
-	<!-- synthesemesures.xml -->
-	
-		<string name="synthese_titre">Synthèse des mesures</string>
+<string name="aide_titre">Aide</string>
+<string name="aide_retour">" Retour "</string>
+<string name="aide_ok">"Ok"</string>
+
+<!-- accesmesures.xml -->
+
+<string name="accesmesures_titre">Accès aux mesures</string>
+<string name="accesmesures_photo">Photographies de l\'emplacement</string>
+<string name="accesmesures_synthese">Synthèse des mesures</string>
+<string name="accesmesures_retour">" Annuler "</string>
+
+<!-- synthesemesures.xml -->
+
+<string name="synthese_titre">Synthèse des mesures</string>
     <string name="synthese_reptexte">Répertoire courrant :</string>
-    <string name="synthese_retour">"   Annuler   "</string>
-        <string-array name="etat_array">	
-		<item>S</item>
-		<item>N</item>
-		<item>\?</item>
-	</string-array>
-	<color name="couleurTableau">#000000</color>
-	
-	<!-- caractmesures.xml -->
-	<string name="caractmesures_titre">Caractérisation des mesures</string>
-	<string name="caractmesures_photo">Prendre une nouvelle Photo</string>
-	<string name="caractmesures_retour">"   Annuler   "</string>
+    <string name="synthese_retour">" Annuler "</string>
+        <string-array name="etat_array">
+<item>S</item>
+<item>N</item>
+<item>\?</item>
+</string-array>
+<color name="couleurTableau">#000000</color>
+
+<!-- caractmesures.xml -->
+<string name="caractmesures_titre">Caractérisation des mesures</string>
+<string name="caractmesures_photo">Prendre une nouvelle Photo</string>
+<string name="caractmesures_retour">" Annuler "</string>
 
 
-	<string name="aide_texte">"Cette application permet de connaître la direction apparente du soleil à une date et une heure choisies.
+<!-- textes des différents écrans d'aide -->
+<string name="aide_texte_gSun">"Cette application permet de connaître la direction apparente du soleil a` une date et une heure choisies.
 
 Projet initié par Daniel Siret et Myriam Servières (CERMA)
-	
+
 Projet développé par Niki Banerjee, Nicolas Carougeau, Raphaëlle Chapuis, Benjamin Hervy, Shion Kashimura, Benjamin Thorent et Benoît Vandevelde (École Centrale de Nantes)
-	
+
 Version alpha
-	"</string>
+"</string>
+
+<string name="aide_texte_ecran_accueil">"Bouton « Calcul dune direction » : accès à lécran de paramétrage dans lobjectif dune nouvelle prise de mesure.
+
+Bouton « Accès aux mesures » : accès aux mesures enregistrées.
+
+Bouton « Info » : Accéder au menu daide.
+"</string>
+
+<string name="aide_texte_ecran_parametrage">"Champ date : cliquez sur « date ? » et sélectionnez dans le menu déroulant, le type de date que vous souhaitez élire parmi : solstice, équinoxe, ou personnalisée.
+
+Si loption « personnalisée » a été sélectionné, vous êtes invité à choisir la date plus proche de celle désirée :
+-	Choisissez un « jour » parmi les options proposées (1er, 11ème et 21ème jour). 
+-	Choisissez un « mois » de lannée par lintermédiaire de la liste déroulante.
+
+Puis, choisissez une heure entre les heures de lever et de coucher du soleil indiquées pour le jour sélectionné, en faisant glisser le curseur « heure à choisir ».
+
+En cliquant sur « précision ? », il est possible de régler lindication de la direction apparente du soleil (3, 2, ou 1 qui correspondent respectivement à un angle de 4°, 7° ou 10°) en utilisant les boutons -/+. 
+
+Bouton « valider » : permet de lancer le calcul de la hauteur solaire et de lazimut correspondant à la position apparente du soleil au lieu où vous vous trouvez, à la date choisie. 
+
+Une fois le calcul terminé lapplication passe automatiquement à lécran de recherche du soleil.
+
+Bouton « Annuler » : Retour à lécran daccueil.
+"</string>
+
+<string name="aide_texte_ecran_rechercheSoleil">"Lobjectif de cet écran est de vous aidez à positionner votre terminal mobile suivant la direction apparente du soleil. Le positionnement doit seffectuer dabord en azimut puis en hauteur solaire.
+
+Suivez les indications données par les flèches latérales pour positionner le téléphone suivant le bon azimut.
+
+Puis, suivez les flèches verticales ou les indications sonores pour effectuer le positionnement suivant la hauteur solaire.
+
+Une fois la direction apparente du soleil trouvée :
+-	un soleil saffiche au centre de lécran ;
+-	un signal sonore vous indique que vous avez trouvé la direction apparente du soleil.
+
+Patientez 2s et la photographie indiquant la direction apparente du soleil est prise automatiquement. Un signal sonore retenti au moment de la prise de la photographie.
+
+Bouton « Retour » : Retourner à lécran de paramétrage.
+"</string>
+
+<string name="aide_texte_ecran_editionPhoto">"Cet écran vous présente une photo indiquant la direction du soleil qui a été prise à partir de lécran édition photo.
+
+Utilisez la liste déroulante placée en haut de lécran pour indiquer si dans la configuration présentée le point considéré est au soleil, à lombre. Le choix par défaut est « Non spécifié ».
+
+Bouton « Enregistrer » : Enregistrez la configuration présentée à lécran en accédant à lécran denregistrement.
+
+Bouton « Retour » : Retour à lécran de recherche du soleil.
+"</string>
+
+<string name="aide_texte_ecran_enregistrement">"Cet écran vous permet denregistrement la photographie prise suivant la direction apparente du soleil.
+
+Liste déroulante « Répertoire » : sélectionnez le répertoire dans lequel vous souhaitez enregistrer la photographie.
+
+Pour créer un nouveau répertoire sélectionnez la mention « Nouveau répertoire » proposée dans la liste déroulante « Répertoire ». Une fenêtre souvre alors, saisissez un nom puis cliquez sur ok. Vous obtenez alors la confirmation que le nouveau répertoire a été créé. La photo sera alors enregistrée dans ce nouveau répertoire (la liste déroulante nest pas actualisée, la mention « Nouveau répertoire » reste indiquée).
+
+Champ « Nom du fichier » : saisissez un nom de fichier (taille inférieure à 15 caractères).
+
+Bouton « Validez » : validez ainsi lenregistrement et vous serez automatiquement redirigé vers lécran daccueil.
+"</string>
+
+<string name="aide_texte_ecran_accesMesures">"Liste déroulante « répertoire courant » : choisissez un répertoire parmi ceux proposés.
+
+Bouton « Photographies de lemplacement » : accès à la galerie des photos permettant de caractériser le lieu de prise des mesures enregistrées dans le répertoire choisi.
+
+Bouton « Synthèse des mesures » : accès au tableau de synthèse des mesures enregistrées dans le répertoire choisi.
+"</string>
+
+<string name="aide_texte_ecran_galeriePhotoCaract">"Galerie présentant lensemble des photos qui ont été prises afin de caractériser le lieu de la prise de mesures.
+
+Bouton « Prendre une nouvelle Photo » : lancement de caméra pour prendre une nouvelle photo de caractérisation.
+
+Bouton « Annuler » : retour à lécran daccès aux mesures.
+"</string>
+
+<string name="aide_texte_ecran_prisePhotoCaract">"Cet écran vous permet de prendre une nouvelle photographie permettant de caractérisation du lieu de prise de vue.
+
+Bouton « Photo » : prise effective de la photo.
+
+Bouton « Annuler » : retour à la galerie.
+"</string>
+
+<string name="aide_texte_ecran_syntheseMesures">"Ce tableau vous présente une synthèse des mesures que vous avez prises et enregistrées dans le répertoire sélectionné à partir de lécran daccès aux mesures.
+
+Chaque ligne du tableau correspond à une mesure.
+
+Accédez à la photo correspondant à la mesure en cliquant sur son nom.
+
+Changez la qualification de la mesure (à lombre, au soleil, indéterminée) en cliquant sur la qualification associée à la mesure.
+
+Bouton « Annuler » : retour à lécran daccès aux mesures.
+"</string>
+
+
 
 </resources>

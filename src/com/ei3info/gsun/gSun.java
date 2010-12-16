@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.widget.*;
@@ -28,6 +29,9 @@ public class gSun extends Activity {
 	protected static File temp;
 	protected static File temptxt;
 	protected static int fileCount;
+	protected static int levelbattery;
+	protected static AudioManager am;
+
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,9 +61,40 @@ public class gSun extends Activity {
 	    Button accueil_mesures =(Button)findViewById(R.id.accueil_mesures);
 	    Button accueil_aide =(Button)findViewById(R.id.accueil_aide);
 	    
+	    
+	    batteryLevel();
+	    // Defines "low battery level" pop-up display
+	    if(this.levelbattery < 10){
+		    AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+	        builder2.setMessage(R.string.aide_texte_gSun)
+	            .setCancelable(false)
+	            .setTitle(R.string.aide_titre)
+	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                dialog.dismiss();
+	                }
+	            });
+	        final AlertDialog alert2 = builder2.create();
+	        alert2.show();
+	    }
+	    
+	    // Defines "no-sound" pop-up display
+	    am= (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+	    if(am.getStreamVolume(am.STREAM_RING) == 0){
+	    	AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
+	        builder3.setMessage(R.string.aide_texte_gSun)
+	            .setCancelable(false)
+	            .setTitle(R.string.aide_titre)
+	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                dialog.dismiss();
+	                }
+	            });
+	        final AlertDialog alert3 = builder3.create();
+	        alert3.show();
+	    }
+	    
 
-
-	
 	     
 	    //On cr�e un �couteur d'�v�nement commun au deux Button
 	    OnClickListener onClickLister = new OnClickListener() {
@@ -88,7 +123,7 @@ public class gSun extends Activity {
         
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.aide_texte)
+        builder.setMessage(R.string.aide_texte_gSun)
             .setCancelable(false)
             .setTitle(R.string.aide_titre)
             .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
@@ -103,6 +138,27 @@ public class gSun extends Activity {
                 alert.show();
             }
             });}
+    
+    /**
+     * Computes the battery level by registering a receiver to the intent triggered 
+     * by a battery status/level change.
+     */
+    private void batteryLevel() {
+        BroadcastReceiver batteryLevelReceiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                context.unregisterReceiver(this);
+                int rawlevel = intent.getIntExtra("level", -1);
+                int scale = intent.getIntExtra("scale", -1);
+                int level = -1;
+                if (rawlevel >= 0 && scale > 0) {
+                    level = (rawlevel * 100) / scale;
+                }
+                gSun.levelbattery=level;
+            }
+        };
+        IntentFilter batteryLevelFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(batteryLevelReceiver, batteryLevelFilter);
+    }
         
     
         

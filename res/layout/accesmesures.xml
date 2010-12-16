@@ -18,13 +18,38 @@
 		android:textColor="#0000FF"
 	/>
 	
+	<TextView
+	android:id="@+id/accesmesures_reptexte"
+	android:layout_width="wrap_content" 
+    android:layout_height="wrap_content" 
+    android:text="@string/synthese_reptexte"
+    android:layout_below="@id/accesmesures_titre"
+    android:textColor="@color/texte"
+    android:layout_gravity="left"
+    android:layout_marginLeft="10px"
+    android:textSize="15px"
+    android:layout_marginTop="20px"/>
+    
+    
+    <Spinner
+    android:id="@+id/accesmesures_rep"
+	android:layout_width="fill_parent" 
+    android:layout_height="60px" 
+    android:text="/"
+    android:layout_below="@id/accesmesures_reptexte"
+    android:layout_gravity="left"
+    android:layout_marginLeft="10px"
+    android:textSize="15px"
+    android:textColor="#000000"/>
+    
+	
 		<Button
  		android:id="@+id/accesmesures_photo"
 		android:layout_width="wrap_content"
  		android:layout_height="wrap_content"
  		android:layout_gravity="center"
  		android:text="@string/accesmesures_photo"
- 		android:layout_marginTop="100px"
+ 		android:layout_marginTop="200px"
 		android:layout_centerHorizontal="true"
 		android:background="@drawable/mybutton2"
  	/>
@@ -35,7 +60,7 @@
  		android:layout_height="wrap_content"
  		android:layout_gravity="center"
  		android:text="@string/accesmesures_synthese"
- 		android:layout_marginTop="170px"
+ 		android:layout_marginTop="270px"
 		android:layout_centerHorizontal="true"
 		android:background="@drawable/mybutton2"
  	/>

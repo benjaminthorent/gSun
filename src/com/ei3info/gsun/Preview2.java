@@ -78,8 +78,8 @@ public class Preview2 extends SurfaceView implements SurfaceHolder.Callback{
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
 			
-				//TODO Nouvelle fonction de Shion à la place !
-				Fichier.setTempPicture(data);
+				//TODO Récupérer nom dossier depuis classe Niki via attribut statique
+				Fichier.setCaracPicture("", data);
 			
 		}
 	};

@@ -20,11 +20,11 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.drawable.Drawable;
 
 /*Some methods take a File into parameters, but some constructors are defined to
- * create new object File easily. 
+ * create new object File easily.
  */
 
 public class Fichier {
-	
+
 	//Create an object File with the path : gsun/nameDir
 	public static File File(String nameDir) {
 		return new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir);
@@ -37,12 +37,20 @@ public class Fichier {
 	public static File File(String nameDir, String nameFile, String namePic) {
 		return new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + nameFile + File.separator + namePic);
 	}
-	
-	//Effectively creates the File file. 
+
+	//Add spaces to a String if its length is < nbMax
+	public static String ajoutEsp(String nom, int nbMax) {
+		while (nom.length() < nbMax) {
+			nom += " ";
+		}
+		return nom;
+	}
+
+	//Effectively creates the File file.
 	public static void create(File file) {
 		try {file.createNewFile();} catch (IOException e) {e.printStackTrace();}
 	}
-	
+
 	//Convert a Drawable into a bitmap. A Drawable can be for example :
 	//getResources().getDrawable(R.drawable.picture)
 	public static Bitmap drawableToBitmap(Drawable drawable) {
@@ -52,14 +60,14 @@ public class Fichier {
         drawable.draw(canvas);
         return bmp;
 	}
-	
+
 	//Convert a bitmap into byte array
 	public static byte[] bitmapToByte(Bitmap bmp) {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
         bmp.compress(CompressFormat.PNG, 0, bos);
         return bos.toByteArray();
 	}
-	
+
 	//General method to get a picture stored in a file as a Bitmap
 	public static Bitmap getPicture(File file) {
 		Bitmap picToDisplay = null;
@@ -78,7 +86,7 @@ public class Fichier {
 		}
 		return picToDisplay;
 	}
-	
+
 	//General method to save an array of bytes into a file
 	public static void setPicture(File file, byte[] data) {
 		try {
@@ -91,13 +99,13 @@ public class Fichier {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//Save an array of bytes into the "carac" folder of the nameDir directory
 	public static void setCaracPicture(String nameDir, byte[] data) {
 		int count = File(nameDir, "carac").list().length;
 		setPicture(File(nameDir, "carac", String.valueOf(count+1)), data);
 	}
-	
+
 	//General method to get information about a picture stored in a file
 	public static String[] getInfo(File file) {
 		String[] listInfo = new String[4];
@@ -115,7 +123,7 @@ public class Fichier {
 		}
 		return listInfo;
 	}
-	
+
 	//General method to save information in a file
 	public static void setInfo(File file, String date, String time, String precision, String state) {
 		try {
@@ -135,12 +143,12 @@ public class Fichier {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//General method to get the state(in the sun/in the shade...) of a picture in a file
 	public static String getState(File file) {
 		return getInfo(file)[3];
 	}
-	
+
 	//General method to save the state(in the sun/in the shade...) of a picture in a file
 	public static void setState(File file, String state) {
 		//Gets information before deleting
@@ -151,7 +159,7 @@ public class Fichier {
 		//Save all new information
 		setInfo(file, listInfo[0], listInfo[1], listInfo[2], state);
 	}
-	
+
 	//Save the picture and its information in temporary files when the picture has been taken.
 	public static void setTempPicture(byte[] data) {
 		//Delete the content of temporary files in case it contains data of a previous picture
@@ -170,26 +178,31 @@ public class Fichier {
 		//Save information about the picture in another temporary file
 		setInfo(gSun.temptxt, conversionDate(gSun.temps.jour, gSun.temps.mois), conversionHeure(gSun.temps.heure), String.valueOf(gSun.precision), "");
 	}
-	
+
 	//Returns a bitmap containing the picture stored in the temporary file
 	public static Bitmap getTempPicture() {
 		return getPicture(gSun.temp);
 	}
-	
+
+	//Convert an int to a String and add a zero before if the number is < 10
+	public static String toString(int nb) {
+		String mot = String.valueOf(nb);
+		if (nb < 10) {
+			mot = "0" + mot;
+		}
+		return mot;
+	}
+
 	//Convert the date into a string format
 	public static String conversionDate(int jour, int mois) {
-		String sJour = String.valueOf(jour);
-		if (jour < 10) {
-			sJour = "0" + String.valueOf(jour);
-		}
-		return sJour + "/" + String.valueOf(mois);
+		return toString(jour) + "/" + toString(mois);
 	}
-	
+
 	//Convert the time into a string format
 	public static String conversionHeure(int heure) {
-		return String.valueOf(heure) + ":00";
+		return toString(heure) + ":00";
 	}
-	
+
 	//Returns the list of all directories of gsun
 	public static ArrayList<String> getAllDir() {
 		ArrayList<String> listDir = new ArrayList<String>();
@@ -201,8 +214,8 @@ public class Fichier {
 		listDir.remove("temptxt");
 		return listDir;
 	}
-	
-	/*Creates a new directory in gsun, and its sub-directory "carac". 
+
+	/*Creates a new directory in gsun, and its sub-directory "carac".
 	 * The method returns false and the directory is not effectively created if
 	 * a directory which has the same name already exists.
 	 * */
@@ -220,8 +233,8 @@ public class Fichier {
 		}
 		return success;
 	}
-	
-	//Returns the list of the name of all pictures stored in a directory 
+
+	//Returns the list of the name of all pictures stored in a directory
 	public static ArrayList<String> getAllPic(String nameDir) {
 		ArrayList<String> listPic = new ArrayList<String>();
 		String[] vectorFiles = File(nameDir).list();
@@ -232,12 +245,12 @@ public class Fichier {
 		}
 		return listPic;
 	}
-	
+
 	//Returns the default name of a file
 	public static String getDefaultName() {
-		return "gSun_" + String.valueOf(gSun.temps.jour) + String.valueOf(gSun.temps.mois) + "_" + String.valueOf(gSun.temps.heure) + "_" + String.valueOf(gSun.fileCount+1);
+		return "gSun_" + toString(gSun.temps.jour) + toString(gSun.temps.mois) + "_" + toString(gSun.temps.heure) + "_" + toString(gSun.fileCount+1);
 	}
-	
+
 	/*Create a new pair of files for a picture, and copy data from temporary files.
 	 * The method returns false and the "saving" is not effectively done in the following cases :
 	 * - a file which has the same name already exists
@@ -255,10 +268,12 @@ public class Fichier {
 		if (namePic.endsWith("txt")|namePic.equals("carac")) {
 			success = false;
 		}
-		if (success = true) {
+		if (success) {
 			File pic = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic);
+			create(pic);
 			gSun.temp.renameTo(pic);
 			File picInfo = new File(gSun.gsun.getAbsolutePath() + File.separator + nameDir + File.separator + namePic + "txt");
+			create(picInfo);
 			gSun.temptxt.renameTo(picInfo);
 		}
 		if (nameDir.equals("defaut")) {
@@ -266,7 +281,7 @@ public class Fichier {
 		}
 		return success;
 	}
-	
+
 	//Returns an ArrayList of all characterization pictures of a directory as Bitmaps
 	public static ArrayList<Bitmap> getAllCaracPic(String nameDir) {
 		ArrayList<Bitmap> listPic = new ArrayList<Bitmap>();
@@ -275,5 +290,16 @@ public class Fichier {
 		}
 		return listPic;
 	}
-	
+
+	public static ArrayList<File> getAllCaracFiles(File nameDir) {
+		ArrayList<File> listFiles = new ArrayList<File>();
+		for (File fichiercarac : nameDir.listFiles()) {
+			if(fichiercarac.getName().endsWith("txt")){
+				listFiles.add(fichiercarac);
+			}
+
+		}
+		return listFiles;
+	}
+
 }

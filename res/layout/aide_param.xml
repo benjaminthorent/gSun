@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:background="@color/background"
+android:id="@+id/ChoixDateLayout"
+>
+
+<TextView
+android:id="@+id/aide_titre"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/aide_titre"
+android:textSize="27px"
+android:layout_marginTop="20px"
+android:layout_centerHorizontal="true"
+android:textColor="#0000FF"
+/>
+
+<TextView
+android:id="@+id/aide_texte"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="@string/aide_texte_ecran_parametrage"
+android:textSize="12px"
+/>
+
+<Button
+  android:id="@+id/aide_retour"
+android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_gravity="center"
+  android:text="@string/aide_retour"
+android:layout_centerHorizontal="true"
+android:layout_marginTop="375px"
+  />
+
+
+</RelativeLayout>

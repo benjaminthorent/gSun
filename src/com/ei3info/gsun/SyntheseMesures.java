@@ -1,7 +1,11 @@
 package com.ei3info.gsun;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,60 +18,121 @@ import android.widget.TextView;
 
 public class SyntheseMesures extends Activity {
 
+	
+	/** Called when the activity is first created. */
+	
 	protected static Bitmap imageAAfficher;
-	    /** Called when the activity is first created. */
+	
 	    @Override
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	        setContentView(R.layout.synthesemesures);
             
+	        /**AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        builder.setMessage(R.string.aide_texte)
+	            .setCancelable(false)
+	            .setTitle(R.string.aide_titre)
+	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int id) {
+	                dialog.dismiss();
+	                }
+	            });
+	        final AlertDialog alert = builder.create();**/
 	        
-	        Button l1c1 = (Button)findViewById(R.id.synthese_l1c1);
-            l1c1.setText("Paris");
+	        
+	        TableLayout tableau = (TableLayout)findViewById(R.id.synthese_tableau);
+	        
+	        // int nblignes = 3;
+	        ArrayList<File> fichiersText = new ArrayList<File>();
+	        fichiersText = Fichier.getAllCaracFiles(AccesMesures.repCourant);
 
-            @SuppressWarnings("unused")
-			ImageView image = (ImageView)findViewById(R.drawable.soleil);
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("hello");
-            //builder.setView(image);
-            builder.setCancelable(false);
-            builder.setPositiveButton("Retour", new DialogInterface.OnClickListener() {
-                 public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                    }
-                });
-            @SuppressWarnings("unused")
-			final AlertDialog alert = builder.create();
-            
-            /**l1c1.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    alert.show();
-                }
-                });**/
-            l1c1.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    //ouverture de la femetre widget  	 
-               	 Intent intent = new Intent(SyntheseMesures.this, AffichagePhotoSynthese.class);
-	 				startActivity(intent);
-	 		    	finish();
-                }
-            });
-   
-            TextView l1c2 = (TextView)findViewById(R.id.synthese_l1c2);
-            l1c2.setText("11/09");
-            TextView l1c3 = (TextView)findViewById(R.id.synthese_l1c3);
-            l1c3.setText("15h");
-            
-           final Spinner etat_spinner=(Spinner) findViewById(R.id.synthese_l1c4);
-			ArrayAdapter<CharSequence> etat_adapter = ArrayAdapter.createFromResource(this, R.array.etat_array, android.R.layout.simple_spinner_item);
-			etat_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			etat_spinner.setAdapter(etat_adapter);
-            
-            //ImageView l1c4 = (ImageView)findViewById(R.id.synthese_l1c4);
-            //l1c4.setImageResource(R.drawable.soleil);
-            TextView l1c5 = (TextView)findViewById(R.id.synthese_l1c5);
-            l1c5.setText("7�");
-	            
+	        int nblignes = fichiersText.size();
+	        
+	        
+        ArrayList<TableRow> vecteurligne = new ArrayList<TableRow>(nblignes);
+	        
+	     for(int i=0;i<nblignes;i++){
+	    	 TableRow ligne = new TableRow(this);
+	    	 vecteurligne.add(ligne);
+	     }
+	        
+	     final ArrayList<Bitmap> images=new ArrayList<Bitmap>();
+	        for(int i=0;i<nblignes;i++){
+	        	
+	        	
+		        vecteurligne.get(i).setLayoutParams(new LayoutParams(
+		                LayoutParams.FILL_PARENT,
+		                LayoutParams.WRAP_CONTENT));
+		      
+		        //Nom: exactement 15 caractčres
+		        //Mois: 3 espaces au début, 2 caractčres, 2 espaces ŕ la fin
+		        //Jour: 3 espaces au début, 2 caractčres, 3 espaces ŕ la fin
+		        //Heure: 3 espaces au début, 2 caractčres + les caractčres ":00", 2 espaces ŕ la fin
+		        //Etat: Spinner ŕ régler
+		        //Préc. : 2 espaces au début, 1 caractčre + le caractčre "°".
+		        Button c1 = new Button(this);
+		        c1.setId(i);
+		        String nom = fichiersText.get(i).getName();
+		        String nombis = Fichier.ajoutEsp(nom.substring(0,nom.length()-3), 1);
+		        c1.setText(nombis);
+		        c1.setTextColor(R.color.texte);
+		        
+		        Bitmap image = Fichier.getPicture(Fichier.File(AccesMesures.repCourant.getName(), fichiersText.get(i).getName()));
+		        images.add(image);
+		        
+		        OnClickListener c1onClickLister = new OnClickListener() {
+		            public void onClick(View v){
+		            	
+		            	
+		            		//SyntheseMesures.imageAAfficher=images.get(v.getId());
+		            	Bitmap bmp = Fichier.drawableToBitmap(getResources().getDrawable(R.drawable.chrysanthemum));
+		            	SyntheseMesures.imageAAfficher=bmp;
+		            		Intent intent = new Intent(SyntheseMesures.this, AffichagePhotoSynthese.class);
+		        			startActivity(intent);
+		            		finish();
+		            	
+		            }
+		        };
+		        c1.setOnClickListener(c1onClickLister);
+		        c1.setBackgroundColor(0xCCCCFF);
+		        
+		        TextView c2 = new TextView(this);
+		        c2.setText(Fichier.getInfo(fichiersText.get(i))[0]);
+		        c2.setTextColor(R.color.texte);
+
+		        
+		        TextView c3 = new TextView(this);
+		        c3.setText(Fichier.getInfo(fichiersText.get(i))[1]);
+		        c3.setTextColor(R.color.texte);
+		    
+		        Button c4 = new Button(this);
+		        c4.setText(Fichier.getInfo(fichiersText.get(i))[2]);
+		        c4.setBackgroundDrawable(null);
+		        c4.setTextColor(R.color.texte);
+		        
+		        /**c4.setOnClickListener(new View.OnClickListener() {
+		            public void onClick(View v) {
+		                alert.show();
+		            }
+		            });**/
+		        
+		        TextView c5 = new TextView(this);
+		        c5.setText(Fichier.getInfo(fichiersText.get(i))[3]);
+		        c5.setTextColor(R.color.texte);
+
+		        
+		        vecteurligne.get(i).addView(c1);
+		        vecteurligne.get(i).addView(c2);
+		        vecteurligne.get(i).addView(c3);
+		        vecteurligne.get(i).addView(c4);
+		        vecteurligne.get(i).addView(c5);
+		       
+		        
+		        tableau.addView(vecteurligne.get(i),new TableLayout.LayoutParams(
+		                LayoutParams.FILL_PARENT,
+		                LayoutParams.WRAP_CONTENT));
+	        }
+ 
 	            
 	            Button synthese_retour = (Button)findViewById(R.id.synthese_retour);
 	            OnClickListener onClickLister = new OnClickListener() { 
@@ -86,3 +151,4 @@ public class SyntheseMesures extends Activity {
 	    
 	    }  
 }
+

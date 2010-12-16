@@ -611,6 +611,8 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 
 	   List<String> providers = lm.getProviders(true);
 	    double[] gps = new double[2];
+	    gps[0]=47.21;
+	    gps[1]=-1.55;
 
 	    /* Loop over the array backwards, and if you get an accurate location, then break out the loop*/
 

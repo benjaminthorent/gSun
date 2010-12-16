@@ -71,7 +71,7 @@ public class EcranRecherche extends Activity implements OrientationListener{
 	       
 	       //Creation of the help text
 	       AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	        builder.setMessage(R.string.aide_texte)
+	        builder.setMessage(R.string.aide_texte_gSun)
 	            .setCancelable(false)
 	            .setTitle(R.string.aide_titre)
 	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
