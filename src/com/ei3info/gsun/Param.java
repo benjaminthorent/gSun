@@ -20,7 +20,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.Toast;
 
 public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
 	SeekBar mSeekBar;
@@ -117,7 +116,6 @@ public class Param extends Activity implements SeekBar.OnSeekBarChangeListener {
             		//TODO A nettoyer
             		gSun.posUtilisateur.setLatitude(48.8);
             		gSun.posUtilisateur.setLongitude(-1.583);
-            		Toast.makeText(getBaseContext(), gSun.posUtilisateur.latitude + " " + gSun.posUtilisateur.longitude, 2000).show();
             		Intent intent2 = new Intent(Param.this, EcranRecherche.class);
         			startActivity(intent2);
         			finish();

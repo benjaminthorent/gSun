@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.widget.*;
 import android.view.*;
@@ -33,7 +32,8 @@ public class gSun extends Activity {
 	protected static AudioManager am;
 
     
-    @Override
+    @SuppressWarnings("static-access")
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -64,12 +64,12 @@ public class gSun extends Activity {
 	    
 	    batteryLevel();
 	    // Defines "low battery level" pop-up display
-	    if(this.levelbattery < 10){
+	    if((this.levelbattery < 10)&&(this.levelbattery > 0)){
 		    AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-	        builder2.setMessage(R.string.aide_texte_gSun)
+	        builder2.setMessage(R.string.batterylevel)
 	            .setCancelable(false)
-	            .setTitle(R.string.aide_titre)
-	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
+	            .setTitle(R.string.alerte)
+	            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 	                public void onClick(DialogInterface dialog, int id) {
 	                dialog.dismiss();
 	                }
@@ -82,10 +82,10 @@ public class gSun extends Activity {
 	    am= (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 	    if(am.getStreamVolume(am.STREAM_RING) == 0){
 	    	AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
-	        builder3.setMessage(R.string.aide_texte_gSun)
+	        builder3.setMessage(R.string.nosound)
 	            .setCancelable(false)
-	            .setTitle(R.string.aide_titre)
-	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {
+	            .setTitle(R.string.alerte)
+	            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 	                public void onClick(DialogInterface dialog, int id) {
 	                dialog.dismiss();
 	                }

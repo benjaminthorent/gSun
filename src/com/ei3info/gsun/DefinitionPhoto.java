@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 
-
 public class DefinitionPhoto extends Activity {
 
     protected static Bouton mBoutonSave;
@@ -19,6 +18,8 @@ public class DefinitionPhoto extends Activity {
     protected static Image viewPhoto;
     protected static Image viewSun;
     protected static Spin spinner;
+    
+    protected static String etat;
     
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +85,9 @@ public class DefinitionPhoto extends Activity {
                 new OnClickListener() {
                     @Override
                     public void onClick(View v){
-                    	//TODO Enregistrement
-                        //Go to the Enregistrement Activity (screen where the user must say whether the sun is visible or not)
-                        Intent intent2 = new Intent(DefinitionPhoto.this, gSun.class); //TODO "gSun" must be changed to "Enregistrement"
+                    	DefinitionPhoto.etat = (String) DefinitionPhoto.spinner.getSelectedItem();
+                    	//Go to the Enregistrement Activity (screen where the user must say whether the sun is visible or not)
+                        Intent intent2 = new Intent(DefinitionPhoto.this, Enregistrement.class); //TODO "gSun" must be changed to "Enregistrement"
                         startActivity(intent2);
                         finish();
                     }

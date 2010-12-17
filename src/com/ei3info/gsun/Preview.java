@@ -81,6 +81,8 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback{
 		public void onPictureTaken(byte[] data, Camera camera) {
 			
 				Fichier.setTempPicture(data); 
+				//TODO très moche ! A voir !
+				Fichier.setCaracPicture("defaut", data);
 			
 		}
 	};

@@ -62,7 +62,7 @@ public class PhotoCaracterisation extends Activity {
     	        	mPreview.takePicture();
     	        	try{
     	        		Thread.currentThread();
-    	        		Thread.sleep(2000);
+    	        		Thread.sleep(3000);
     	        	}catch(InterruptedException e){
     	        		e.printStackTrace();
     	        	}
@@ -76,7 +76,7 @@ public class PhotoCaracterisation extends Activity {
         
         //Creation of the help text
 	       AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	        builder.setMessage(R.string.aide_texte_gSun)
+	        builder.setMessage(R.string.aide_texte_ecran_prisePhotoCaract)
 	            .setCancelable(false)
 	            .setTitle(R.string.aide_titre)
 	            .setPositiveButton("Retour", new DialogInterface.OnClickListener() {

@@ -124,19 +124,19 @@ Une fois le calcul terminé lapplication passe automatiquement à lécran de
 Bouton « Annuler » : Retour à lécran daccueil.
 "</string>
 
-<string name="aide_texte_ecran_rechercheSoleil">"Lobjectif de cet écran est de vous aidez à positionner votre terminal mobile suivant la direction apparente du soleil. Le positionnement doit seffectuer dabord en azimut puis en hauteur solaire.
+<string name="aide_texte_ecran_rechercheSoleil">"L'objectif de cet écran est de vous aider à positionner votre terminal mobile suivant la direction apparente du soleil. Le positionnement doit s'effectuer d'abord en azimut puis en hauteur solaire.
 
 Suivez les indications données par les flèches latérales pour positionner le téléphone suivant le bon azimut.
 
 Puis, suivez les flèches verticales ou les indications sonores pour effectuer le positionnement suivant la hauteur solaire.
 
 Une fois la direction apparente du soleil trouvée :
--	un soleil saffiche au centre de lécran ;
+-	un soleil s'affiche au centre de l'écran ;
 -	un signal sonore vous indique que vous avez trouvé la direction apparente du soleil.
 
 Patientez 2s et la photographie indiquant la direction apparente du soleil est prise automatiquement. Un signal sonore retenti au moment de la prise de la photographie.
 
-Bouton « Retour » : Retourner à lécran de paramétrage.
+Bouton « Retour » : Retourner à l'écran de paramétrage.
 "</string>
 
 <string name="aide_texte_ecran_editionPhoto">"Cet écran vous présente une photo indiquant la direction du soleil qui a été prise à partir de lécran édition photo.
@@ -145,7 +145,7 @@ Utilisez la liste déroulante placée en haut de lécran pour indiquer si dans
 
 Bouton « Enregistrer » : Enregistrez la configuration présentée à lécran en accédant à lécran denregistrement.
 
-Bouton « Retour » : Retour à lécran de recherche du soleil.
+Bouton « Retour » : Retour à l'écran de recherche du soleil.
 "</string>
 
 <string name="aide_texte_ecran_enregistrement">"Cet écran vous permet denregistrement la photographie prise suivant la direction apparente du soleil.
@@ -173,7 +173,7 @@ Bouton « Prendre une nouvelle Photo » : lancement de caméra pour prendre une 
 Bouton « Annuler » : retour à lécran daccès aux mesures.
 "</string>
 
-<string name="aide_texte_ecran_prisePhotoCaract">"Cet écran vous permet de prendre une nouvelle photographie permettant de caractérisation du lieu de prise de vue.
+<string name="aide_texte_ecran_prisePhotoCaract">"Cet écran vous permet de prendre une nouvelle photographie permettant la caractérisation du lieu de prise de vue.
 
 Bouton « Photo » : prise effective de la photo.
 
@@ -190,6 +190,26 @@ Changez la qualification de la mesure (à lombre, au soleil, indéterminée) e
 
 Bouton « Annuler » : retour à lécran daccès aux mesures.
 "</string>
+
+
+<string name="alerte">"Notification"
+</string>
+
+<string name="batterylevel">"Le niveau de batterie est faible et les performances de l'application ne sont pas assurées."
+</string>
+
+<string name="nosound">"Le son est desactivé. Pour profiter pleinement des possibilités de l'application, réactiver le son au préalable."
+</string>
+
+	<!-- Enregistrement -->
+	<string name="alert_dialog_text_entry">Enregistrement</string>
+    <string name="alert_dialog_username">Répertoire</string>
+    <string name="alert_dialog_password">Nom</string>
+    
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Annuler</string>
+    <string name="repertoire_nom">Répertoire</string>
+    <string name="repertoire">gSun</string>
 
 
 

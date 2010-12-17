@@ -8,8 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.*;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -85,8 +83,8 @@ public class SyntheseMesures extends Activity {
 		            	
 		            	
 		            		//SyntheseMesures.imageAAfficher=images.get(v.getId());
-		            	Bitmap bmp = Fichier.drawableToBitmap(getResources().getDrawable(R.drawable.chrysanthemum));
-		            	SyntheseMesures.imageAAfficher=bmp;
+		            		Bitmap bmp = Fichier.drawableToBitmap(getResources().getDrawable(R.drawable.chrysanthemum));
+		            		SyntheseMesures.imageAAfficher=bmp;
 		            		Intent intent = new Intent(SyntheseMesures.this, AffichagePhotoSynthese.class);
 		        			startActivity(intent);
 		            		finish();

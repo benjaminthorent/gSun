@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+	android:background="@color/background"
+	android:id="@+id/enregistrement2">
+
+    
+    <TextView
+        android:id="@+id/repertoire_nom"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/repertoire_nom"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/texte"
+    />
+        
+	
+    <Spinner android:id="@+id/repertoire_spinner"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+    />
+    
+    <TextView
+    	android:id="@+id/repertoire_nouveau_nom" 
+    	android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:visibility="invisible"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:gravity="center"
+    />
+ 	
+
+	<TextView
+        android:id="@+id/nom"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:text="@string/alert_dialog_password"
+        android:gravity="left"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="invisible"
+        android:textColor="@color/texte"
+    />
+            
+    <EditText
+        android:id="@+id/nom_edit"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:scrollHorizontally="true"
+        android:autoText="true"
+        android:capitalize="none"
+        android:gravity="fill_horizontal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="invisible"
+        android:text="test"
+    />
+    
+    <TextView
+    	android:id="@+id/nouveau_nom_contrainte" 
+    	android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:visibility="invisible"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:gravity="center"
+        android:text="Au plus 15 caractères"
+        android:textSize="10px"
+   />
+   
+   	<RelativeLayout
+		android:id="@+id/param_boutonsbas"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_below="@id/nouveau_nom_contrainte"
+		android:gravity="bottom|center"
+		android:layout_margin="10px"
+		android:layout_marginTop="50px"
+	>
+   		<Button
+			android:id="@+id/enregistrement_valider"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+	 		android:text="@string/param_TrouverSoleil"
+			android:visibility="invisible"	
+			android:background="@drawable/mybutton2"
+			android:layout_margin="10px"
+	 	/>
+	 
+		<Button
+	 		android:id="@+id/enregistrement_retour"
+			android:layout_width="wrap_content"
+	 		android:layout_height="wrap_content"
+	 		android:text="@string/param_retour"
+			android:background="@drawable/mybutton2"
+			android:layout_toRightOf="@id/enregistrement_valider"
+			android:layout_margin="10px"
+	 	/>
+	 	
+	 </RelativeLayout>
+
+            
+</LinearLayout>

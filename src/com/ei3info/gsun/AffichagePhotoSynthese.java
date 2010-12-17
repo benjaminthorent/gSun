@@ -36,7 +36,7 @@ public class AffichagePhotoSynthese extends Activity {
 	        
 
 	            //Background Picture
-	        	 	Image viewPhoto = new Image(this,SyntheseMesures.imageAAfficher,0x70,0,0);
+	        	 	Image viewPhoto = new Image(this,SyntheseMesures.imageAAfficher,0x70+0x07,0,0);
 	        	 	
 	                
 

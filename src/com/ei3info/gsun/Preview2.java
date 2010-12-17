@@ -78,8 +78,7 @@ public class Preview2 extends SurfaceView implements SurfaceHolder.Callback{
 	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
 			
-				//TODO Récupérer nom dossier depuis classe Niki via attribut statique
-				Fichier.setCaracPicture("", data);
+				Fichier.setCaracPicture(AccesMesures.repCourant.getName(), data);
 			
 		}
 	};

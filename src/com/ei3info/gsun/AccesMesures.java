@@ -9,16 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 public class AccesMesures extends Activity{
 	
 	protected static File repCourant;
+	@SuppressWarnings({ "unchecked" })
 	@Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -35,7 +34,8 @@ public class AccesMesures extends Activity{
 		
 		
 		
-	    ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, listeRepertoires);
+	    @SuppressWarnings("rawtypes")
+		ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item, listeRepertoires);
 	    accesmesures_rep.setAdapter(spinnerArrayAdapter);
 	    
 	    OnItemSelectedListener ecouteSpinner = new OnItemSelectedListener() {
@@ -57,7 +57,7 @@ public class AccesMesures extends Activity{
 	    };
 	    accesmesures_rep.setOnItemSelectedListener(ecouteSpinner);
 	    
-	    this.repCourant = Fichier.File((String) accesmesures_rep.getSelectedItem());
+	    
 
 	    	
 		
@@ -73,14 +73,19 @@ public class AccesMesures extends Activity{
 				    	finish();
 			    	break;
 			    	case R.id.accesmesures_synthese:
+			    		AccesMesures.repCourant = Fichier.File((String) accesmesures_rep.getSelectedItem());
+			    		//Toast.makeText(getBaseContext(), AccesMesures.repCourant.getAbsolutePath(), 1000).show();
+			    		 
 				    	Intent intent2 = new Intent(AccesMesures.this, SyntheseMesures.class);
 						startActivity(intent2);
 				    	finish();
 				    break;
 			    	
 			    	 case R.id.accesmesures_photo:
-			    		
-			    		 Intent intent3 = new Intent(AccesMesures.this, CaractMesures.class);
+			    		 AccesMesures.repCourant = Fichier.File((String) accesmesures_rep.getSelectedItem());
+			    		 //Toast.makeText(getBaseContext(), AccesMesures.repCourant.getAbsolutePath(), 1000).show();
+			    		 
+			    		Intent intent3 = new Intent(AccesMesures.this, CaractMesures.class);
 						startActivity(intent3);
 				    	finish();
 				    break;			    		

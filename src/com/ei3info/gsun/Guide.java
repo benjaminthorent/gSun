@@ -368,12 +368,13 @@ public class Guide extends View {
                         	if((Math.abs(System.currentTimeMillis()-start)>2000)&&(photo_non_prise)){
                         		Toast.makeText(getContext(), "Action !", 1000).show();
                         		//Take the picture corresponding to the preview
+                        		temps_ok=false;
     		    	        	EcranRecherche.mPreview.takePicture();
     		    	        	photo_non_prise=false;
     		    	        	//TODO Améliorer le sleep
     		    	        	try{
     		    	        		Thread.currentThread();
-    		    	        		Thread.sleep(1000);
+    		    	        		Thread.sleep(3000);
     		    	        	}catch(InterruptedException e){
     		    	        		e.printStackTrace();
     		    	        	}

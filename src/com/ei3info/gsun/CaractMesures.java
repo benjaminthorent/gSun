@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +55,7 @@ public class CaractMesures extends Activity{
             		finish();
             		break;
 	            case R.id.caractmesures_photo:
-	        		Intent intent2 = new Intent(CaractMesures.this, gSun.class);
+	        		Intent intent2 = new Intent(CaractMesures.this, PhotoCaracterisation.class);
 	    			startActivity(intent2);
 	        		finish();
 	        		break;
@@ -75,7 +73,7 @@ public class CaractMesures extends Activity{
          gallery.setAdapter(new AddImgAdp(this));
 
          gallery.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
+            public void onItemClick(@SuppressWarnings("rawtypes") AdapterView parent, View v, int position, long id) {
                 imgView.setImageBitmap(images.get(position));
             }
         });
